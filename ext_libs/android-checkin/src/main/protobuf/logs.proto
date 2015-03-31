@@ -1,0 +1,53 @@
+option java_package = "com.android.checkin.proto";
+
+message AndroidCheckinProto {
+  optional AndroidBuildProto build = 1;
+  optional int64 lastCheckinMsec = 2;
+  repeated AndroidEventProto event = 3;
+  repeated AndroidStatisticProto stat = 4;
+  repeated string requestedGroup = 5;
+  optional string cellOperator = 6;
+  optional string simOperator = 7;
+  optional string roaming = 8;
+  optional int32 userNumber = 9;
+}
+
+message AndroidBuildProto {
+  optional string id = 1;
+  optional string product = 2;
+  optional string carrier = 3;
+  optional string radio = 4;
+  optional string bootloader = 5;
+  optional string client = 6;
+  optional int64 timestamp = 7;
+  optional int32 googleServices = 8;
+  optional string device = 9;
+  optional int32 sdkVersion = 10;
+  optional string model = 11;
+  optional string manufacturer = 12;
+  optional string buildProduct = 13;
+  optional bool otaInstalled = 14;
+}
+
+message AndroidEventProto {
+  optional string tag = 1;
+  optional string value = 2;
+  optional int64 timeMsec = 3;
+}
+
+message AndroidStatisticProto {
+  optional string tag = 1;
+  optional int32 count = 2;
+  optional float sum = 3;
+}
+
+message AndroidIntentProto {
+  optional string action = 1;
+  optional string dataUri = 2;
+  optional string mimeType = 3;
+  optional string javaClass = 4;
+  repeated group Extra = 5 {
+    optional string name = 6;
+    optional string value = 7;
+  }
+}

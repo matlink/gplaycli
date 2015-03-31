@@ -1,0 +1,21 @@
+option java_package = "com.android.checkin.proto";
+
+message DeviceConfigurationProto {
+  optional int32 touchScreen = 1;
+  optional int32 keyboard = 2;
+  optional int32 navigation = 3;
+  optional int32 screenLayout = 4;
+  optional bool hasHardKeyboard = 5;
+  optional bool hasFiveWayNavigation = 6;
+  optional int32 screenDensity = 7;
+  optional int32 glEsVersion = 8;
+  repeated string systemSharedLibrary = 9;
+  repeated string systemAvailableFeature = 10;
+  repeated string nativePlatform = 11;
+  optional int32 screenWidth = 12;
+  optional int32 screenHeight = 13;
+  repeated string systemSupportedLocale = 14;
+  repeated string glExtension = 15;
+  optional int32 deviceClass = 16;
+  optional int32 maxApkDownloadSizeMb = 17;
+}
