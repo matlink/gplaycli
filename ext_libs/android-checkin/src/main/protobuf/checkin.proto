@@ -1,0 +1,45 @@
+option java_package = "com.android.checkin.proto";
+import "logs.proto";
+import "config.proto";
+
+message AndroidCheckinRequest {
+  optional string imei = 1;
+  optional int64 id = 2;
+  optional string digest = 3;
+  optional AndroidCheckinProto checkin = 4;
+  optional string desiredBuild = 5;
+  optional string locale = 6;
+  optional int64 loggingId = 7;
+  optional string marketCheckin = 8;
+  repeated string macAddr = 9;
+  optional string meid = 10;
+  repeated string accountCookie = 11;
+  optional string timeZone = 12;
+  optional fixed64 securityToken = 13;
+  optional int32 version = 14;
+  repeated string otaCert = 15;
+  optional string serialNumber = 16;
+  optional string esn = 17;
+  optional DeviceConfigurationProto deviceConfiguration = 18;
+  repeated string macAddrType = 19;
+  optional int32 fragment = 20;
+  optional string userName = 21;
+}
+
+message AndroidCheckinResponse {
+  optional bool statsOk = 1;
+  repeated AndroidIntentProto intent = 2;
+  optional int64 timeMsec = 3;
+  optional string digest = 4;
+  repeated GservicesSetting setting = 5;
+  optional bool marketOk = 6;
+  optional fixed64 androidId = 7;
+  optional fixed64 securityToken = 8;
+  optional bool settingsDiff = 9;
+  repeated string deleteSetting = 10;
+}
+
+message GservicesSetting {
+  optional bytes name = 1;
+  optional bytes value = 2;
+}
