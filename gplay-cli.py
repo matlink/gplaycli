@@ -99,7 +99,7 @@ class GPlaycli(object):
 		for position, item in enumerate(list_of_packages_to_download):
 			packagename, filename = item
 			if self.verbose:
-				print packagename, str(position)+"/"+len(list_of_packages_to_download)
+				print packagename, str(position)+"/"+str(len(list_of_packages_to_download))
 
 			#Check for download folder
 			download_folder_path = self.config["download_folder_path"]
