@@ -187,7 +187,7 @@ class GPlaycli(object):
 		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download)
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager")
+	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
 	parser.add_argument('-y','--yes', action='store_true',dest='yes_to_all',help='Say yes to all prompted questions')
 	parser.add_argument('-s','--search',action='store',dest='search_string',metavar="SEARCH",
 		type=str,help="Search the given string into the Google Play Store")
@@ -198,6 +198,8 @@ if __name__ == '__main__':
 	parser.add_argument('-f','--folder',action='store',dest='dest_folder',metavar="FOLDER",nargs=1,
 		type=str,help="Where to put the downloaded Apks")
 	parser.add_argument('-v','--verbose', action='store_true',dest='verbose',help='Be verbose')
+	if len(sys.argv)<2:
+		sys.argv.append("-h")
 	args = parser.parse_args()
 	cli = GPlaycli()
 	cli.yes = args.yes_to_all
