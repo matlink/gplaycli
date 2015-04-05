@@ -1,7 +1,9 @@
 #! /usr/bin/python2
 # -*- coding: utf-8 -*-
 """
-GooglePlayDownloader
+GPlay-Cli 
+Copyleft (C) 2015 Matlink
+Hardly based on GooglePlayDownloader https://codingteam.net/project/googleplaydownloader
 Copyright (C) 2013   Tuxicoman
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -159,8 +161,10 @@ class GPlaycli(object):
 			print "No result"
 			return
 		all_results = list()
+		# Name of the columns
 		col_names = ["Title","Creator","Size","Downloads","Last Update","AppID","Version","Rating"]
 		all_results.append(col_names)
+		# Compute results values
 		for result in results:
 			if result.offer[0].checkoutFlowRequired == False: #if Free to download
 				l = [ result.title,

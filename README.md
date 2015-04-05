@@ -19,3 +19,6 @@ Google Play Downloader via Command line, based on https://codingteam.net/project
 	  -f FOLDER, --folder FOLDER
 	                        Where to put the downloaded Apks
 	  -v, --verbose         Be verbose
+
+If you want to use your own Google credentials, simply change `self.config` values in the `gplay-cli.py` file with your own settings. 
+If you want to generate androidID, see https://github.com/nviennot/android-checkin/, otherwise you could either use the given one (default) or use one of your devices ID.
