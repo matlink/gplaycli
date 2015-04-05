@@ -1,5 +1,5 @@
 # gplay-cli
-Google Play Downloader via Command line
+Google Play Downloader via Command line, based on https://codingteam.net/project/googleplaydownloader See package Readme for python modules to install.
 
 	./gplay-cli.py 
 	usage: gplay-cli.py [-h] [-y] [-s SEARCH] [-d AppID [AppID ...]] [-u FOLDER]
