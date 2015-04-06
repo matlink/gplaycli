@@ -201,7 +201,7 @@ if __name__ == '__main__':
 	parser.add_argument('-u','--update',action='store',dest='update_folder',metavar="FOLDER",
 		type=str,help="Update all the APKs in the given folder")
 	parser.add_argument('-f','--folder',action='store',dest='dest_folder',metavar="FOLDER",nargs=1,
-		type=str,help="Where to put the downloaded Apks")
+		type=str,default=".",help="Where to put the downloaded Apks")
 	parser.add_argument('-v','--verbose', action='store_true',dest='verbose',help='Be verbose')
 	if len(sys.argv)<2:
 		sys.argv.append("-h")
