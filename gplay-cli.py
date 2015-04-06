@@ -199,7 +199,7 @@ if __name__ == '__main__':
 	parser.add_argument('-d','--download',action='store',dest='packages_to_download',metavar="AppID",nargs="+",
 		type=str,help="Download the Apps that map given AppIDs")
 	parser.add_argument('-u','--update',action='store',dest='update_folder',metavar="FOLDER",
-		type=str,default=".",help="Update all the APKs in the given folder")
+		type=str,help="Update all the APKs in the given folder")
 	parser.add_argument('-f','--folder',action='store',dest='dest_folder',metavar="FOLDER",nargs=1,
 		type=str,help="Where to put the downloaded Apks")
 	parser.add_argument('-v','--verbose', action='store_true',dest='verbose',help='Be verbose')
