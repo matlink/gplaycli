@@ -102,7 +102,7 @@ class GPlaycli(object):
 		for position, item in enumerate(list_of_packages_to_download):
 			packagename, filename = item
 			if self.verbose:
-				print packagename, str(position)+"/"+str(len(list_of_packages_to_download))
+				print str(position+1)+"/"+str(len(list_of_packages_to_download)), packagename
 
 			#Check for download folder
 			download_folder_path = self.config["download_folder_path"]
@@ -196,12 +196,14 @@ if __name__ == '__main__':
 	parser.add_argument('-y','--yes', action='store_true',dest='yes_to_all',help='Say yes to all prompted questions')
 	parser.add_argument('-s','--search',action='store',dest='search_string',metavar="SEARCH",
 		type=str,help="Search the given string into the Google Play Store")
+	parser.add_argument('-n','--number',action='store',dest='number_results',metavar="NUMBER",
+		type=str,help="For the search option, returns the given number of matching applications")
 	parser.add_argument('-d','--download',action='store',dest='packages_to_download',metavar="AppID",nargs="+",
 		type=str,help="Download the Apps that map given AppIDs")
 	parser.add_argument('-u','--update',action='store',dest='update_folder',metavar="FOLDER",
 		type=str,help="Update all the APKs in the given folder")
 	parser.add_argument('-f','--folder',action='store',dest='dest_folder',metavar="FOLDER",nargs=1,
-		type=str,default=".",help="Where to put the downloaded Apks")
+		type=str,default=".",help="Where to put the downloaded Apks, only for -d command")
 	parser.add_argument('-v','--verbose', action='store_true',dest='verbose',help='Be verbose')
 	if len(sys.argv)<2:
 		sys.argv.append("-h")
@@ -214,7 +216,10 @@ if __name__ == '__main__':
 	if args.update_folder:
 		cli.prepare_analyse_apks()
 	if args.search_string:
-		cli.search(list(),args.search_string,10)
+		nb_results = 10
+		if args.number_results:
+			nb_results=args.number_results
+		cli.search(list(),args.search_string,nb_results)
 	if args.packages_to_download!=None:
 		if args.dest_folder!=None:
 			cli.set_download_folder(args.dest_folder[0])
