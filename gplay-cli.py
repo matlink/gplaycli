@@ -118,6 +118,8 @@ class GPlaycli(object):
 			# Download
 			try:
 			  data = playstore_api.download(packagename, vc)
+			except IndexError as exc:
+				print "Error while downloading %s : %s" % (packagename, "this package does not exist, try to search it via --search before")
 			except Exception as exc:
 			  print "Error while downloading %s : %s" % (packagename, exc)
 			  failed_downloads.append((item, exc))
