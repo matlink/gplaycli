@@ -5,6 +5,7 @@ import gzip
 import pprint
 import StringIO
 import requests
+from clint.textui import progress
 
 from google.protobuf import descriptor
 from google.protobuf.internal.containers import RepeatedCompositeFieldContainer
@@ -253,7 +254,7 @@ class GooglePlayAPI(object):
         message = self.executeRequestApi2(path)
         return message.payload.reviewResponse
 
-    def download(self, packageName, versionCode, offerType=1):
+    def download(self, packageName, versionCode, offerType=1,progress_bar=False):
         """Download an app and return its raw data (APK file).
 
         packageName is the app unique ID (usually starting with 'com.').
@@ -276,6 +277,15 @@ class GooglePlayAPI(object):
                    "Accept-Encoding": "",
                   }
 
-        response = requests.get(url, headers=headers, cookies=cookies, verify=ssl_verify)
-        return response.content
+        if not progress_bar:
+            response = requests.get(url, headers=headers, cookies=cookies, verify=ssl_verify)
+            return response.content
+        # If progress_bar is asked
+        response_content = str()
+        response = requests.get(url, headers=headers, cookies=cookies, verify=ssl_verify,stream=True)
+        total_length = int(response.headers.get('content-length'))
+        for chunk in progress.bar(response.iter_content(chunk_size=1024),expected_size=(total_length/1024) + 1):
+            if chunk:
+                response_content+=chunk
+        return response_content
 
