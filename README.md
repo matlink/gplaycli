@@ -26,5 +26,5 @@ Google Play Downloader via Command line, based on https://codingteam.net/project
 		                        Use a different config file than credentials.conf
 		  -p, --progress        Prompt a progress bar while downloading packages
 
-If you want to use your own Google credentials, simply change `self.config` values in the `gplay-cli.py` file with your own settings. 
+If you want to use your own Google credentials, simply change them in the `credentials.conf` file with your own settings. 
 If you want to generate androidID, see https://github.com/nviennot/android-checkin/, otherwise you could either use the given one (default) or use one of your devices ID.
