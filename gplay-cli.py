@@ -11,19 +11,18 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import sys, os, argparse
+import sys, os, argparse, ConfigParser
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI #GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from ext_libs.androguard.core.bytecodes import apk as androguard_apk #Androguard
 
 class GPlaycli(object):
-	def __init__(self):
-		self.config = {
-			"gmail_password": "jesuischarlie", 
-			"android_ID": "3f07fa136be3e63d", 
-			"gmail_address": "googleplay@jesuislibre.net",
-			"language": "fr_FR"
-		}
+	def __init__(self,credentials="credentials.conf"):
+		self.configparser = ConfigParser.ConfigParser()
+		self.configparser.read(credentials)
+		self.config = dict()
+		for key, value in self.configparser.items("Credentials"):
+			self.config[key] = value
 		self.yes = False
 		self.verbose = False
 
@@ -33,7 +32,7 @@ class GPlaycli(object):
 	def connect_to_googleplay_api(self):
 	    AUTH_TOKEN = None
 
-	    api = GooglePlayAPI(androidId=self.config["android_ID"], lang=self.config["language"])
+	    api = GooglePlayAPI(androidId=self.config["android_id"], lang=self.config["language"])
 	    try :
 	      api.login(self.config["gmail_address"], self.config["gmail_password"], AUTH_TOKEN)
 	    except LoginError, exc:
