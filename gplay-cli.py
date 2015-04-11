@@ -96,7 +96,7 @@ class GPlaycli(object):
 	    	print "Everything is up to date !"
 	    	sys.exit(1)
 
-	def download_selection(self,playstore_api, list_of_packages_to_download, return_function):
+	def download_selection(self,playstore_api, list_of_packages_to_download, return_function,progress_bar=False):
 		failed_downloads = []
 		for position, item in enumerate(list_of_packages_to_download):
 			packagename, filename = item
@@ -116,7 +116,7 @@ class GPlaycli(object):
 
 			# Download
 			try:
-			  data = playstore_api.download(packagename, vc)
+			  data = playstore_api.download(packagename, vc,progress_bar=progress_bar)
 			except IndexError as exc:
 				print "Error while downloading %s : %s" % (packagename, "this package does not exist, try to search it via --search before")
 			except Exception as exc:
@@ -189,8 +189,8 @@ class GPlaycli(object):
 			line = ""
 			print "".join((u"%s"%item).ljust(col_width[indice]) for indice,item in enumerate(result))
 
-	def download_packages(self,list_of_packages_to_download):
-		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download)
+	def download_packages(self,list_of_packages_to_download,progress_bar=False):
+		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download,progress_bar)
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
@@ -208,6 +208,7 @@ if __name__ == '__main__':
 	parser.add_argument('-v','--verbose', action='store_true',dest='verbose',help='Be verbose')
 	parser.add_argument('-c','--config',action='store',dest='config',metavar="CONF_FILE",nargs=1,
 		type=str,default="credentials.conf",help="Use a different config file than credentials.conf")
+	parser.add_argument('-p','--progress', action='store_true',dest='progress_bar',help='Prompt a progress bar while downloading packages')
 	if len(sys.argv)<2:
 		sys.argv.append("-h")
 	args = parser.parse_args()
@@ -226,4 +227,4 @@ if __name__ == '__main__':
 	if args.packages_to_download!=None:
 		if args.dest_folder!=None:
 			cli.set_download_folder(args.dest_folder[0])
-		cli.download_packages(args.packages_to_download)
+		cli.download_packages(args.packages_to_download,args.progress_bar)
