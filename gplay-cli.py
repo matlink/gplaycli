@@ -206,10 +206,12 @@ if __name__ == '__main__':
 	parser.add_argument('-f','--folder',action='store',dest='dest_folder',metavar="FOLDER",nargs=1,
 		type=str,default=".",help="Where to put the downloaded Apks, only for -d command")
 	parser.add_argument('-v','--verbose', action='store_true',dest='verbose',help='Be verbose')
+	parser.add_argument('-c','--config',action='store',dest='config',metavar="CONF_FILE",nargs=1,
+		type=str,default="credentials.conf",help="Use a different config file than credentials.conf")
 	if len(sys.argv)<2:
 		sys.argv.append("-h")
 	args = parser.parse_args()
-	cli = GPlaycli()
+	cli = GPlaycli(args.config)
 	cli.yes = args.yes_to_all
 	cli.verbose = args.verbose
 	cli.set_download_folder(args.update_folder)
