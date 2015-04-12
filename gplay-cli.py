@@ -124,6 +124,7 @@ class GPlaycli(object):
 			  	data = playstore_api.download(packagename, vc,progress_bar=self.progress_bar)
 			except IndexError as exc:
 				print "Error while downloading %s : %s" % (packagename, "this package does not exist, try to search it via --search before")
+				failed_downloads.append((item, exc))
 			except Exception as exc:
 			  print "Error while downloading %s : %s" % (packagename, exc)
 			  failed_downloads.append((item, exc))
@@ -137,8 +138,11 @@ class GPlaycli(object):
 			  except IOError, exc:
 			    print "Error while writing %s : %s" % (packagename, exc)
 			    failed_downloads.append((item, exc))
+
+		failed_items = set([item[0] for item,error in failed_downloads])
+		to_download_items = set([item[0] for item in list_of_packages_to_download])
 		return_function(failed_downloads)
-		return list_of_packages_to_download
+		return to_download_items - failed_items
 	def after_download(self, failed_downloads):
 	    #Info message
 	    if len(failed_downloads) == 0 :
