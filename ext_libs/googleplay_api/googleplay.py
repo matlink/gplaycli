@@ -5,7 +5,6 @@ import gzip
 import pprint
 import StringIO
 import requests
-from clint.textui import progress
 
 from google.protobuf import descriptor
 from google.protobuf.internal.containers import RepeatedCompositeFieldContainer
@@ -281,6 +280,7 @@ class GooglePlayAPI(object):
             response = requests.get(url, headers=headers, cookies=cookies, verify=ssl_verify)
             return response.content
         # If progress_bar is asked
+        from clint.textui import progress
         response_content = str()
         response = requests.get(url, headers=headers, cookies=cookies, verify=ssl_verify,stream=True)
         total_length = int(response.headers.get('content-length'))
