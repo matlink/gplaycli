@@ -14,7 +14,11 @@ You should have received a copy of the GNU Affero General Public License along w
 import sys, os, argparse, ConfigParser
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI #GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
-from ext_libs.androguard.core.bytecodes import apk as androguard_apk #Androguard
+from ext_libs.androguard.core.bytecodes import apk as androguard_apk #Androguard 
+from os.
+
+import os.path
+
 
 class GPlaycli(object):
 	def __init__(self,credentials="credentials.conf"):
@@ -26,7 +30,7 @@ class GPlaycli(object):
 		self.yes = False
 		self.verbose = False
 		self.progress_bar = False
-
+			
 	def set_download_folder(self,folder):
 		self.config["download_folder_path"] = folder
 
@@ -42,7 +46,6 @@ class GPlaycli(object):
 	    else:
 	      self.playstore_api = api
 	      success = True
-
 	    return success
 
 	def prepare_analyse_apks(self):
