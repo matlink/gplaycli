@@ -1,0 +1,12 @@
+./ext_libs/androguard/__init__.pyc
+./ext_libs/androguard/core/bytecode.pyc
+./ext_libs/androguard/core/androconf.pyc
+./ext_libs/androguard/core/bytecodes/dvm_permissions.pyc
+./ext_libs/androguard/core/bytecodes/apk.pyc
+./ext_libs/androguard/core/bytecodes/__init__.pyc
+./ext_libs/androguard/core/__init__.pyc
+./ext_libs/googleplay_api/googleplay_pb2.pyc
+./ext_libs/googleplay_api/__init__.pyc
+./ext_libs/googleplay_api/googleplay.pyc
+./ext_libs/googleplay_api/config.pyc
+./ext_libs/__init__.pyc
