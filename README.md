@@ -28,7 +28,7 @@ Google Play Downloader via Command line, based on https://codingteam.net/project
 
 Requirements
 ----------
-Working on GNU/Linux or Windows with `pip` and Python 2.9+.
+Works on GNU/Linux or Windows with `pip` and Python 2.9+.
 You need to install some needed libraries with `pip` (consider using a venv):
 
 - python-protobuf (>=2.4) to talking with Google Play Store -> `pip install protobuf`
