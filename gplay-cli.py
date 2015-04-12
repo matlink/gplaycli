@@ -25,6 +25,7 @@ class GPlaycli(object):
 			self.config[key] = value
 		self.yes = False
 		self.verbose = False
+		self.progress_bar = False
 
 	def set_download_folder(self,folder):
 		self.config["download_folder_path"] = folder
@@ -91,12 +92,16 @@ class GPlaycli(object):
 	      if self.yes or return_value == 'y':
 	        if self.verbose:
 	        	print "Downloading ..."
-	        self.download_selection(self.playstore_api, list_of_packages_to_download, self.after_download)
+	        downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download, self.after_download)
+	        return_string = str()
+	        for package,apk in downloaded_packages:
+	        	return_string+=package+" "
+	        print "Updated: "+return_string[:-1]
 	    else:
 	    	print "Everything is up to date !"
 	    	sys.exit(1)
 
-	def download_selection(self,playstore_api, list_of_packages_to_download, return_function,progress_bar=False):
+	def download_selection(self,playstore_api, list_of_packages_to_download, return_function):
 		failed_downloads = []
 		for position, item in enumerate(list_of_packages_to_download):
 			packagename, filename = item
@@ -116,7 +121,7 @@ class GPlaycli(object):
 
 			# Download
 			try:
-			  data = playstore_api.download(packagename, vc,progress_bar=progress_bar)
+			  	data = playstore_api.download(packagename, vc,progress_bar=self.progress_bar)
 			except IndexError as exc:
 				print "Error while downloading %s : %s" % (packagename, "this package does not exist, try to search it via --search before")
 			except Exception as exc:
@@ -133,6 +138,7 @@ class GPlaycli(object):
 			    print "Error while writing %s : %s" % (packagename, exc)
 			    failed_downloads.append((item, exc))
 		return_function(failed_downloads)
+		return list_of_packages_to_download
 	def after_download(self, failed_downloads):
 	    #Info message
 	    if len(failed_downloads) == 0 :
@@ -189,8 +195,8 @@ class GPlaycli(object):
 			line = ""
 			print "".join((u"%s"%item).ljust(col_width[indice]) for indice,item in enumerate(result))
 
-	def download_packages(self,list_of_packages_to_download,progress_bar=False):
-		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download,progress_bar)
+	def download_packages(self,list_of_packages_to_download):
+		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download)
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
@@ -217,6 +223,7 @@ if __name__ == '__main__':
 	cli.verbose = args.verbose
 	cli.set_download_folder(args.update_folder)
 	cli.connect_to_googleplay_api()
+	cli.progress_bar = args.progress_bar
 	if args.update_folder:
 		cli.prepare_analyse_apks()
 	if args.search_string:
@@ -227,4 +234,4 @@ if __name__ == '__main__':
 	if args.packages_to_download!=None:
 		if args.dest_folder!=None:
 			cli.set_download_folder(args.dest_folder[0])
-		cli.download_packages(args.packages_to_download,args.progress_bar)
+		cli.download_packages(args.packages_to_download)

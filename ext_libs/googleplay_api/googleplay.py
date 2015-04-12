@@ -275,7 +275,7 @@ class GooglePlayAPI(object):
                    "User-Agent" : "AndroidDownloadManager/4.4.3 (Linux; U; Android 4.4.3; Nexus S Build/JRO03E)",
                    "Accept-Encoding": "",
                   }
-
+                  
         if not progress_bar:
             response = requests.get(url, headers=headers, cookies=cookies, verify=ssl_verify)
             return response.content
