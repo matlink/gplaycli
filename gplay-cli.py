@@ -15,7 +15,6 @@ import sys, os, argparse, ConfigParser
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI #GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from ext_libs.androguard.core.bytecodes import apk as androguard_apk #Androguard 
-from os.
 
 import os.path
 
