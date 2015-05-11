@@ -165,9 +165,12 @@ class GPlaycli(object):
 	        return "%3.1f%s" % (num, x)
 	    num /= 1024.0
 
-	def search(self, results_list, search_string, nb_results):
+	def raw_search(self, results_list, search_string, nb_results):
 		#Query results
-		results = self.playstore_api.search(search_string, nb_results=nb_results).doc
+		return self.playstore_api.search(search_string, nb_results=nb_results).doc
+
+	def search(self, results_list, search_string, nb_results):
+		self.raw_search(results_list, search_string, nb_results)
 		if len(results) > 0:
 			results = results[0].child
 		else:
