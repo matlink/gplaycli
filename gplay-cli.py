@@ -170,7 +170,7 @@ class GPlaycli(object):
 		return self.playstore_api.search(search_string, nb_results=nb_results).doc
 
 	def search(self, results_list, search_string, nb_results):
-		self.raw_search(results_list, search_string, nb_results)
+		results = self.raw_search(results_list, search_string, nb_results)
 		if len(results) > 0:
 			results = results[0].child
 		else:
