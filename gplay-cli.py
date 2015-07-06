@@ -202,7 +202,7 @@ class GPlaycli(object):
 
 		for result in all_results:
 			line = ""
-			print "".join((u"%s"%item).ljust(col_width[indice]) for indice,item in enumerate(result))
+			print "".join((u"%s"%item).encode('utf-8').strip().ljust(col_width[indice]) for indice,item in enumerate(result))
 
 	def download_packages(self,list_of_packages_to_download):
 		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download)
