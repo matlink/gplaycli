@@ -2,3 +2,4 @@ requests>=0.12
 protobuf>=2.4
 ndg-httpsclient
 clint
+pyasn1
