@@ -36,10 +36,11 @@ Works on GNU/Linux or Windows with `pip` and Python 2.9+. First of all, ensure t
 
 Then, you need to install some needed libraries with `pip` (consider using a venv):
 
-- python-protobuf (>=2.4) to talking with Google Play Store -> `pip install protobuf`
+- python-protobuf (>=2.4) for talking with Google Play Store -> `pip install protobuf`
 - python-requests (>=0.12) -> `pip install requests`
 - python-ndg-httpsclient for SSL connexions -> `pip install ndg-httpsclient`
 - python-clint for progress bar -> `pip install clint`
+- python-pyasn1 -> `pip install pyasn1`
 
 If you want to use your own Google credentials, simply change them in the `credentials.conf` file with your own settings. 
 If you want to generate androidID, see https://github.com/nviennot/android-checkin/, otherwise you could either use the given one (default) or use one of your devices ID.
