@@ -57,17 +57,25 @@ class GPlaycli(object):
 
 	def analyse_local_apks(self,list_of_apks, playstore_api, download_folder_path, return_function):
 		list_apks_to_update = []
+		package_bunch = []
 		for position, filename in enumerate(list_of_apks):
 			filepath = os.path.join(download_folder_path, filename)
 			a = androguard_apk.APK(filepath)
-			apk_version_code = a.get_androidversion_code()
 			packagename = a.get_package()
+			package_bunch.append(packagename)
+
+		# BulkDetails requires only one HTTP request
+		# Get APK info from store
+		details = playstore_api.bulkDetails(package_bunch)
+		for detail, packagename, filename in zip(details.entry,package_bunch, list_of_apks):
 			if self.verbose:
 				print "Analyzing %s" % packagename
-
-			#Get APK info from store
-			m =playstore_api.details(packagename)
-			doc = m.docV2
+			# Getting Apk infos
+			filepath = os.path.join(download_folder_path, filename)
+			a = androguard_apk.APK(filepath)
+			apk_version_code = a.get_androidversion_code()
+			m = detail
+			doc = m.doc
 			store_version_code = doc.details.appDetails.versionCode
 
 			#Compare
@@ -105,10 +113,15 @@ class GPlaycli(object):
 
 	def download_selection(self,playstore_api, list_of_packages_to_download, return_function):
 		failed_downloads = []
-		for position, item in enumerate(list_of_packages_to_download):
+
+		# BulkDetails requires only one HTTP request
+		# Get APK info from store
+		details = playstore_api.bulkDetails([item for item, item2 in list_of_packages_to_download])
+		position = 1
+		for detail, item in zip(details.entry,list_of_packages_to_download):
 			packagename, filename = item
 			if self.verbose:
-				print str(position+1)+"/"+str(len(list_of_packages_to_download)), packagename
+				print str(position)+"/"+str(len(list_of_packages_to_download)), packagename
 
 			#Check for download folder
 			download_folder_path = self.config["download_folder_path"]
@@ -116,8 +129,9 @@ class GPlaycli(object):
 			  os.mkdir(download_folder_path)
 
 			# Get the version code and the offer type from the app details
-			m = playstore_api.details(packagename)
-			doc = m.docV2
+			# m = playstore_api.details(packagename)
+			m = detail
+			doc = m.doc
 			title = doc.title
 			vc = doc.details.appDetails.versionCode
 
@@ -140,6 +154,7 @@ class GPlaycli(object):
 			  except IOError, exc:
 			    print "Error while writing %s : %s" % (packagename, exc)
 			    failed_downloads.append((item, exc))
+			position += 1
 
 		failed_items = set([item[0] for item,error in failed_downloads])
 		to_download_items = set([item[0] for item in list_of_packages_to_download])
