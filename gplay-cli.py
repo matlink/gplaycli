@@ -96,7 +96,7 @@ class GPlaycli(object):
 	        	print "Downloading ..."
 	        downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download, self.after_download)
 	        return_string = str()
-	        for package,apk in downloaded_packages:
+	        for package in downloaded_packages:
 	        	return_string+=package+" "
 	        print "Updated: "+return_string[:-1]
 	    else:
