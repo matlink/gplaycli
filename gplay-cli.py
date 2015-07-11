@@ -37,15 +37,16 @@ class GPlaycli(object):
 	    AUTH_TOKEN = None
 
 	    api = GooglePlayAPI(androidId=self.config["android_id"], lang=self.config["language"])
+	    error = None
 	    try :
 	      api.login(self.config["gmail_address"], self.config["gmail_password"], AUTH_TOKEN)
 	    except LoginError, exc:
-	      print exc.value
+	      error = exc.value
 	      success = False
 	    else:
 	      self.playstore_api = api
 	      success = True
-	    return success
+	    return success, error
 
 	def prepare_analyse_apks(self):
 	    download_folder_path = self.config["download_folder_path"]
@@ -246,7 +247,10 @@ if __name__ == '__main__':
 	cli.yes = args.yes_to_all
 	cli.verbose = args.verbose
 	cli.set_download_folder(args.update_folder)
-	cli.connect_to_googleplay_api()
+	success, error = cli.connect_to_googleplay_api()
+	if not success:
+		print "Cannot login to GooglePlay (", error, ")"
+		sys.exit(1)
 	cli.progress_bar = args.progress_bar
 	if args.update_folder:
 		cli.prepare_analyse_apks()
