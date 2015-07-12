@@ -50,7 +50,8 @@ class GPlaycli(object):
 
 	# List apks in the given folder
 	def list_folder_apks(self, folder):
-		list_of_apks = [filename for filename in os.listdir(folder) if os.path.splitext(filename)[1] == ".apk"]
+		list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
+		return list_of_apks
 		apks_with_details = list()
 		for apk in list_of_apks:
 			filepath = os.path.join(folder, apk)
