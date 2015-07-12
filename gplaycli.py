@@ -48,6 +48,17 @@ class GPlaycli(object):
 	      success = True
 	    return success, error
 
+	# List apks in the given folder
+	def list_folder_apks(self, folder):
+		list_of_apks = [filename for filename in os.listdir(folder) if os.path.splitext(filename)[1] == ".apk"]
+		apks_with_details = list()
+		for apk in list_of_apks:
+			filepath = os.path.join(folder, apk)
+			a = androguard_apk.APK(filepath)
+			apk_version_code = a.get_androidversion_code()
+			apks_with_details.append([apk,apk_version_code])
+		return apks_with_details
+
 	def prepare_analyse_apks(self):
 	    download_folder_path = self.config["download_folder_path"]
 	    list_of_apks = [filename for filename in os.listdir(download_folder_path) if os.path.splitext(filename)[1] == ".apk"]
@@ -210,15 +221,17 @@ class GPlaycli(object):
 				]
 			all_results.append(l)
 
-		# Print a nice table
-		col_width = list()
-		for column_indice in range(len(all_results[0])):
-			col_length = max([len(u"%s"%row[column_indice]) for row in all_results])
-			col_width.append(col_length+2)
+		if self.verbose:
+			# Print a nice table
+			col_width = list()
+			for column_indice in range(len(all_results[0])):
+				col_length = max([len(u"%s"%row[column_indice]) for row in all_results])
+				col_width.append(col_length+2)
 
-		for result in all_results:
-			line = ""
-			print "".join((u"%s"%item).encode('utf-8').strip().ljust(col_width[indice]) for indice,item in enumerate(result))
+			for result in all_results:
+				line = ""
+				print "".join((u"%s"%item).encode('utf-8').strip().ljust(col_width[indice]) for indice,item in enumerate(result))
+		return all_results
 
 	def download_packages(self,list_of_packages_to_download):
 		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download)
@@ -226,6 +239,8 @@ class GPlaycli(object):
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
 	parser.add_argument('-y','--yes', action='store_true',dest='yes_to_all',help='Say yes to all prompted questions')
+	parser.add_argument('-l','--list',action='store',dest='list',metavar="FOLDER",
+		type=str,help="List APKS in the given folder, with details")
 	parser.add_argument('-s','--search',action='store',dest='search_string',metavar="SEARCH",
 		type=str,help="Search the given string in Google Play Store")
 	parser.add_argument('-n','--number',action='store',dest='number_results',metavar="NUMBER",
@@ -246,15 +261,18 @@ if __name__ == '__main__':
 	cli = GPlaycli(args.config)
 	cli.yes = args.yes_to_all
 	cli.verbose = args.verbose
+	cli.progress_bar = args.progress_bar
 	cli.set_download_folder(args.update_folder)
 	success, error = cli.connect_to_googleplay_api()
 	if not success:
 		print "Cannot login to GooglePlay (", error, ")"
 		sys.exit(1)
-	cli.progress_bar = args.progress_bar
+	if args.list:
+		print cli.list_folder_apks(args.list)
 	if args.update_folder:
 		cli.prepare_analyse_apks()
 	if args.search_string:
+		self.verbose=True
 		nb_results = 10
 		if args.number_results:
 			nb_results=args.number_results
