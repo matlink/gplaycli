@@ -273,7 +273,7 @@ if __name__ == '__main__':
 	if args.update_folder:
 		cli.prepare_analyse_apks()
 	if args.search_string:
-		self.verbose=True
+		cli.verbose=True
 		nb_results = 10
 		if args.number_results:
 			nb_results=args.number_results
