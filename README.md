@@ -36,7 +36,7 @@ Works on GNU/Linux or Windows with `pip` and Python 2.9+. First of all, ensure t
 
 Then, you need to install some needed libraries with `pip` (consider using a venv):
 
-- python-protobuf (>=2.4) to talking with Google Play Store -> `pip install protobuf`
+- python-protobuf (>=2.4) to talk to Google Play Store -> `pip install protobuf`
 - python-requests (>=0.12) -> `pip install requests`
 - python-ndg-httpsclient for SSL connexions -> `pip install ndg-httpsclient`
 - python-clint for progress bar -> `pip install clint`
