@@ -256,7 +256,8 @@ class GPlaycli(object):
 	def download_packages(self,list_of_packages_to_download):
 		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download)
 
-if __name__ == '__main__':
+
+def main():
 	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
 	parser.add_argument('-y','--yes', action='store_true',dest='yes_to_all',help='Say yes to all prompted questions')
 	parser.add_argument('-l','--list',action='store',dest='list',metavar="FOLDER",
@@ -301,3 +302,6 @@ if __name__ == '__main__':
 		if args.dest_folder!=None:
 			cli.set_download_folder(args.dest_folder[0])
 		cli.download_packages(args.packages_to_download)
+
+if __name__ == '__main__':
+	main()
