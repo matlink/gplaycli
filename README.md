@@ -1,10 +1,10 @@
-# gplay-cli
+# gplaycli
 Google Play Downloader via Command line, based on https://codingteam.net/project/googleplaydownloader See package Readme for python modules to install.
 
 GPlayCli is a command line tool to search, install, update Android applications from the Google Play Store. The main goal was to be able to run this script with a cronjob, in order to automatically update an F-Droid server instance.
 
-	$ ./gplay-cli.py 
-	usage: gplay-cli.py [-h] [-y] [-s SEARCH] [-n NUMBER] [-d AppID [AppID ...]]
+	$ ./gplaycli.py 
+	usage: gplaycli.py [-h] [-y] [-s SEARCH] [-n NUMBER] [-d AppID [AppID ...]]
                     [-u FOLDER] [-f FOLDER] [-v] [-c CONF_FILE] [-p]
 
 		A Google Play Store Apk downloader and manager for command line
@@ -30,7 +30,7 @@ GPlayCli is a command line tool to search, install, update Android applications 
 
 Requirements
 ----------
-Works on GNU/Linux or Windows with `pip` and Python 2.9+. First of all, ensure these packages are installed on your system : 
+Works on GNU/Linux or Windows with `pip` and Python 2.7. First of all, ensure these packages are installed on your system : 
 
 - python-dev package -> `apt-get install python-dev`
 - libffi package -> `apt-get install libffi-dev`
