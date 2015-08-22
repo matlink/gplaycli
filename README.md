@@ -28,13 +28,15 @@ GPlayCli is a command line tool to search, install, update Android applications 
 		                        Use a different config file than credentials.conf
 		  -p, --progress        Prompt a progress bar while downloading packages
 
+Keep in mind that GPlayCli is not able to download apps that are not gratis, costless.
+
 Requirements
 ----------
 Works on GNU/Linux or Windows with `pip` and Python 2.7. First of all, ensure these packages are installed on your system : 
 
 - python-dev package -> `apt-get install python-dev`
 - libffi package -> `apt-get install libffi-dev`
-- python (>=2.5)
+- python (>=2.7)
 
 Then, you need to install some needed libraries with `pip` (consider using a venv):
 
@@ -44,4 +46,4 @@ Then, you need to install some needed libraries with `pip` (consider using a ven
 - python-clint for progress bar -> `pip install clint`
 
 If you want to use your own Google credentials, simply change them in the `credentials.conf` file with your own settings. 
-If you want to generate androidID, see https://github.com/nviennot/android-checkin/, otherwise you could either use the given one (default) or use one of your devices ID.
+If you want to generate androidID, see https://github.com/nviennot/android-checkin/ or https://github.com/Akdeniz/google-play-crawler, otherwise you could either use the given one (default) or use one of your devices ID.
