@@ -67,14 +67,14 @@ class GPlaycli(object):
 			det = results.entry[pos]
 			doc = det.doc
 			details[apk] = [ doc.title,\
-							doc.creator,\
-							self.sizeof_fmt(doc.details.appDetails.installationSize),\
-							doc.details.appDetails.numDownloads,\
-							doc.details.appDetails.uploadDate,\
-							doc.docid,\
-							str(doc.details.appDetails.versionCode),\
-							"%.2f" % doc.aggregateRating.starRating\
-							]
+					doc.creator,\
+					self.sizeof_fmt(doc.details.appDetails.installationSize),\
+					doc.details.appDetails.numDownloads,\
+					doc.details.appDetails.uploadDate,\
+					doc.docid,\
+					str(doc.details.appDetails.versionCode),\
+					"%.2f" % doc.aggregateRating.starRating\
+				]
 		return details
 
 	def prepare_analyse_apks(self):
