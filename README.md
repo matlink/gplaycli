@@ -30,6 +30,10 @@ GPlayCli is a command line tool to search, install, update Android applications 
 
 Keep in mind that GPlayCli is not able to download apps that are not gratis, costless.
 
+Debian installation
+--------------------
+Releases are available here https://github.com/matlink/gplaycli/releases/ as debian packages. If you prefer not to use debian packaging, check the following method.
+
 Requirements
 ----------
 Works on GNU/Linux or Windows with `pip` and Python 2.7. First of all, ensure these packages are installed on your system : 
