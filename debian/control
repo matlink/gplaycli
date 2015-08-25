@@ -1,0 +1,11 @@
+Source: gplaycli
+Section: shells
+Priority: optional
+Maintainer: Matlink (Matlink - Sysadmin matlink.fr) <matlink@matlink.fr>
+
+Package: gplaycli
+Architecture: all
+Homepage: https://github.com/matlink/gplaycli
+Depends: python-dev, libffi-dev, python (>=2.7), fuckoff (>=1.0)
+Description: GPlayCli is a command line tool to search, install, update Android applications from the Google Play Store. 
+ The main goal was to be able to run this script with a cronjob, in order to automatically update an F-Droid server instance. 
