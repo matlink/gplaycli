@@ -42,7 +42,7 @@ Works on GNU/Linux or Windows with `pip` and Python 2.7. First of all, ensure th
 - libffi package -> `apt-get install libffi-dev`
 - python (>=2.7)
 
-Then, you need to install it with some needed libraries using `python setup.py install` and it will be available with `gplaycli` command. If you don't want to install it, just install requirements with `pip install -r requirements.txt`
+Then, you need to install it with some needed libraries using either `pip install GPlayCli` or `python setup.py install`, then it will be available with `gplaycli` command. If you don't want to install it, just install requirements with `pip install -r requirements.txt`
 
 If you want to use your own Google credentials, simply change them in the `credentials.conf` file with your own settings. 
 If you want to generate androidID, see https://github.com/nviennot/android-checkin/ or https://github.com/Akdeniz/google-play-crawler, otherwise you could either use the given one (default) or use one of your devices ID.
