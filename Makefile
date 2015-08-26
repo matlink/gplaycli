@@ -20,10 +20,11 @@ install:
 	$(PYTHON) setup.py install --root $(DESTDIR) $(COMPILE)
 
 deb:
-#	python setup.py --command-packages=stdeb.command bdist_deb
 	python setup.py --command-packages=stdeb.command sdist_dsc --sign-results bdist_deb
-#	python setup.py sdist_dsc --sign-results bdist_deb
 
+publish:
+	python setup.py register -r pypi
+	python setup.py sdist upload -r pypi
 clean:
 	$(PYTHON) setup.py clean
 	rm -rf build/ MANIFEST dist GPlayCli.egg-info debian/{gplaycli,python-module-stampdir} debian/gplaycli.{debhelper.log,postinst.debhelper,prerm.debhelper,substvars} *.tar.gz* deb_dist
