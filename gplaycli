@@ -260,6 +260,36 @@ class GPlaycli(object):
 		self.download_selection(self.playstore_api, [(pkg,None) for pkg in list_of_packages_to_download], self.after_download)
 
 
+def install_cronjob():
+    import shutil, stat
+    cred_default = '/etc/gplaycli/credentials.conf'
+    credentials = raw_input('path to credentials.conf? let empty for '+cred_default+'\n') or cred_default
+    fold_default = '/opt/apks'
+    folder_to_update = raw_input('path to apks folder? let empty for '+fold_default+'\n') or fold_default
+    frequence = raw_input('update it [d]aily or [w]eekly?\n')
+    if frequence == 'd':
+        frequence_folder = '/etc/cron.daily'
+    elif frequence == 'w':
+        frequence_folder = '/etc/cron.weekly'
+    else:
+        raise Exception('please type h/d/w to make your choice')
+        return 1
+    frequence_file = frequence_folder+'/gplaycli'
+    shutil.copyfile('/etc/gplaycli/cronjob', frequence_file)
+    fi = open('/etc/gplaycli/cronjob', 'r')
+    fo = open(frequence_file, 'w')
+    for line in fi:
+        line = line.replace('PL_FOLD', folder_to_update)
+        line = line.replace('PL_CRED', credentials)
+        fo.write(line)
+    fi.close()
+    fo.close()
+    st = os.stat(frequence_file)
+    os.chmod(frequence_file, st.st_mode | stat.S_IEXEC)
+    print('Cronjob installed at '+frequence_file)
+    return 0
+
+
 def main():
 	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
 	parser.add_argument('-y','--yes', action='store_true',dest='yes_to_all',help='Say yes to all prompted questions')
@@ -279,9 +309,12 @@ def main():
 	parser.add_argument('-c','--config',action='store',dest='config',metavar="CONF_FILE",nargs=1,
 		type=str,default="credentials.conf",help="Use a different config file than credentials.conf")
 	parser.add_argument('-p','--progress', action='store_true',dest='progress_bar',help='Prompt a progress bar while downloading packages')
+	parser.add_argument('-ic','--install-cronjob', action='store_true',dest='install_cronjob',help='Interactively install cronjob for regular APKs update')
 	if len(sys.argv)<2:
 		sys.argv.append("-h")
 	args = parser.parse_args()
+        if args.install_cronjob:
+            sys.exit(install_cronjob())
 	cli = GPlaycli(args.config)
 	cli.yes = args.yes_to_all
 	cli.verbose = args.verbose
