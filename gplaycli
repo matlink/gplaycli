@@ -272,7 +272,7 @@ def install_cronjob():
     elif frequence == 'w':
         frequence_folder = '/etc/cron.weekly'
     else:
-        raise Exception('please type h/d/w to make your choice')
+        raise Exception('please type d/w to make your choice')
         return 1
     frequence_file = frequence_folder+'/gplaycli'
     shutil.copyfile('/etc/gplaycli/cronjob', frequence_file)
