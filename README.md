@@ -27,6 +27,9 @@ GPlayCli is a command line tool to search, install, update Android applications 
 		  -c CONF_FILE, --config CONF_FILE
 		                        Use a different config file than credentials.conf
 		  -p, --progress        Prompt a progress bar while downloading packages
+		  -ic, --install-cronjob
+                		        Interactively install cronjob for regular APKs update
+
 
 Keep in mind that GPlayCli is not able to download apps that are not gratis, costless.
 

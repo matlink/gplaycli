@@ -2,7 +2,7 @@ from setuptools import setup, Command
 import os
 
 setup(name='GPlayCli',
-        version='0.1',
+        version='0.1.1',
         description='GPlayCli, a Google play downloader command line interface',
         author="Matlink",
         author_email="matlink@matlink.fr",
@@ -18,7 +18,7 @@ setup(name='GPlayCli',
             'ext_libs/',    
         ], 
         data_files=[
-            ['/etc/gplaycli/', ['credentials.conf']],
+            ['/etc/gplaycli/', ['credentials.conf','cron/cronjob']],
         ],
         install_requires=[
                 'requests',
