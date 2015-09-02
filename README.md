@@ -50,3 +50,7 @@ Then, you need to install it with some needed libraries using either `pip instal
 If you want to use your own Google credentials, simply change them in the `credentials.conf` file with your own settings. 
 If you want to generate androidID, see https://github.com/nviennot/android-checkin/ or https://github.com/Akdeniz/google-play-crawler, otherwise you could either use the given one (default) or use one of your devices ID.
 If you plan to use it with F-Droid-server, remember that fdroidserver needs Java (more precisely the 'jar' command) to work.
+
+Uninstall
+=========
+Use `pip uninstall gplaycli`, and remove conf and cronjob with `rm -rf /etc/gplaycli /etc/cron.daily/gplaycli`. Should be clean, except python dependancies for gplaycli.
