@@ -44,12 +44,10 @@ class GPlaycli(object):
         self.config["download_folder_path"] = folder
 
     def connect_to_googleplay_api(self):
-        AUTH_TOKEN = None
-
         api = GooglePlayAPI(androidId=self.config["android_id"], lang=self.config["language"])
         error = None
         try:
-            api.login(self.config["gmail_address"], self.config["gmail_password"], AUTH_TOKEN)
+            api.login(self.config["gmail_address"], self.config["gmail_password"], None)
         except LoginError, exc:
             error = exc.value
             success = False
