@@ -60,13 +60,6 @@ class GPlaycli(object):
     def list_folder_apks(self, folder):
         list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
         return list_of_apks
-        apks_with_details = list()
-        for apk in list_of_apks:
-            filepath = os.path.join(folder, apk)
-            a = androguard_apk.APK(filepath)
-            apk_version_code = a.get_androidversion_code()
-            apks_with_details.append([apk, apk_version_code])
-        return apks_with_details
 
     def get_bulk_details(self, list_of_apks):
         results = self.playstore_api.bulkDetails(list_of_apks)
