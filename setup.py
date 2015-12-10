@@ -22,7 +22,7 @@ setup(name='GPlayCli',
             ['/etc/gplaycli/', ['credentials.conf','cron/cronjob']],
         ],
         install_requires=[
-                'requests',
+                'requests >= 2.0.0',
                 'protobuf',
                 'ndg-httpsclient',
                 'clint',
