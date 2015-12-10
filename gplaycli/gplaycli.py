@@ -256,7 +256,6 @@ class GPlaycli(object):
                 col_width.append(col_length + 2)
 
             for result in all_results:
-                line = ""
                 print "".join((u"%s" % item).encode('utf-8').strip().ljust(col_width[indice]) for indice, item in
                               enumerate(result))
         return all_results
