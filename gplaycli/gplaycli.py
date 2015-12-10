@@ -23,7 +23,6 @@ import ConfigParser
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from ext_libs.androguard.core.bytecodes import apk as androguard_apk  # Androguard
-import os.path
 
 
 class GPlaycli(object):
