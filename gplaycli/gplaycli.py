@@ -284,14 +284,14 @@ def install_cronjob():
 
     frequence_file = frequence_folder + '/gplaycli'
     shutil.copyfile('/etc/gplaycli/cronjob', frequence_file)
-    fi = open('/etc/gplaycli/cronjob', 'r')
-    fo = open(frequence_file, 'w')
-    for line in fi:
-        line = line.replace('PL_FOLD', folder_to_update)
-        line = line.replace('PL_CRED', credentials)
-        fo.write(line)
-    fi.close()
-    fo.close()
+
+    with open('/etc/gplaycli/cronjob', 'r') as fi:
+        with open(frequence_file, 'w') as fo:
+            for line in fi:
+                line = line.replace('PL_FOLD', folder_to_update)
+                line = line.replace('PL_CRED', credentials)
+                fo.write(line)
+
     st = os.stat(frequence_file)
     os.chmod(frequence_file, st.st_mode | stat.S_IEXEC)
     print('Cronjob installed at ' + frequence_file)
@@ -352,7 +352,7 @@ def main():
         if args.number_results:
             nb_results = args.number_results
         cli.search(list(), args.search_string, nb_results)
-        
+
     if args.packages_to_download is not None:
         if args.dest_folder is not None:
             cli.set_download_folder(args.dest_folder[0])
