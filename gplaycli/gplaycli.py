@@ -320,30 +320,39 @@ def main():
                         help='Prompt a progress bar while downloading packages')
     parser.add_argument('-ic', '--install-cronjob', action='store_true', dest='install_cronjob',
                         help='Interactively install cronjob for regular APKs update')
+
     if len(sys.argv) < 2:
         sys.argv.append("-h")
+
     args = parser.parse_args()
+
     if args.install_cronjob:
         sys.exit(install_cronjob())
+
     cli = GPlaycli(args.config)
     cli.yes = args.yes_to_all
     cli.verbose = args.verbose
     cli.progress_bar = args.progress_bar
     cli.set_download_folder(args.update_folder)
     success, error = cli.connect_to_googleplay_api()
+
     if not success:
         print "Cannot login to GooglePlay (", error, ")"
         sys.exit(1)
+
     if args.list:
         print cli.list_folder_apks(args.list)
+
     if args.update_folder:
         cli.prepare_analyse_apks()
+
     if args.search_string:
         cli.verbose = True
         nb_results = 10
         if args.number_results:
             nb_results = args.number_results
         cli.search(list(), args.search_string, nb_results)
+        
     if args.packages_to_download is not None:
         if args.dest_folder is not None:
             cli.set_download_folder(args.dest_folder[0])
