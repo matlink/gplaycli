@@ -167,7 +167,6 @@ class GPlaycli(object):
             # m = playstore_api.details(packagename)
             m = detail
             doc = m.doc
-            title = doc.title
             vc = doc.details.appDetails.versionCode
 
             # Download
