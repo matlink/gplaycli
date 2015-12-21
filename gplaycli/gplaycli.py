@@ -30,6 +30,10 @@ class GPlaycli(object):
         # If credentials are not specified on command line, get default conffile
         if credentials == 'credentials.conf' and not os.path.isfile(credentials):
             credentials = '/etc/gplaycli/credentials.conf'
+        # Overide credentials if present in .config
+        config_file = os.path.expanduser("~")+'/.config/gplaycli/credentials.conf'
+        if os.path.isfile(config_file):
+            credentials = config_file
         self.configparser = ConfigParser.ConfigParser()
         self.configparser.read(credentials)
         self.config = dict()
