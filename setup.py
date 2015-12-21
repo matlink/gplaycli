@@ -19,7 +19,7 @@ setup(name='GPlayCli',
             'gplaycli/',
         ], 
         data_files=[
-            ['/etc/gplaycli/', ['credentials.conf','cron/cronjob']],
+            [os.path.expanduser('~')+'/.config/gplaycli/', ['credentials.conf','cron/cronjob']],
         ],
         install_requires=[
                 'requests >= 2.0.0',
