@@ -1,4 +1,5 @@
 requests>=0.12
 protobuf>=2.4
+androguard
 ndg-httpsclient
 clint
