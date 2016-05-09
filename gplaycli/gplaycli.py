@@ -67,7 +67,7 @@ class GPlaycli(object):
 
     def get_bulk_details(self, list_of_apks):
         try:
-           results = self.playstore_api.bulkDetails(list_of_apks)
+            results = self.playstore_api.bulkDetails(list_of_apks)
         except DecodeError:
             time.sleep(1)
             results = self.playstore_api.bulkDetails(list_of_apks)
@@ -90,21 +90,6 @@ class GPlaycli(object):
         download_folder_path = self.config["download_folder_path"]
         list_of_apks = [filename for filename in os.listdir(download_folder_path) if
                         os.path.splitext(filename)[1] == ".apk"]
-
-        # Don't analyze old apks when newer version is here
-        package_versions = dict()
-        for position, filename in enumerate(list_of_apks):
-            filepath = os.path.join(download_folder_path, filename)
-            a = androguard_apk.APK(filepath)
-            packagename = a.get_package()
-            try:
-                version_code = filename.split('-')[1].split('.')[0]
-            except IndexError:
-                version_code = 0
-            if ( packagename not in package_versions ) or ( version_code > package_versions[packagename][1] ):
-                package_versions[packagename] = (filename,version_code)
-        list_of_apks = [ filename for packagename,(filename,version_code) in package_versions.items() ]
-
         if len(list_of_apks) > 0:
             if self.verbose:
                 print "Checking apks ..."
@@ -112,8 +97,8 @@ class GPlaycli(object):
                                     self.prepare_download_updates)
 
     def analyse_local_apks(self, list_of_apks, playstore_api, download_folder_path, return_function):
-        list_apks_to_update = list()
-        package_bunch = list()
+        list_apks_to_update = []
+        package_bunch = []
         for position, filename in enumerate(list_of_apks):
             filepath = os.path.join(download_folder_path, filename)
             a = androguard_apk.APK(filepath)
@@ -204,8 +189,8 @@ class GPlaycli(object):
                 print "Error while downloading %s : %s" % (packagename, exc)
                 failed_downloads.append((item, exc))
             else:
-                #if filename is None:
-                filename = packagename + '-%s' % str(vc) + ".apk"
+                if filename is None:
+                    filename = packagename + ".apk"
                 filepath = os.path.join(download_folder_path, filename)
 
                 try:
