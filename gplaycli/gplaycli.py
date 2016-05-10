@@ -24,6 +24,7 @@ import time
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from androguard.core.bytecodes import apk as androguard_apk  # Androguard
+from google.protobuf.message import DecodeError
 
 
 class GPlaycli(object):
@@ -66,7 +67,11 @@ class GPlaycli(object):
         return list_of_apks
 
     def get_bulk_details(self, list_of_apks):
-        results = self.playstore_api.bulkDetails(list_of_apks)
+        try:
+            results = self.playstore_api.bulkDetails(list_of_apks)
+        except DecodeError:
+            time.sleep(1)
+            results = self.playstore_api.bulkDetails(list_of_apks)
         details = dict()
         for pos, apk in enumerate(list_of_apks):
             det = results.entry[pos]
