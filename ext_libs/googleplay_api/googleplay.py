@@ -14,7 +14,7 @@ from google.protobuf.message import Message, DecodeError
 import googleplay_pb2
 import config
 
-ssl_verify=True
+ssl_verify="/etc/ssl/certs/ca-certificates.crt"
 class LoginError(Exception):
     def __init__(self, value):
         self.value = value
