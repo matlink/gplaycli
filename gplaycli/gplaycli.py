@@ -153,7 +153,7 @@ class GPlaycli(object):
                 print "Updated: " + return_string[:-1]
         else:
             print "Everything is up to date !"
-            sys.exit(1)
+            sys.exit(0)
 
     def download_selection(self, playstore_api, list_of_packages_to_download, return_function):
         failed_downloads = []
