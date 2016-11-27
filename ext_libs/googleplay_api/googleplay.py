@@ -11,10 +11,21 @@ from google.protobuf.internal.containers import RepeatedCompositeFieldContainer
 from google.protobuf import text_format
 from google.protobuf.message import Message, DecodeError
 
+from OpenSSL.SSL import Error as SSLError
+
 import googleplay_pb2
 import config
 
 ssl_verify="/etc/ssl/certs/ca-certificates.crt"
+
+conn_test_url="https://android.clients.google.com"
+try:
+    requests.post(conn_test_url, verify=ssl_verify)
+except SSLError as e:
+    ssl_verify=True
+    requests.post(conn_test_url, verify=ssl_verify)
+
+
 class LoginError(Exception):
     def __init__(self, value):
         self.value = value
