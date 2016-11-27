@@ -1,8 +1,8 @@
 #GPlay-Cli 
 ==========
 Copyleft (C) 2015 Matlink
-Hardly based on GooglePlayDownloader https://codingteam.net/project/googleplaydownloader
-Copyright (C) 2013   Tuxicoman
+Hardly based on GooglePlayDownloader https://framagit.org/tuxicoman/googleplaydownloader
+Copyright (C) 2013 Tuxicoman
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details.
