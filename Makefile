@@ -1,7 +1,8 @@
 # $Id: Makefile,v 1.6 2015/08/24 22:00:00 Matlink Exp $
 #
 SHELL := /bin/bash
-PYTHON=`which python`
+PYTHON=$(shell which python3)
+GIT=$(shell which git)
 DESTDIR=/
 BUILDIR=$(CURDIR)/debian/gplaycli
 PROJECT=gplaycli
@@ -20,14 +21,14 @@ install:
 	$(PYTHON) setup.py install --root $(DESTDIR) $(COMPILE)
 
 deb:
-	python setup.py --command-packages=stdeb.command sdist_dsc --sign-results bdist_deb
+	$(PYTHON) setup.py --command-packages=stdeb.command sdist_dsc --sign-results bdist_deb
 
 publish:
-	python setup.py register -r pypi
-	python setup.py sdist upload -r pypi
+	$(PYTHON) setup.py register -r pypi
+	$(PYTHON) setup.py sdist upload --sign --identity 186BB3CA
 
 gitpush:
-	git push origin master && git push github master
+	$(GIT) push origin master && git push github master
 clean:
 	$(PYTHON) setup.py clean
 	rm -rf build/ MANIFEST dist GPlayCli.egg-info debian/{gplaycli,python-module-stampdir} debian/gplaycli.{debhelper.log,postinst.debhelper,prerm.debhelper,substvars} *.tar.gz* deb_dist
