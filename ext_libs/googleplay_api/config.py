@@ -4,7 +4,7 @@ SEPARATOR = ";"
 LANG            = "fr_FR" # can be en_US, fr_FR, ...
 ANDROID_ID      = "32AA74CDC05B26A9" # "xxxxxxxxxxxxxxxx"
 GOOGLE_LOGIN    = "tefuhkog@gmail.com" # "username@gmail.com"
-GOOGLE_PASSWORD = "tyuiop65"
+GOOGLE_PASSWORD = "password"
 AUTH_TOKEN      = None # "yyyyyyyyy"
 
 # force the user to edit this file
