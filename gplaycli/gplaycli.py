@@ -21,6 +21,7 @@ import os
 import argparse
 import ConfigParser
 import time
+import requests
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from androguard.core.bytecodes import apk as androguard_apk  # Androguard
@@ -28,7 +29,7 @@ from google.protobuf.message import DecodeError
 
 
 class GPlaycli(object):
-    def __init__(self, credentials="credentials.conf"):
+    def __init__(self, args, credentials="credentials.conf"):
         # If credentials are not specified on command line, get default conffile
         if credentials == 'credentials.conf' and not os.path.isfile(credentials):
             credentials = '/etc/gplaycli/credentials.conf'
@@ -41,9 +42,27 @@ class GPlaycli(object):
         self.config = dict()
         for key, value in self.configparser.items("Credentials"):
             self.config[key] = value
-        self.yes = False
-        self.verbose = False
-        self.progress_bar = False
+        self.yes = args.yes_to_all
+        self.verbose = args.verbose
+        self.progress_bar = args.progress_bar
+        self.set_download_folder(args.update_folder)
+        self.token = args.token
+        if self.token == True:
+            self.token_url = args.token_url
+        if self.token == False and 'token' in self.config:
+            self.token = self.config['token']
+            self.token_url = self.config['token_url']
+        if str(self.token) == 'True':
+            self.token = self.retrieve_token(self.token_url)
+
+    def retrieve_token(self, token_url):
+        if self.verbose:
+            print "Retrieving token ..."
+        r = requests.get(token_url)
+        token = r.text
+        if self.verbose:
+            print "Token:", token
+        return token
 
     def set_download_folder(self, folder):
         self.config["download_folder_path"] = folder
@@ -52,7 +71,14 @@ class GPlaycli(object):
         api = GooglePlayAPI(androidId=self.config["android_id"], lang=self.config["language"])
         error = None
         try:
-            api.login(self.config["gmail_address"], self.config["gmail_password"], None)
+            if self.token is False:
+                if self.verbose:
+                    print "Using credentials to connect to API"
+                api.login(self.config["gmail_address"], self.config["gmail_password"], None)
+            else:
+                if self.verbose:
+                    print "Using token to connect to API"
+                api.login(None, None, self.token)
         except LoginError, exc:
             error = exc.value
             success = False
@@ -322,6 +348,9 @@ def main():
                         type=str, help="Update all APKs in a given folder")
     parser.add_argument('-f', '--folder', action='store', dest='dest_folder', metavar="FOLDER", nargs=1,
                         type=str, default=".", help="Where to put the downloaded Apks, only for -d command")
+    parser.add_argument('-t', '--token', action='store_true', dest='token', default=False, help='Instead of classical credentials, use the tokenize version')
+    parser.add_argument('-tu', '--token-url', action='store', dest='token_url', metavar="TOKEN",
+                        type=str, default="DEFAULT_URL", help="Use the given tokendispenser URL to retrieve a token")
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Be verbose')
     parser.add_argument('-c', '--config', action='store', dest='config', metavar="CONF_FILE", nargs=1,
                         type=str, default="credentials.conf", help="Use a different config file than credentials.conf")
@@ -338,11 +367,7 @@ def main():
     if args.install_cronjob:
         sys.exit(install_cronjob())
 
-    cli = GPlaycli(args.config)
-    cli.yes = args.yes_to_all
-    cli.verbose = args.verbose
-    cli.progress_bar = args.progress_bar
-    cli.set_download_folder(args.update_folder)
+    cli = GPlaycli(args, args.config)
     success, error = cli.connect_to_googleplay_api()
 
     if not success:
