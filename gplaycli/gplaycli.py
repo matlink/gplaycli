@@ -349,7 +349,7 @@ def main():
     parser.add_argument('-f', '--folder', action='store', dest='dest_folder', metavar="FOLDER", nargs=1,
                         type=str, default=".", help="Where to put the downloaded Apks, only for -d command")
     parser.add_argument('-t', '--token', action='store_true', dest='token', default=False, help='Instead of classical credentials, use the tokenize version')
-    parser.add_argument('-tu', '--token-url', action='store', dest='token_url', metavar="TOKEN",
+    parser.add_argument('-tu', '--token-url', action='store', dest='token_url', metavar="TOKEN_URL",
                         type=str, default="DEFAULT_URL", help="Use the given tokendispenser URL to retrieve a token")
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Be verbose')
     parser.add_argument('-c', '--config', action='store', dest='config', metavar="CONF_FILE", nargs=1,

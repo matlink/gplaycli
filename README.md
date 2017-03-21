@@ -23,6 +23,10 @@ GPlayCli is a command line tool to search, install, update Android applications 
 		                        Update all APKs in a given folder
 		  -f FOLDER, --folder FOLDER
 		                        Where to put the downloaded Apks, only for -d command
+		  -t, --token           Instead of classical credentials, use the tokenize
+		                        version
+		  -tu TOKEN_URL, --token-url TOKEN_URL
+		                        Use the given tokendispenser URL to retrieve a token
 		  -v, --verbose         Be verbose
 		  -c CONF_FILE, --config CONF_FILE
 		                        Use a different config file than credentials.conf
