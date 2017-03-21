@@ -37,6 +37,10 @@ GPlayCli is a command line tool to search, install, update Android applications 
 
 Keep in mind that GPlayCli is not able to download apps that are not gratis, costless.
 
+Changelog
+=========
+- A new way for authentication has been added to GPlayCli: the tokens. I've set up a token-dispenser server (https://github.com/yeriomin/token-dispenser) at this address : https://token.matlink.fr/token/email/gplaycliacc@gmail.com . The settings has been added to credenttials.conf, and by default GPlayCli will retrieve token from this URL. If you want to keep using your credentials, set token=False in credentials.conf. You can also change the URL and setup your own token-dispenser server and then changing the token_url in the credentials.conf.
+
 Debian installation
 --------------------
 Releases are available here https://github.com/matlink/gplaycli/releases/ as debian packages. If you prefer not to use debian packaging, check the following method.
