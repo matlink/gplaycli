@@ -278,6 +278,25 @@ class GooglePlayAPI(object):
         url = message.payload.buyResponse.purchaseStatusResponse.appDeliveryData.downloadUrl
         cookie = message.payload.buyResponse.purchaseStatusResponse.appDeliveryData.downloadAuthCookie[0]
 
+        return self.download_package(url, progress_bar, cookie)
+
+    def delivery(self, packageName, versionCode, offerType=1, progress_bar=False):
+        """Download a prepaid app and return its raw data (APK file).
+
+        packageName is the app unique ID (usually starting with 'com.').
+
+        versionCode can be grabbed by using the details() method on the given
+        app."""
+        path = "delivery?ot=%d&doc=%s&vc=%d" % (offerType, packageName, versionCode)
+        message = self.executeRequestApi2(path)
+
+        url = message.payload.deliveryResponse.appDeliveryData.downloadUrl
+        cookie = message.payload.deliveryResponse.appDeliveryData.downloadAuthCookie[0]
+
+        return self.download_package(url, progress_bar, cookie)
+
+
+    def download_package(self, url, progress_bar, cookie):
         cookies = {
             str(cookie.name): str(cookie.value) # python-requests #459 fixes this
         }
