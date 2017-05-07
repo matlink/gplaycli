@@ -3,10 +3,13 @@
 SHELL := /bin/bash
 PYTHON=$(shell which python3)
 GIT=$(shell which git)
+GPG=$(shell which gpg)
+TWINE=$(shell which twine)
 DESTDIR=/
 BUILDIR=$(CURDIR)/debian/gplaycli
 PROJECT=gplaycli
-VERSION=0.1
+VERSION=$(shell $(PYTHON) setup.py --version)
+GPGID=186BB3CA
 
 all:
 	@echo "make source - Create source package"
@@ -17,18 +20,21 @@ all:
 source:
 	$(PYTHON) setup.py sdist $(COMPILE)
 
+sign:
+	$(GPG) --detach-sign --default-key $(GPGID) -a dist/GPlayCli-$(VERSION).tar.gz
+
 install:
 	$(PYTHON) setup.py install --root $(DESTDIR) $(COMPILE)
 
 deb:
 	$(PYTHON) setup.py --command-packages=stdeb.command sdist_dsc --sign-results bdist_deb
 
-publish:
-	$(PYTHON) setup.py register -r pypi
-	$(PYTHON) setup.py sdist upload --sign --identity 186BB3CA
+publish: clean source sign
+	$(TWINE) upload dist/GPlayCli-$(VERSION).tar.gz dist/GPlayCli-$(VERSION).tar.gz.asc
 
 gitpush:
-	$(GIT) push origin master && git push github master
+	$(GIT) push origin master
+	$(GIT) push github master
 clean:
 	$(PYTHON) setup.py clean
 	rm -rf build/ MANIFEST dist GPlayCli.egg-info debian/{gplaycli,python-module-stampdir} debian/gplaycli.{debhelper.log,postinst.debhelper,prerm.debhelper,substvars} *.tar.gz* deb_dist
