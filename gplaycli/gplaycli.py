@@ -150,7 +150,7 @@ class GPlaycli(object):
             store_version_code = doc.details.appDetails.versionCode
 
             # Compare
-            if apk_version_code != "" and int(apk_version_code) != int(store_version_code) and int(
+            if apk_version_code != "" and int(apk_version_code) < int(store_version_code) and int(
                     store_version_code) != 0:
                 # Add to the download list
                 list_apks_to_update.append([packagename, filename, int(apk_version_code), int(store_version_code)])
