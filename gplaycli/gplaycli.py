@@ -62,6 +62,9 @@ class GPlaycli(object):
         token = r.text
         if self.verbose:
             print "Token:", token
+        if token == 'Auth error':
+            print 'Token dispenser auth error, probably too many connections'
+            sys.exit(1)
         return token
 
     def set_download_folder(self, folder):
