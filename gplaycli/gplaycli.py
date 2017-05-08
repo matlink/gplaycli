@@ -29,7 +29,7 @@ from google.protobuf.message import DecodeError
 
 
 class GPlaycli(object):
-    def __init__(self, args, credentials="credentials.conf"):
+    def __init__(self, args=None, credentials="credentials.conf"):
         # If credentials are not specified on command line, get default conffile
         if credentials == 'credentials.conf' and not os.path.isfile(credentials):
             credentials = '/etc/gplaycli/credentials.conf'
@@ -42,18 +42,27 @@ class GPlaycli(object):
         self.config = dict()
         for key, value in self.configparser.items("Credentials"):
             self.config[key] = value
-        self.yes = args.yes_to_all
-        self.verbose = args.verbose
-        self.progress_bar = args.progress_bar
-        self.set_download_folder(args.update_folder)
-        self.token = args.token
-        if self.token == True:
-            self.token_url = args.token_url
-        if self.token == False and 'token' in self.config:
-            self.token = self.config['token']
-            self.token_url = self.config['token_url']
-        if str(self.token) == 'True':
-            self.token = self.retrieve_token(self.token_url)
+
+        # default settings, ie for API calls
+        if args == None:
+            self.yes = False
+            self.verbose = False
+            self.progress_bar = False
+
+        # if args are passed
+        else:
+            self.yes = args.yes_to_all
+            self.verbose = args.verbose
+            self.progress_bar = args.progress_bar
+            self.set_download_folder(args.update_folder)
+            self.token = args.token
+            if self.token == True:
+                self.token_url = args.token_url
+            if self.token == False and 'token' in self.config:
+                self.token = self.config['token']
+                self.token_url = self.config['token_url']
+            if str(self.token) == 'True':
+                self.token = self.retrieve_token(self.token_url)
 
     def retrieve_token(self, token_url):
         if self.verbose:
