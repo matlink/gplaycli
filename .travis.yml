@@ -1,7 +1,7 @@
 language: python
 python:
   - "2.7"
-  - "pypy"  # PyPy2 2.5.0
+  - "pypy-5.3.1"
 install:
   - pip install .
   - pip install -r requirements.txt
