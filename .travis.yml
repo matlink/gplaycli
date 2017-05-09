@@ -1,6 +1,11 @@
 language: python
 notifications:
-  irc: "irc.freenode.net#gplaycli"
+  irc:
+    channels:
+      - "irc.freenode.net#gplaycli"
+      - "chat.freenode.net#gplaycli"
+    on_success: always
+    on_failure: always
 python:
   - "2.7"
   - "pypy-5.3.1"
