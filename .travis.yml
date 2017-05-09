@@ -4,8 +4,10 @@ notifications:
     channels:
       - "irc.freenode.net#gplaycli"
       - "chat.freenode.net#gplaycli"
-    on_success: always
-    on_failure: always
+    skip_join: true
+    use_notice: true
+    template:
+      - "%{message} (%{branch} - %{commit} : %{author}): %{build_url}"
 python:
   - "2.7"
   - "pypy-5.3.1"
