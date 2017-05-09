@@ -4,6 +4,7 @@ python:
 - pypy-5.3.1
 before_install:
 - date
+- pip install androguard 
 install:
 - pip install .
 - pip install -r requirements.txt
