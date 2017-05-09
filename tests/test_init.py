@@ -13,12 +13,22 @@ def test_default_settings():
     assert gpc.verbose == False
     assert gpc.progress_bar == False
 
-def test_connection():
+def test_connection_token():
     gpc.token = True
     gpc.retrieve_token(token_url)
     success, error = gpc.connect_to_googleplay_api()
     assert error is None
     assert success == True
 
+def test_connection_credentials():
+    gpc.token = False
+    gpc.config['gmail_address']  = os.environ['GMAIL_ADDR']
+    gpc.config['gmail_password'] = os.environ['GMAIL_PWD']
+    success, error = gpc.connect_to_googleplay_api()
+    assert error is None
+    assert success == True
+
 def test_download_firefox():
+    gpc.progress_bar = True
+    gpc.config['download_folder_path'] = os.path.abspath('.')
     gpc.download_packages(['org.mozilla.firefox'])
