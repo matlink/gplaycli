@@ -29,14 +29,22 @@ from google.protobuf.message import DecodeError
 
 
 class GPlaycli(object):
-    def __init__(self, args=None, credentials="credentials.conf"):
-        # If credentials are not specified on command line, get default conffile
-        if credentials == 'credentials.conf' and not os.path.isfile(credentials):
-            credentials = '/etc/gplaycli/credentials.conf'
-        # Overide credentials if present in .config
-        config_file = os.path.expanduser("~")+'/.config/gplaycli/credentials.conf'
-        if os.path.isfile(config_file):
-            credentials = config_file
+    def __init__(self, args=None, credentials=None):
+        # no config file given, look for one
+        if credentials is None:
+            # default local user configs
+            cred_paths_list = [
+                'credentials.conf',
+                os.path.expanduser("~")+'/.config/gplaycli/credentials.conf',
+                '/etc/gplaycli/credentials.conf'
+            ]
+            tmp_list = list(cred_paths_list)
+            while not os.path.isfile(tmp_list[0]):
+                tmp_list.pop(0)
+                if len(tmp_list) == 0:
+                    raise OSError("No configuration file found at %s" % cred_paths_list)
+            credentials = tmp_list[0]
+
         self.configparser = ConfigParser.ConfigParser()
         self.configparser.read(credentials)
         self.config = dict()
@@ -53,12 +61,14 @@ class GPlaycli(object):
         else:
             self.yes = args.yes_to_all
             self.verbose = args.verbose
+            if self.verbose:
+                print 'Configuration file is %s' % credentials
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
             self.token = args.token
             if self.token == True:
                 self.token_url = args.token_url
-            if self.token == False and 'token' in self.config:
+            if self.token == False and 'token' in self.config and self.config['token'] == 'True':
                 self.token = self.config['token']
                 self.token_url = self.config['token_url']
             if str(self.token) == 'True':
@@ -365,7 +375,7 @@ def main():
                         type=str, default="DEFAULT_URL", help="Use the given tokendispenser URL to retrieve a token")
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Be verbose')
     parser.add_argument('-c', '--config', action='store', dest='config', metavar="CONF_FILE", nargs=1,
-                        type=str, default="credentials.conf", help="Use a different config file than credentials.conf")
+                        type=str, default=None, help="Use a different config file than credentials.conf")
     parser.add_argument('-p', '--progress', action='store_true', dest='progress_bar',
                         help='Prompt a progress bar while downloading packages')
     parser.add_argument('-ic', '--install-cronjob', action='store_true', dest='install_cronjob',
