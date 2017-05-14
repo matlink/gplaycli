@@ -24,7 +24,7 @@ import time
 import requests
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
-from androguard.core.bytecodes import apk as androguard_apk  # Androguard
+from pyaxmlparser import APK  # Pyaxmlparser
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 
@@ -163,8 +163,8 @@ class GPlaycli(object):
         package_bunch = []
         for position, filename in enumerate(list_of_apks):
             filepath = os.path.join(download_folder_path, filename)
-            a = androguard_apk.APK(filepath)
-            packagename = a.get_package()
+            a = APK(filepath)
+            packagename = a.package()
             package_bunch.append(packagename)
 
         # BulkDetails requires only one HTTP request
@@ -175,8 +175,8 @@ class GPlaycli(object):
                 print "Analyzing %s" % packagename
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
-            a = androguard_apk.APK(filepath)
-            apk_version_code = a.get_androidversion_code()
+            a = APK(filepath)
+            apk_version_code = a.version_code()
             m = detail
             doc = m.doc
             store_version_code = doc.details.appDetails.versionCode
