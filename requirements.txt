@@ -1,5 +1,5 @@
 requests>=0.12
 protobuf>=2.4
-androguard
+pyaxmlparser
 ndg-httpsclient
 clint
