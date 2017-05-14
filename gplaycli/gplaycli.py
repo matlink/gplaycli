@@ -263,7 +263,8 @@ class GPlaycli(object):
         unavail_items = set([item[0] for item, error in unavail_downloads])
         to_download_items = set([item[0] for item in list_of_packages_to_download])
 
-        self.write_logfiles(success_items, failed_items, unavail_items)
+        if self.logging:
+            self.write_logfiles(success_items, failed_items, unavail_items)
 
         return_function(failed_downloads)
         return to_download_items - failed_items
