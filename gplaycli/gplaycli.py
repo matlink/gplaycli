@@ -56,6 +56,7 @@ class GPlaycli(object):
             self.yes = False
             self.verbose = False
             self.progress_bar = False
+            self.logging = False
 
         # if args are passed
         else:
@@ -409,7 +410,7 @@ def main():
                         type=str, default=None, help="Use a different config file than credentials.conf")
     parser.add_argument('-p', '--progress', action='store_true', dest='progress_bar',
                         help='Prompt a progress bar while downloading packages')
-    parser.add_argument('-L', '--log', action='store_true', dest='enable_logging',
+    parser.add_argument('-L', '--log', action='store_true', dest='enable_logging', default=False,
                         help='Enable logging of apps status. Downloaded, failed, not available apps will be written in separate logging files')
     parser.add_argument('-ic', '--install-cronjob', action='store_true', dest='install_cronjob',
                         help='Interactively install cronjob for regular APKs update')
