@@ -19,7 +19,7 @@ see <http://www.gnu.org/licenses/>.
 import sys
 import os
 import argparse
-import ConfigParser
+import configparser
 import time
 import requests
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
@@ -50,7 +50,7 @@ class GPlaycli(object):
                     raise OSError("No configuration file found at %s" % cred_paths_list)
             credentials = tmp_list[0]
 
-        self.configparser = ConfigParser.ConfigParser()
+        self.configparser = configparser.ConfigParser()
         self.configparser.read(credentials)
         self.config = dict()
         for key, value in self.configparser.items("Credentials"):
@@ -68,8 +68,8 @@ class GPlaycli(object):
             self.yes = args.yes_to_all
             self.verbose = args.verbose
             if self.verbose:
-                print 'GPlayCli version %s' % __version__
-                print 'Configuration file is %s' % credentials
+                print(('GPlayCli version %s' % __version__))
+                print(('Configuration file is %s' % credentials))
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
             self.logging = args.enable_logging
@@ -89,13 +89,13 @@ class GPlaycli(object):
 
     def retrieve_token(self, token_url):
         if self.verbose:
-            print "Retrieving token ..."
+            print("Retrieving token ...")
         r = requests.get(token_url)
         token = r.text
         if self.verbose:
-            print "Token:", token
+            print("Token:", token)
         if token == 'Auth error':
-            print 'Token dispenser auth error, probably too many connections'
+            print('Token dispenser auth error, probably too many connections')
             sys.exit(1)
         return token
 
@@ -108,13 +108,13 @@ class GPlaycli(object):
         try:
             if self.token is False:
                 if self.verbose:
-                    print "Using credentials to connect to API"
+                    print("Using credentials to connect to API")
                 api.login(self.config["gmail_address"], self.config["gmail_password"], None)
             else:
                 if self.verbose:
-                    print "Using token to connect to API"
+                    print("Using token to connect to API")
                 api.login(None, None, self.token)
-        except LoginError, exc:
+        except LoginError as exc:
             error = exc.value
             success = False
         else:
@@ -154,7 +154,7 @@ class GPlaycli(object):
                         os.path.splitext(filename)[1] == ".apk"]
         if len(list_of_apks) > 0:
             if self.verbose:
-                print "Checking apks ..."
+                print("Checking apks ...")
             self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path,
                                     self.prepare_download_updates)
 
@@ -172,7 +172,7 @@ class GPlaycli(object):
         details = playstore_api.bulkDetails(package_bunch)
         for detail, packagename, filename in zip(details.entry, package_bunch, list_of_apks):
             if self.verbose:
-                print "Analyzing %s" % packagename
+                print("Analyzing %s" % packagename)
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
             a = APK(filepath)
@@ -194,26 +194,26 @@ class GPlaycli(object):
             list_of_packages_to_download = []
 
             # Ask confirmation before downloading
-            message = u"The following applications will be updated :"
+            message = "The following applications will be updated :"
             for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
-                message += u"\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
+                message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
                 list_of_packages_to_download.append([packagename, filename])
             message += "\n\nDo you agree?"
-            print message
+            print(message)
             if not self.yes:
-                return_value = raw_input('y/n ?')
+                return_value = input('y/n ?')
 
             if self.yes or return_value == 'y':
                 if self.verbose:
-                    print "Downloading ..."
+                    print("Downloading ...")
                 downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download,
                                                               self.after_download)
                 return_string = str()
                 for package in downloaded_packages:
                     return_string += package + " "
-                print "Updated: " + return_string[:-1]
+                print("Updated: " + return_string[:-1])
         else:
-            print "Everything is up to date !"
+            print("Everything is up to date !")
             sys.exit(0)
 
     def download_selection(self, playstore_api, list_of_packages_to_download, return_function):
@@ -228,7 +228,7 @@ class GPlaycli(object):
         for detail, item in zip(details.entry, list_of_packages_to_download):
             packagename, filename = item
             if self.verbose:
-                print str(position) + "/" + str(len(list_of_packages_to_download)), packagename
+                print(str(position) + "/" + str(len(list_of_packages_to_download)), packagename)
 
             # Check for download folder
             download_folder_path = self.config["download_folder_path"]
@@ -246,12 +246,12 @@ class GPlaycli(object):
                 data = playstore_api.download(packagename, vc, progress_bar=self.progress_bar)
                 success_downloads.append(packagename)
             except IndexError as exc:
-                print "Error while downloading %s : %s" % (packagename,
+                print("Error while downloading %s : %s" % (packagename,
                                                            "this package does not exist, "
-                                                           "try to search it via --search before")
+                                                           "try to search it via --search before"))
                 unavail_downloads.append((item, exc))
             except Exception as exc:
-                print "Error while downloading %s : %s" % (packagename, exc)
+                print("Error while downloading %s : %s" % (packagename, exc))
                 failed_downloads.append((item, exc))
             else:
                 if filename is None:
@@ -260,8 +260,8 @@ class GPlaycli(object):
 
                 try:
                     open(filepath, "wb").write(data)
-                except IOError, exc:
-                    print "Error while writing %s : %s" % (packagename, exc)
+                except IOError as exc:
+                    print("Error while writing %s : %s" % (packagename, exc))
                     failed_downloads.append((item, exc))
             position += 1
 
@@ -290,7 +290,7 @@ class GPlaycli(object):
                     message += "\n%s" % package_name
                 message += "\n%s\n" % exception
 
-        print message
+        print(message)
 
     def sizeof_fmt(self, num):
         for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
@@ -307,7 +307,7 @@ class GPlaycli(object):
         if len(results) > 0:
             results = results[0].child
         else:
-            print "No result"
+            print("No result")
             return
         all_results = list()
         if include_headers:
@@ -333,12 +333,12 @@ class GPlaycli(object):
             # Print a nice table
             col_width = list()
             for column_indice in range(len(all_results[0])):
-                col_length = max([len(u"%s" % row[column_indice]) for row in all_results])
+                col_length = max([len("%s" % row[column_indice]) for row in all_results])
                 col_width.append(col_length + 2)
 
             for result in all_results:
-                print "".join((u"%s" % item).encode('utf-8').strip().ljust(col_width[indice]) for indice, item in
-                              enumerate(result))
+                print("".join(("%s" % item).encode('utf-8').strip().ljust(col_width[indice]) for indice, item in
+                              enumerate(result)))
         return all_results
 
     def download_packages(self, list_of_packages_to_download):
@@ -366,10 +366,10 @@ def install_cronjob():
     import shutil
     import stat
     cred_default = '/etc/gplaycli/credentials.conf'
-    credentials = raw_input('path to credentials.conf? let empty for ' + cred_default + '\n') or cred_default
+    credentials = input('path to credentials.conf? let empty for ' + cred_default + '\n') or cred_default
     fold_default = '/opt/apks'
-    folder_to_update = raw_input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
-    frequence = raw_input('update it [d]aily or [w]eekly?\n')
+    folder_to_update = input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
+    frequence = input('update it [d]aily or [w]eekly?\n')
     if frequence == 'd':
         frequence_folder = '/etc/cron.daily'
     elif frequence == 'w':
@@ -389,7 +389,7 @@ def install_cronjob():
 
     st = os.stat(frequence_file)
     os.chmod(frequence_file, st.st_mode | stat.S_IEXEC)
-    print('Cronjob installed at ' + frequence_file)
+    print(('Cronjob installed at ' + frequence_file))
     return 0
 
 
@@ -433,11 +433,11 @@ def main():
     success, error = cli.connect_to_googleplay_api()
 
     if not success:
-        print "Cannot login to GooglePlay (", error, ")"
+        print("Cannot login to GooglePlay (", error, ")")
         sys.exit(1)
 
     if args.list:
-        print cli.list_folder_apks(args.list)
+        print(cli.list_folder_apks(args.list))
 
     if args.update_folder:
         cli.prepare_analyse_apks()
