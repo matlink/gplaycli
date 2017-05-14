@@ -24,7 +24,7 @@ from . import config
 # except SSLError as e:
 #     ssl_verify=True
 #     requests.post(conn_test_url, verify=ssl_verify)
-
+ssl_verify=True
 
 class LoginError(Exception):
     def __init__(self, value):
