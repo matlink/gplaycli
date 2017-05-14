@@ -16,14 +16,14 @@ from OpenSSL.SSL import Error as SSLError
 from . import googleplay_pb2
 from . import config
 
-ssl_verify="/etc/ssl/certs/ca-certificates.crt"
-
-conn_test_url="https://android.clients.google.com"
-try:
-    requests.post(conn_test_url, verify=ssl_verify)
-except SSLError as e:
-    ssl_verify=True
-    requests.post(conn_test_url, verify=ssl_verify)
+# ssl_verify="/etc/ssl/certs/ca-certificates.crt"
+#
+# conn_test_url="https://android.clients.google.com"
+# try:
+#     requests.post(conn_test_url, verify=ssl_verify)
+# except SSLError as e:
+#     ssl_verify=True
+#     requests.post(conn_test_url, verify=ssl_verify)
 
 
 class LoginError(Exception):
