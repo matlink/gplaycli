@@ -26,8 +26,12 @@ from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from androguard.core.bytecodes import apk as androguard_apk  # Androguard
 from google.protobuf.message import DecodeError
-from gplaycli.version import __version__
+from pkg_resources import get_distribution, DistributionNotFound
 
+try:
+    __version__ = get_distribution('gplaycli').version
+except DistributionNotFound:
+    __version__ = 'unknown: gplaycli not installed (version in setup.py)'
 
 class GPlaycli(object):
     def __init__(self, args=None, credentials=None):
