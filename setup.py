@@ -1,8 +1,10 @@
 from setuptools import setup, Command
 import os
 
+exec(open('gplaycli/version.py').read())
+
 setup(name='GPlayCli',
-        version='0.2.5',
+        version=__version__,
         description='GPlayCli, a Google play downloader command line interface',
         author="Matlink",
         author_email="matlink@matlink.fr",

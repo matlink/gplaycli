@@ -26,6 +26,7 @@ from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from androguard.core.bytecodes import apk as androguard_apk  # Androguard
 from google.protobuf.message import DecodeError
+from gplaycli.version import __version__
 
 
 class GPlaycli(object):
@@ -63,6 +64,7 @@ class GPlaycli(object):
             self.yes = args.yes_to_all
             self.verbose = args.verbose
             if self.verbose:
+                print 'GPlayCli version %s' % __version__
                 print 'Configuration file is %s' % credentials
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
