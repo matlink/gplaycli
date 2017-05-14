@@ -19,7 +19,6 @@ see <http://www.gnu.org/licenses/>.
 import sys
 import os
 import argparse
-import configparser
 import time
 import requests
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
@@ -27,6 +26,11 @@ from ext_libs.googleplay_api.googleplay import LoginError
 from pyaxmlparser import APK  # Pyaxmlparser
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
+
+try:  # Support both python2 and python3
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 
 try:
     __version__ = get_distribution('gplaycli').version
