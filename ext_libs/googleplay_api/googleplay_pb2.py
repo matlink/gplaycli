@@ -53,14 +53,14 @@ _ANDROIDAPPDELIVERYDATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='signature', full_name='AndroidAppDeliveryData.signature', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='downloadUrl', full_name='AndroidAppDeliveryData.downloadUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -158,14 +158,14 @@ _ANDROIDAPPPATCHDATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='baseSignature', full_name='AndroidAppPatchData.baseSignature', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='downloadUrl', full_name='AndroidAppPatchData.downloadUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -228,7 +228,7 @@ _APPFILEMETADATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='downloadUrl', full_name='AppFileMetadata.downloadUrl', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -263,14 +263,14 @@ _ENCRYPTIONPARAMS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='encryptionKey', full_name='EncryptionParams.encryptionKey', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='hmacKey', full_name='EncryptionParams.hmacKey', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -298,14 +298,14 @@ _HTTPCOOKIE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='HttpCookie.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='value', full_name='HttpCookie.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -333,77 +333,77 @@ _ADDRESS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='Address.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='addressLine1', full_name='Address.addressLine1', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='addressLine2', full_name='Address.addressLine2', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='city', full_name='Address.city', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='state', full_name='Address.state', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='postalCode', full_name='Address.postalCode', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='postalCountry', full_name='Address.postalCountry', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='dependentLocality', full_name='Address.dependentLocality', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='sortingCode', full_name='Address.sortingCode', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='languageCode', full_name='Address.languageCode', index=9,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='phoneNumber', full_name='Address.phoneNumber', index=10,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -417,21 +417,21 @@ _ADDRESS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='firstName', full_name='Address.firstName', index=12,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='lastName', full_name='Address.lastName', index=13,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='email', full_name='Address.email', index=14,
       number=15, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -459,14 +459,14 @@ _BOOKAUTHOR = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='BookAuthor.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='deprecatedQuery', full_name='BookAuthor.deprecatedQuery', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -508,7 +508,7 @@ _BOOKDETAILS_IDENTIFIER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='identifier', full_name='BookDetails.Identifier.identifier', index=1,
       number=20, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -542,21 +542,21 @@ _BOOKDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='publisher', full_name='BookDetails.publisher', index=1,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='publicationDate', full_name='BookDetails.publicationDate', index=2,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='isbn', full_name='BookDetails.isbn', index=3,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -570,7 +570,7 @@ _BOOKDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='subtitle', full_name='BookDetails.subtitle', index=5,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -584,35 +584,35 @@ _BOOKDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='readerUrl', full_name='BookDetails.readerUrl', index=7,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='downloadEpubUrl', full_name='BookDetails.downloadEpubUrl', index=8,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='downloadPdfUrl', full_name='BookDetails.downloadPdfUrl', index=9,
       number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='acsEpubTokenUrl', full_name='BookDetails.acsEpubTokenUrl', index=10,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='acsPdfTokenUrl', full_name='BookDetails.acsPdfTokenUrl', index=11,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -633,7 +633,7 @@ _BOOKDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='aboutTheAuthor', full_name='BookDetails.aboutTheAuthor', index=14,
       number=17, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -668,21 +668,21 @@ _BOOKSUBJECT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='BookSubject.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='query', full_name='BookSubject.query', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='subjectId', full_name='BookSubject.subjectId', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -710,14 +710,14 @@ _BROWSELINK = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='BrowseLink.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='dataUrl', full_name='BrowseLink.dataUrl', index=1,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -745,14 +745,14 @@ _BROWSERESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='contentsUrl', full_name='BrowseResponse.contentsUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='promoUrl', full_name='BrowseResponse.promoUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -794,28 +794,28 @@ _ADDRESSCHALLENGE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='responseAddressParam', full_name='AddressChallenge.responseAddressParam', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='responseCheckboxesParam', full_name='AddressChallenge.responseCheckboxesParam', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='title', full_name='AddressChallenge.title', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='descriptionHtml', full_name='AddressChallenge.descriptionHtml', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -843,7 +843,7 @@ _ADDRESSCHALLENGE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='errorHtml', full_name='AddressChallenge.errorHtml', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -885,42 +885,42 @@ _AUTHENTICATIONCHALLENGE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='responseAuthenticationTypeParam', full_name='AuthenticationChallenge.responseAuthenticationTypeParam', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='responseRetryCountParam', full_name='AuthenticationChallenge.responseRetryCountParam', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='pinHeaderText', full_name='AuthenticationChallenge.pinHeaderText', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='pinDescriptionTextHtml', full_name='AuthenticationChallenge.pinDescriptionTextHtml', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='gaiaHeaderText', full_name='AuthenticationChallenge.gaiaHeaderText', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='gaiaDescriptionTextHtml', full_name='AuthenticationChallenge.gaiaDescriptionTextHtml', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -948,21 +948,21 @@ _BUYRESPONSE_CHECKOUTINFO_CHECKOUTOPTION = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='formOfPayment', full_name='BuyResponse.CheckoutInfo.CheckoutOption.formOfPayment', index=0,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='encodedAdjustedCart', full_name='BuyResponse.CheckoutInfo.CheckoutOption.encodedAdjustedCart', index=1,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='instrumentId', full_name='BuyResponse.CheckoutInfo.CheckoutOption.instrumentId', index=2,
       number=15, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1039,7 +1039,7 @@ _BUYRESPONSE_CHECKOUTINFO_CHECKOUTOPTION = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='purchaseCookie', full_name='BuyResponse.CheckoutInfo.CheckoutOption.purchaseCookie', index=13,
       number=45, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1094,14 +1094,14 @@ _BUYRESPONSE_CHECKOUTINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='deprecatedCheckoutUrl', full_name='BuyResponse.CheckoutInfo.deprecatedCheckoutUrl', index=3,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='addInstrumentUrl', full_name='BuyResponse.CheckoutInfo.addInstrumentUrl', index=4,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1170,21 +1170,21 @@ _BUYRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='continueViaUrl', full_name='BuyResponse.continueViaUrl', index=2,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='purchaseStatusUrl', full_name='BuyResponse.purchaseStatusUrl', index=3,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='checkoutServiceId', full_name='BuyResponse.checkoutServiceId', index=4,
       number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1198,7 +1198,7 @@ _BUYRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='baseCheckoutUrl', full_name='BuyResponse.baseCheckoutUrl', index=6,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1226,7 +1226,7 @@ _BUYRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='purchaseCookie', full_name='BuyResponse.purchaseCookie', index=10,
       number=46, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1296,7 +1296,7 @@ _FORMCHECKBOX = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='description', full_name='FormCheckbox.description', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1338,14 +1338,14 @@ _LINEITEM = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='LineItem.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='description', full_name='LineItem.description', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1394,14 +1394,14 @@ _MONEY = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='currencyCode', full_name='Money.currencyCode', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='formattedAmount', full_name='Money.formattedAmount', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1443,14 +1443,14 @@ _PURCHASENOTIFICATIONRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='localizedErrorMessage', full_name='PurchaseNotificationResponse.localizedErrorMessage', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='purchaseId', full_name='PurchaseNotificationResponse.purchaseId', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1485,28 +1485,28 @@ _PURCHASESTATUSRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='statusMsg', full_name='PurchaseStatusResponse.statusMsg', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='statusTitle', full_name='PurchaseStatusResponse.statusTitle', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='briefMessage', full_name='PurchaseStatusResponse.briefMessage', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='infoUrl', full_name='PurchaseStatusResponse.infoUrl', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1611,7 +1611,7 @@ _UPDATEINSTRUMENTREQUEST = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='checkoutToken', full_name='UpdateInstrumentRequest.checkoutToken', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1646,14 +1646,14 @@ _UPDATEINSTRUMENTRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='instrumentId', full_name='UpdateInstrumentResponse.instrumentId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='userMessageHtml', full_name='UpdateInstrumentResponse.userMessageHtml', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1702,7 +1702,7 @@ _INITIATEASSOCIATIONRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='userToken', full_name='InitiateAssociationResponse.userToken', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1772,14 +1772,14 @@ _ADDCREDITCARDPROMOOFFER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='headerText', full_name='AddCreditCardPromoOffer.headerText', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='descriptionHtml', full_name='AddCreditCardPromoOffer.descriptionHtml', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1793,28 +1793,28 @@ _ADDCREDITCARDPROMOOFFER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='introductoryTextHtml', full_name='AddCreditCardPromoOffer.introductoryTextHtml', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='offerTitle', full_name='AddCreditCardPromoOffer.offerTitle', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='noActionDescription', full_name='AddCreditCardPromoOffer.noActionDescription', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='termsAndConditionsHtml', full_name='AddCreditCardPromoOffer.termsAndConditionsHtml', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1912,14 +1912,14 @@ _REDEEMEDPROMOOFFER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='headerText', full_name='RedeemedPromoOffer.headerText', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='descriptionHtml', full_name='RedeemedPromoOffer.descriptionHtml', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1954,7 +1954,7 @@ _DOCID = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='backendDocid', full_name='Docid.backendDocid', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2045,14 +2045,14 @@ _OFFER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='currencyCode', full_name='Offer.currencyCode', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='formattedAmount', full_name='Offer.formattedAmount', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2080,7 +2080,7 @@ _OFFER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='formattedFullAmount', full_name='Offer.formattedFullAmount', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2122,14 +2122,14 @@ _OFFER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='formattedName', full_name='Offer.formattedName', index=12,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='formattedDescription', full_name='Offer.formattedDescription', index=13,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2353,7 +2353,7 @@ _CARRIERBILLINGCREDENTIALS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='value', full_name='CarrierBillingCredentials.value', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2388,21 +2388,21 @@ _CARRIERBILLINGINSTRUMENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='instrumentKey', full_name='CarrierBillingInstrument.instrumentKey', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='accountType', full_name='CarrierBillingInstrument.accountType', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='currencyCode', full_name='CarrierBillingInstrument.currencyCode', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2416,7 +2416,7 @@ _CARRIERBILLINGINSTRUMENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='subscriberIdentifier', full_name='CarrierBillingInstrument.subscriberIdentifier', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2500,7 +2500,7 @@ _CARRIERBILLINGINSTRUMENTSTATUS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='CarrierBillingInstrumentStatus.name', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2577,14 +2577,14 @@ _CARRIERTOSENTRY = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='url', full_name='CarrierTosEntry.url', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='version', full_name='CarrierTosEntry.version', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2619,14 +2619,14 @@ _CREDITCARDINSTRUMENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='escrowHandle', full_name='CreditCardInstrument.escrowHandle', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='lastDigits', full_name='CreditCardInstrument.lastDigits', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2682,7 +2682,7 @@ _EFEPARAM = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='value', full_name='EfeParam.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2717,7 +2717,7 @@ _INPUTVALIDATIONERROR = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='errorMessage', full_name='InputValidationError.errorMessage', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2745,7 +2745,7 @@ _INSTRUMENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='instrumentId', full_name='Instrument.instrumentId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2794,7 +2794,7 @@ _INSTRUMENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='displayTitle', full_name='Instrument.displayTitle', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2822,14 +2822,14 @@ _PASSWORDPROMPT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='prompt', full_name='PasswordPrompt.prompt', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='forgotPasswordUrl', full_name='PasswordPrompt.forgotPasswordUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2857,14 +2857,14 @@ _CONTAINERMETADATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='browseUrl', full_name='ContainerMetadata.browseUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='nextPageUrl', full_name='ContainerMetadata.nextPageUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2885,7 +2885,7 @@ _CONTAINERMETADATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='analyticsCookie', full_name='ContainerMetadata.analyticsCookie', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -2941,7 +2941,7 @@ _DEBUGINFO_TIMING = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='DebugInfo.Timing.name', index=0,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3143,7 +3143,7 @@ _DETAILSRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='analyticsCookie', full_name='DetailsResponse.analyticsCookie', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3164,7 +3164,7 @@ _DETAILSRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='footerHtml', full_name='DetailsResponse.footerHtml', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3353,14 +3353,14 @@ _DOCUMENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='title', full_name='Document.title', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='url', full_name='Document.url', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3451,7 +3451,7 @@ _DOCUMENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='privacyPolicyUrl', full_name='Document.privacyPolicyUrl', index=17,
       number=20, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3493,7 +3493,7 @@ _DOCUMENTVARIANT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='title', full_name='DocumentVariant.title', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3507,7 +3507,7 @@ _DOCUMENTVARIANT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='recentChanges', full_name='DocumentVariant.recentChanges', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3604,14 +3604,14 @@ _IMAGE_CITATION = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='titleLocalized', full_name='Image.Citation.titleLocalized', index=0,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='url', full_name='Image.Citation.url', index=1,
       number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3652,21 +3652,21 @@ _IMAGE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='imageUrl', full_name='Image.imageUrl', index=2,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='altTextLocalized', full_name='Image.altTextLocalized', index=3,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='secureUrl', full_name='Image.secureUrl', index=4,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3715,21 +3715,21 @@ _TRANSLATEDTEXT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='text', full_name='TranslatedText.text', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='sourceLocale', full_name='TranslatedText.sourceLocale', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='targetLocale', full_name='TranslatedText.targetLocale', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3757,7 +3757,7 @@ _BADGE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='title', full_name='Badge.title', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3771,7 +3771,7 @@ _BADGE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='browseUrl', full_name='Badge.browseUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3799,7 +3799,7 @@ _CONTAINERWITHBANNER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='colorThemeArgb', full_name='ContainerWithBanner.colorThemeArgb', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3827,14 +3827,14 @@ _DEALOFTHEDAY = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='featuredHeader', full_name='DealOfTheDay.featuredHeader', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='colorThemeArgb', full_name='DealOfTheDay.colorThemeArgb', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3862,35 +3862,35 @@ _EDITORIALSERIESCONTAINER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='seriesTitle', full_name='EditorialSeriesContainer.seriesTitle', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='seriesSubtitle', full_name='EditorialSeriesContainer.seriesSubtitle', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='episodeTitle', full_name='EditorialSeriesContainer.episodeTitle', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='episodeSubtitle', full_name='EditorialSeriesContainer.episodeSubtitle', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='colorThemeArgb', full_name='EditorialSeriesContainer.colorThemeArgb', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3918,7 +3918,7 @@ _LINK = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='uri', full_name='Link.uri', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -3995,14 +3995,14 @@ _PLUSPERSON = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='displayName', full_name='PlusPerson.displayName', index=0,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='profileImageUrl', full_name='PlusPerson.profileImageUrl', index=1,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4030,14 +4030,14 @@ _PROMOTEDDOC = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='title', full_name='PromotedDoc.title', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='subtitle', full_name='PromotedDoc.subtitle', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4051,14 +4051,14 @@ _PROMOTEDDOC = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='descriptionHtml', full_name='PromotedDoc.descriptionHtml', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='detailsUrl', full_name='PromotedDoc.detailsUrl', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4086,21 +4086,21 @@ _REASON = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='briefReason', full_name='Reason.briefReason', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='detailedReason', full_name='Reason.detailedReason', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='uniqueId', full_name='Reason.uniqueId', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4128,28 +4128,28 @@ _SECTIONMETADATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='header', full_name='SectionMetadata.header', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='listUrl', full_name='SectionMetadata.listUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='browseUrl', full_name='SectionMetadata.browseUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='descriptionHtml', full_name='SectionMetadata.descriptionHtml', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4177,35 +4177,35 @@ _SERIESANTENNA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='seriesTitle', full_name='SeriesAntenna.seriesTitle', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='seriesSubtitle', full_name='SeriesAntenna.seriesSubtitle', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='episodeTitle', full_name='SeriesAntenna.episodeTitle', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='episodeSubtitle', full_name='SeriesAntenna.episodeSubtitle', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='colorThemeArgb', full_name='SeriesAntenna.colorThemeArgb', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4345,14 +4345,14 @@ _TILETEMPLATE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='colorThemeArgb', full_name='TileTemplate.colorThemeArgb', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='colorTextArgb', full_name='TileTemplate.colorTextArgb', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4380,7 +4380,7 @@ _WARNING = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='localizedMessage', full_name='Warning.localizedMessage', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4408,7 +4408,7 @@ _ALBUMDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='AlbumDetails.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4450,7 +4450,7 @@ _APPDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='developerName', full_name='AppDetails.developerName', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4471,14 +4471,14 @@ _APPDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='versionString', full_name='AppDetails.versionString', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='title', full_name='AppDetails.title', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4513,42 +4513,42 @@ _APPDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='developerEmail', full_name='AppDetails.developerEmail', index=9,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='developerWebsite', full_name='AppDetails.developerWebsite', index=10,
       number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='numDownloads', full_name='AppDetails.numDownloads', index=11,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='packageName', full_name='AppDetails.packageName', index=12,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='recentChangesHtml', full_name='AppDetails.recentChangesHtml', index=13,
       number=15, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='uploadDate', full_name='AppDetails.uploadDate', index=14,
       number=16, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4562,7 +4562,7 @@ _APPDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='appType', full_name='AppDetails.appType', index=16,
       number=18, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4590,14 +4590,14 @@ _ARTISTDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='detailsUrl', full_name='ArtistDetails.detailsUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='name', full_name='ArtistDetails.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4639,14 +4639,14 @@ _ARTISTEXTERNALLINKS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='googlePlusProfileUrl', full_name='ArtistExternalLinks.googlePlusProfileUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='youtubeChannelUrl', full_name='ArtistExternalLinks.youtubeChannelUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4814,28 +4814,28 @@ _MAGAZINEDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='parentDetailsUrl', full_name='MagazineDetails.parentDetailsUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='deviceAvailabilityDescriptionHtml', full_name='MagazineDetails.deviceAvailabilityDescriptionHtml', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='psvDescription', full_name='MagazineDetails.psvDescription', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='deliveryFrequencyDescription', full_name='MagazineDetails.deliveryFrequencyDescription', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4877,14 +4877,14 @@ _MUSICDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='originalReleaseDate', full_name='MusicDetails.originalReleaseDate', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='label', full_name='MusicDetails.label', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4905,7 +4905,7 @@ _MUSICDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='releaseDate', full_name='MusicDetails.releaseDate', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4940,7 +4940,7 @@ _SONGDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='SongDetails.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4954,7 +4954,7 @@ _SONGDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='albumName', full_name='SongDetails.albumName', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -4968,7 +4968,7 @@ _SONGDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='previewUrl', full_name='SongDetails.previewUrl', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5031,35 +5031,35 @@ _TRAILER = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='trailerId', full_name='Trailer.trailerId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='title', full_name='Trailer.title', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='thumbnailUrl', full_name='Trailer.thumbnailUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='watchUrl', full_name='Trailer.watchUrl', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='duration', full_name='Trailer.duration', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5087,7 +5087,7 @@ _TVEPISODEDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='parentDetailsUrl', full_name='TvEpisodeDetails.parentDetailsUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5101,7 +5101,7 @@ _TVEPISODEDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='releaseDate', full_name='TvEpisodeDetails.releaseDate', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5129,7 +5129,7 @@ _TVSEASONDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='parentDetailsUrl', full_name='TvSeasonDetails.parentDetailsUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5143,14 +5143,14 @@ _TVSEASONDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='releaseDate', full_name='TvSeasonDetails.releaseDate', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='broadcaster', full_name='TvSeasonDetails.broadcaster', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5199,7 +5199,7 @@ _TVSHOWDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='broadcaster', full_name='TvShowDetails.broadcaster', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5234,7 +5234,7 @@ _VIDEOCREDIT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='credit', full_name='VideoCredit.credit', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5276,21 +5276,21 @@ _VIDEODETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='duration', full_name='VideoDetails.duration', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='releaseDate', full_name='VideoDetails.releaseDate', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='contentRating', full_name='VideoDetails.contentRating', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5353,14 +5353,14 @@ _VIDEORENTALTERM_TERM = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='header', full_name='VideoRentalTerm.Term.header', index=0,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='body', full_name='VideoRentalTerm.Term.body', index=1,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5394,14 +5394,14 @@ _VIDEORENTALTERM = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='offerAbbreviation', full_name='VideoRentalTerm.offerAbbreviation', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='rentalHeader', full_name='VideoRentalTerm.rentalHeader', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5450,21 +5450,21 @@ _BUCKET = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='title', full_name='Bucket.title', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='iconUrl', full_name='Bucket.iconUrl', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='fullContentsUrl', full_name='Bucket.fullContentsUrl', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5485,21 +5485,21 @@ _BUCKET = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='analyticsCookie', full_name='Bucket.analyticsCookie', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='fullContentsListUrl', full_name='Bucket.fullContentsListUrl', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='nextPageUrl', full_name='Bucket.nextPageUrl', index=9,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5576,49 +5576,49 @@ _DOCV1 = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='docid', full_name='DocV1.docid', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='detailsUrl', full_name='DocV1.detailsUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='reviewsUrl', full_name='DocV1.reviewsUrl', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='relatedListUrl', full_name='DocV1.relatedListUrl', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='moreByListUrl', full_name='DocV1.moreByListUrl', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='shareUrl', full_name='DocV1.shareUrl', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='creator', full_name='DocV1.creator', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5632,42 +5632,42 @@ _DOCV1 = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='descriptionHtml', full_name='DocV1.descriptionHtml', index=9,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='relatedBrowseUrl', full_name='DocV1.relatedBrowseUrl', index=10,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='moreByBrowseUrl', full_name='DocV1.moreByBrowseUrl', index=11,
       number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='relatedHeader', full_name='DocV1.relatedHeader', index=12,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='moreByHeader', full_name='DocV1.moreByHeader', index=13,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='title', full_name='DocV1.title', index=14,
       number=15, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5681,7 +5681,7 @@ _DOCV1 = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='warningMessage', full_name='DocV1.warningMessage', index=16,
       number=17, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5800,7 +5800,7 @@ _ANNOTATIONS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='offerNote', full_name='Annotations.offerNote', index=13,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5821,7 +5821,7 @@ _ANNOTATIONS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='privacyPolicyUrl', full_name='Annotations.privacyPolicyUrl', index=16,
       number=18, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5849,14 +5849,14 @@ _DOCV2 = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='docid', full_name='DocV2.docid', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='backendDocid', full_name='DocV2.backendDocid', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5877,21 +5877,21 @@ _DOCV2 = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='title', full_name='DocV2.title', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='creator', full_name='DocV2.creator', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='descriptionHtml', full_name='DocV2.descriptionHtml', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5954,35 +5954,35 @@ _DOCV2 = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='detailsUrl', full_name='DocV2.detailsUrl', index=15,
       number=16, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='shareUrl', full_name='DocV2.shareUrl', index=16,
       number=17, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='reviewsUrl', full_name='DocV2.reviewsUrl', index=17,
       number=18, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='backendUrl', full_name='DocV2.backendUrl', index=18,
       number=19, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='purchaseDetailsUrl', full_name='DocV2.purchaseDetailsUrl', index=19,
       number=20, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -5996,7 +5996,7 @@ _DOCV2 = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='subtitle', full_name='DocV2.subtitle', index=21,
       number=22, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6024,28 +6024,28 @@ _ENCRYPTEDSUBSCRIBERINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='data', full_name='EncryptedSubscriberInfo.data', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='encryptedKey', full_name='EncryptedSubscriberInfo.encryptedKey', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='signature', full_name='EncryptedSubscriberInfo.signature', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='initVector', full_name='EncryptedSubscriberInfo.initVector', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6296,7 +6296,7 @@ _RULE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='comment', full_name='Rule.comment', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6394,7 +6394,7 @@ _LIBRARYAPPDETAILS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='certificateHash', full_name='LibraryAppDetails.certificateHash', index=0,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6583,7 +6583,7 @@ _LIBRARYUPDATE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='libraryId', full_name='LibraryUpdate.libraryId', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6723,28 +6723,28 @@ _CLICKLOGEVENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='url', full_name='ClickLogEvent.url', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='listId', full_name='ClickLogEvent.listId', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='referrerUrl', full_name='ClickLogEvent.referrerUrl', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='referrerListId', full_name='ClickLogEvent.referrerListId', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6828,7 +6828,7 @@ _ANDROIDAPPNOTIFICATIONDATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='AndroidAppNotificationData.assetId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6856,14 +6856,14 @@ _INAPPNOTIFICATIONDATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='checkoutOrderId', full_name='InAppNotificationData.checkoutOrderId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='inAppNotificationId', full_name='InAppNotificationData.inAppNotificationId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6940,14 +6940,14 @@ _NOTIFICATION = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='docTitle', full_name='Notification.docTitle', index=3,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='userEmail', full_name='Notification.userEmail', index=4,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -6996,7 +6996,7 @@ _NOTIFICATION = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='notificationId', full_name='Notification.notificationId', index=11,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7101,35 +7101,35 @@ _USERNOTIFICATIONDATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='notificationTitle', full_name='UserNotificationData.notificationTitle', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='notificationText', full_name='UserNotificationData.notificationText', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='tickerText', full_name='UserNotificationData.tickerText', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='dialogTitle', full_name='UserNotificationData.dialogTitle', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='dialogText', full_name='UserNotificationData.dialogText', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7304,21 +7304,21 @@ _DIRECTPURCHASE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='detailsUrl', full_name='DirectPurchase.detailsUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='purchaseDocid', full_name='DirectPurchase.purchaseDocid', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='parentDocid', full_name='DirectPurchase.parentDocid', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7353,21 +7353,21 @@ _RESOLVELINKRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='detailsUrl', full_name='ResolveLinkResponse.detailsUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='browseUrl', full_name='ResolveLinkResponse.browseUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='searchUrl', full_name='ResolveLinkResponse.searchUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7381,7 +7381,7 @@ _RESOLVELINKRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='homeUrl', full_name='ResolveLinkResponse.homeUrl', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7598,7 +7598,7 @@ _PREFETCH = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='url', full_name='PreFetch.url', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7612,7 +7612,7 @@ _PREFETCH = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='etag', full_name='PreFetch.etag', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7710,14 +7710,14 @@ _SERVERCOMMANDS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='displayErrorMessage', full_name='ServerCommands.displayErrorMessage', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='logErrorStacktrace', full_name='ServerCommands.logErrorStacktrace', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7780,28 +7780,28 @@ _REVIEW = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='authorName', full_name='Review.authorName', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='url', full_name='Review.url', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='source', full_name='Review.source', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='documentVersion', full_name='Review.documentVersion', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7822,35 +7822,35 @@ _REVIEW = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='title', full_name='Review.title', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='comment', full_name='Review.comment', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='commentId', full_name='Review.commentId', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='deviceName', full_name='Review.deviceName', index=9,
       number=19, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='replyText', full_name='Review.replyText', index=10,
       number=29, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7892,7 +7892,7 @@ _REVIEWRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='nextPageUrl', full_name='ReviewResponse.nextPageUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -7948,14 +7948,14 @@ _RELATEDSEARCH = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='searchUrl', full_name='RelatedSearch.searchUrl', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='header', full_name='RelatedSearch.header', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8004,14 +8004,14 @@ _SEARCHRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='originalQuery', full_name='SearchResponse.originalQuery', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='suggestedQuery', full_name='SearchResponse.suggestedQuery', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8074,21 +8074,21 @@ _CORPUSMETADATA = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='name', full_name='CorpusMetadata.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='landingUrl', full_name='CorpusMetadata.landingUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='libraryName', full_name='CorpusMetadata.libraryName', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8158,14 +8158,14 @@ _TOCRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='tosContent', full_name='TocResponse.tosContent', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='homeUrl', full_name='TocResponse.homeUrl', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8179,14 +8179,14 @@ _TOCRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='tosCheckboxTextMarketingEmails', full_name='TocResponse.tosCheckboxTextMarketingEmails', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='tosToken', full_name='TocResponse.tosToken', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8200,7 +8200,7 @@ _TOCRESPONSE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='iconOverrideUrl', full_name='TocResponse.iconOverrideUrl', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8340,63 +8340,63 @@ _ADDRESSPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='address1', full_name='AddressProto.address1', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='address2', full_name='AddressProto.address2', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='city', full_name='AddressProto.city', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='state', full_name='AddressProto.state', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='postalCode', full_name='AddressProto.postalCode', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='country', full_name='AddressProto.country', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='name', full_name='AddressProto.name', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='type', full_name='AddressProto.type', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='phone', full_name='AddressProto.phone', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8424,14 +8424,14 @@ _APPDATAPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='key', full_name='AppDataProto.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='value', full_name='AppDataProto.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8487,7 +8487,7 @@ _ASSETIDENTIFIERPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='packageName', full_name='AssetIdentifierProto.packageName', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8501,7 +8501,7 @@ _ASSETIDENTIFIERPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='AssetIdentifierProto.assetId', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8536,14 +8536,14 @@ _ASSETSREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='query', full_name='AssetsRequestProto.query', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='categoryId', full_name='AssetsRequestProto.categoryId', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8599,7 +8599,7 @@ _ASSETSREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='rankingType', full_name='AssetsRequestProto.rankingType', index=10,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8676,7 +8676,7 @@ _ASSETSRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='correctedQuery', full_name='AssetsResponseProto.correctedQuery', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8697,7 +8697,7 @@ _ASSETSRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='header', full_name='AssetsResponseProto.header', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8739,7 +8739,7 @@ _BILLINGEVENTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='billingParametersId', full_name='BillingEventRequestProto.billingParametersId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8753,7 +8753,7 @@ _BILLINGEVENTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='clientMessage', full_name='BillingEventRequestProto.clientMessage', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8809,14 +8809,14 @@ _BILLINGPARAMETERPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='id', full_name='BillingParameterProto.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='name', full_name='BillingParameterProto.name', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8837,7 +8837,7 @@ _BILLINGPARAMETERPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='iconId', full_name='BillingParameterProto.iconId', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8851,14 +8851,14 @@ _BILLINGPARAMETERPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='applicationId', full_name='BillingParameterProto.applicationId', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='tosUrl', full_name='BillingParameterProto.tosUrl', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8900,14 +8900,14 @@ _BILLINGPARAMETERPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='userTokenRequestMessage', full_name='BillingParameterProto.userTokenRequestMessage', index=13,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='userTokenRequestAddress', full_name='BillingParameterProto.userTokenRequestAddress', index=14,
       number=15, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8942,7 +8942,7 @@ _CARRIERBILLINGCREDENTIALSPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='credentials', full_name='CarrierBillingCredentialsProto.credentials', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -8984,21 +8984,21 @@ _CATEGORYPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='categoryId', full_name='CategoryProto.categoryId', index=1,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='categoryDisplay', full_name='CategoryProto.categoryDisplay', index=2,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='categorySubtitle', full_name='CategoryProto.categorySubtitle', index=3,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9110,7 +9110,7 @@ _CHECKLICENSEREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='packageName', full_name='CheckLicenseRequestProto.packageName', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9159,14 +9159,14 @@ _CHECKLICENSERESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='signedData', full_name='CheckLicenseResponseProto.signedData', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='signature', full_name='CheckLicenseResponseProto.signature', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9194,7 +9194,7 @@ _COMMENTSREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='CommentsRequestProto.assetId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9222,7 +9222,7 @@ _COMMENTSREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetReferrer', full_name='CommentsRequestProto.assetReferrer', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9292,7 +9292,7 @@ _CONTENTSYNCREQUESTPROTO_ASSETINSTALLSTATE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='ContentSyncRequestProto.AssetInstallState.assetId', index=0,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9320,7 +9320,7 @@ _CONTENTSYNCREQUESTPROTO_ASSETINSTALLSTATE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='packageName', full_name='ContentSyncRequestProto.AssetInstallState.packageName', index=4,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9334,7 +9334,7 @@ _CONTENTSYNCREQUESTPROTO_ASSETINSTALLSTATE = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetReferrer', full_name='ContentSyncRequestProto.AssetInstallState.assetReferrer', index=6,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9361,7 +9361,7 @@ _CONTENTSYNCREQUESTPROTO_SYSTEMAPP = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='packageName', full_name='ContentSyncRequestProto.SystemApp.packageName', index=0,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9479,7 +9479,7 @@ _DATAMESSAGEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='category', full_name='DataMessageProto.category', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9597,7 +9597,7 @@ _EXTERNALASSETPROTO_EXTENDEDINFO_PACKAGEDEPENDENCY = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='packageName', full_name='ExternalAssetProto.ExtendedInfo.PackageDependency.packageName', index=0,
       number=41, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9631,7 +9631,7 @@ _EXTERNALASSETPROTO_EXTENDEDINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='description', full_name='ExternalAssetProto.ExtendedInfo.description', index=0,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9659,14 +9659,14 @@ _EXTERNALASSETPROTO_EXTENDEDINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='packageName', full_name='ExternalAssetProto.ExtendedInfo.packageName', index=4,
       number=17, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='category', full_name='ExternalAssetProto.ExtendedInfo.category', index=5,
       number=18, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9680,7 +9680,7 @@ _EXTERNALASSETPROTO_EXTENDEDINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='contactEmail', full_name='ExternalAssetProto.ExtendedInfo.contactEmail', index=7,
       number=20, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9694,21 +9694,21 @@ _EXTERNALASSETPROTO_EXTENDEDINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='downloadCountString', full_name='ExternalAssetProto.ExtendedInfo.downloadCountString', index=9,
       number=23, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='contactPhone', full_name='ExternalAssetProto.ExtendedInfo.contactPhone', index=10,
       number=26, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='contactWebsite', full_name='ExternalAssetProto.ExtendedInfo.contactWebsite', index=11,
       number=27, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9729,7 +9729,7 @@ _EXTERNALASSETPROTO_EXTENDEDINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='promotionalDescription', full_name='ExternalAssetProto.ExtendedInfo.promotionalDescription', index=14,
       number=31, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9750,14 +9750,14 @@ _EXTERNALASSETPROTO_EXTENDEDINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='contentRatingString', full_name='ExternalAssetProto.ExtendedInfo.contentRatingString', index=17,
       number=37, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='recentChanges', full_name='ExternalAssetProto.ExtendedInfo.recentChanges', index=18,
       number=38, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9771,7 +9771,7 @@ _EXTERNALASSETPROTO_EXTENDEDINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='videoLink', full_name='ExternalAssetProto.ExtendedInfo.videoLink', index=20,
       number=43, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9805,14 +9805,14 @@ _EXTERNALASSETPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='id', full_name='ExternalAssetProto.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='title', full_name='ExternalAssetProto.title', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9826,28 +9826,28 @@ _EXTERNALASSETPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='owner', full_name='ExternalAssetProto.owner', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='version', full_name='ExternalAssetProto.version', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='price', full_name='ExternalAssetProto.price', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='averageRating', full_name='ExternalAssetProto.averageRating', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9875,14 +9875,14 @@ _EXTERNALASSETPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='ownerId', full_name='ExternalAssetProto.ownerId', index=10,
       number=22, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='packageName', full_name='ExternalAssetProto.packageName', index=11,
       number=24, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9903,7 +9903,7 @@ _EXTERNALASSETPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='priceCurrency', full_name='ExternalAssetProto.priceCurrency', index=14,
       number=32, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9917,14 +9917,14 @@ _EXTERNALASSETPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='filterReason', full_name='ExternalAssetProto.filterReason', index=16,
       number=35, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='actualSellerPrice', full_name='ExternalAssetProto.actualSellerPrice', index=17,
       number=40, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -9973,7 +9973,7 @@ _EXTERNALBADGEIMAGEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='url', full_name='ExternalBadgeImageProto.url', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10001,14 +10001,14 @@ _EXTERNALBADGEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='localizedTitle', full_name='ExternalBadgeProto.localizedTitle', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='localizedDescription', full_name='ExternalBadgeProto.localizedDescription', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10022,7 +10022,7 @@ _EXTERNALBADGEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='searchId', full_name='ExternalBadgeProto.searchId', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10050,28 +10050,28 @@ _EXTERNALCARRIERBILLINGINSTRUMENTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='instrumentKey', full_name='ExternalCarrierBillingInstrumentProto.instrumentKey', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='subscriberIdentifier', full_name='ExternalCarrierBillingInstrumentProto.subscriberIdentifier', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='accountType', full_name='ExternalCarrierBillingInstrumentProto.accountType', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='subscriberCurrency', full_name='ExternalCarrierBillingInstrumentProto.subscriberCurrency', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10085,49 +10085,49 @@ _EXTERNALCARRIERBILLINGINSTRUMENTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='subscriberName', full_name='ExternalCarrierBillingInstrumentProto.subscriberName', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='address1', full_name='ExternalCarrierBillingInstrumentProto.address1', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='address2', full_name='ExternalCarrierBillingInstrumentProto.address2', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='city', full_name='ExternalCarrierBillingInstrumentProto.city', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='state', full_name='ExternalCarrierBillingInstrumentProto.state', index=9,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='postalCode', full_name='ExternalCarrierBillingInstrumentProto.postalCode', index=10,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='country', full_name='ExternalCarrierBillingInstrumentProto.country', index=11,
       number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10162,7 +10162,7 @@ _EXTERNALCOMMENTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='body', full_name='ExternalCommentProto.body', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10176,7 +10176,7 @@ _EXTERNALCOMMENTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='creatorName', full_name='ExternalCommentProto.creatorName', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10190,7 +10190,7 @@ _EXTERNALCOMMENTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='creatorId', full_name='ExternalCommentProto.creatorId', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10218,14 +10218,14 @@ _EXTERNALCREDITCARD = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='type', full_name='ExternalCreditCard.type', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='lastDigits', full_name='ExternalCreditCard.lastDigits', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10246,21 +10246,21 @@ _EXTERNALCREDITCARD = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='personName', full_name='ExternalCreditCard.personName', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='countryCode', full_name='ExternalCreditCard.countryCode', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='postalCode', full_name='ExternalCreditCard.postalCode', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10274,35 +10274,35 @@ _EXTERNALCREDITCARD = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='address1', full_name='ExternalCreditCard.address1', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='address2', full_name='ExternalCreditCard.address2', index=9,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='city', full_name='ExternalCreditCard.city', index=10,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='state', full_name='ExternalCreditCard.state', index=11,
       number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='phone', full_name='ExternalCreditCard.phone', index=12,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10330,21 +10330,21 @@ _EXTERNALPAYPALINSTRUMENTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='instrumentKey', full_name='ExternalPaypalInstrumentProto.instrumentKey', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='preapprovalKey', full_name='ExternalPaypalInstrumentProto.preapprovalKey', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='paypalEmail', full_name='ExternalPaypalInstrumentProto.paypalEmail', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10407,7 +10407,7 @@ _FILEMETADATAPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='downloadUrl', full_name='FileMetadataProto.downloadUrl', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10463,7 +10463,7 @@ _GETADDRESSSNIPPETRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='addressSnippet', full_name='GetAddressSnippetResponseProto.addressSnippet', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10491,14 +10491,14 @@ _GETASSETREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='GetAssetRequestProto.assetId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='directDownloadKey', full_name='GetAssetRequestProto.directDownloadKey', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10526,42 +10526,42 @@ _GETASSETRESPONSEPROTO_INSTALLASSET = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='GetAssetResponseProto.InstallAsset.assetId', index=0,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='assetName', full_name='GetAssetResponseProto.InstallAsset.assetName', index=1,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='assetType', full_name='GetAssetResponseProto.InstallAsset.assetType', index=2,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='assetPackage', full_name='GetAssetResponseProto.InstallAsset.assetPackage', index=3,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='blobUrl', full_name='GetAssetResponseProto.InstallAsset.blobUrl', index=4,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='assetSignature', full_name='GetAssetResponseProto.InstallAsset.assetSignature', index=5,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10603,14 +10603,14 @@ _GETASSETRESPONSEPROTO_INSTALLASSET = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='downloadAuthCookieName', full_name='GetAssetResponseProto.InstallAsset.downloadAuthCookieName', index=11,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='downloadAuthCookieValue', full_name='GetAssetResponseProto.InstallAsset.downloadAuthCookieValue', index=12,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10721,14 +10721,14 @@ _GETCARRIERINFORESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='carrierSubtitle', full_name='GetCarrierInfoResponseProto.carrierSubtitle', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='carrierTitle', full_name='GetCarrierInfoResponseProto.carrierTitle', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10819,7 +10819,7 @@ _GETIMAGEREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='GetImageRequestProto.assetId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10833,7 +10833,7 @@ _GETIMAGEREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='imageId', full_name='GetImageRequestProto.imageId', index=2,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -10959,14 +10959,14 @@ _GETMARKETMETADATAREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='deviceModelName', full_name='GetMarketMetadataRequestProto.deviceModelName', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='deviceManufacturerName', full_name='GetMarketMetadataRequestProto.deviceManufacturerName', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11001,7 +11001,7 @@ _GETMARKETMETADATARESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='latestClientUrl', full_name='GetMarketMetadataResponseProto.latestClientUrl', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11036,7 +11036,7 @@ _GETMARKETMETADATARESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='warningMessage', full_name='GetMarketMetadataResponseProto.warningMessage', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11106,14 +11106,14 @@ _GETSUBCATEGORIESRESPONSEPROTO_SUBCATEGORY = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='subCategoryDisplay', full_name='GetSubCategoriesResponseProto.SubCategory.subCategoryDisplay', index=0,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='subCategoryId', full_name='GetSubCategoriesResponseProto.SubCategory.subCategoryId', index=1,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11189,7 +11189,7 @@ _INAPPPURCHASEINFORMATIONREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='signatureAlgorithm', full_name='InAppPurchaseInformationRequestProto.signatureAlgorithm', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11280,7 +11280,7 @@ _INAPPRESTORETRANSACTIONSREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='signatureAlgorithm', full_name='InAppRestoreTransactionsRequestProto.signatureAlgorithm', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11350,7 +11350,7 @@ _MODIFYCOMMENTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='ModifyCommentRequestProto.assetId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11385,7 +11385,7 @@ _MODIFYCOMMENTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='flagMessage', full_name='ModifyCommentRequestProto.flagMessage', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11448,21 +11448,21 @@ _PAYPALCOUNTRYINFOPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='tosText', full_name='PaypalCountryInfoProto.tosText', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='billingAgreementText', full_name='PaypalCountryInfoProto.billingAgreementText', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='preTosText', full_name='PaypalCountryInfoProto.preTosText', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11490,14 +11490,14 @@ _PAYPALCREATEACCOUNTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='firstName', full_name='PaypalCreateAccountRequestProto.firstName', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='lastName', full_name='PaypalCreateAccountRequestProto.lastName', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11511,7 +11511,7 @@ _PAYPALCREATEACCOUNTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='birthDate', full_name='PaypalCreateAccountRequestProto.birthDate', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11539,7 +11539,7 @@ _PAYPALCREATEACCOUNTRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='createAccountKey', full_name='PaypalCreateAccountResponseProto.createAccountKey', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11567,14 +11567,14 @@ _PAYPALCREDENTIALSPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='preapprovalKey', full_name='PaypalCredentialsProto.preapprovalKey', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='paypalEmail', full_name='PaypalCredentialsProto.paypalEmail', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11658,14 +11658,14 @@ _PAYPALPREAPPROVALCREDENTIALSREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='gaiaAuthToken', full_name='PaypalPreapprovalCredentialsRequestProto.gaiaAuthToken', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='billingInstrumentId', full_name='PaypalPreapprovalCredentialsRequestProto.billingInstrumentId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11700,14 +11700,14 @@ _PAYPALPREAPPROVALCREDENTIALSRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='paypalAccountKey', full_name='PaypalPreapprovalCredentialsResponseProto.paypalAccountKey', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='paypalEmail', full_name='PaypalPreapprovalCredentialsResponseProto.paypalEmail', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11742,7 +11742,7 @@ _PAYPALPREAPPROVALDETAILSREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='preapprovalKey', full_name='PaypalPreapprovalDetailsRequestProto.preapprovalKey', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11770,7 +11770,7 @@ _PAYPALPREAPPROVALDETAILSRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='paypalEmail', full_name='PaypalPreapprovalDetailsResponseProto.paypalEmail', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11826,7 +11826,7 @@ _PAYPALPREAPPROVALRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='preapprovalKey', full_name='PaypalPreapprovalResponseProto.preapprovalKey', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -11924,49 +11924,49 @@ _PURCHASECARTINFOPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='itemPrice', full_name='PurchaseCartInfoProto.itemPrice', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='taxInclusive', full_name='PurchaseCartInfoProto.taxInclusive', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='taxExclusive', full_name='PurchaseCartInfoProto.taxExclusive', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='total', full_name='PurchaseCartInfoProto.total', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='taxMessage', full_name='PurchaseCartInfoProto.taxMessage', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='footerMessage', full_name='PurchaseCartInfoProto.footerMessage', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='priceCurrency', full_name='PurchaseCartInfoProto.priceCurrency', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12001,14 +12001,14 @@ _PURCHASEINFOPROTO_BILLINGINSTRUMENTS_BILLINGINSTRUMENT = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='id', full_name='PurchaseInfoProto.BillingInstruments.BillingInstrument.id', index=0,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='name', full_name='PurchaseInfoProto.BillingInstruments.BillingInstrument.name', index=1,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12063,7 +12063,7 @@ _PURCHASEINFOPROTO_BILLINGINSTRUMENTS = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='defaultBillingInstrumentId', full_name='PurchaseInfoProto.BillingInstruments.defaultBillingInstrumentId', index=1,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12090,7 +12090,7 @@ _PURCHASEINFOPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='transactionId', full_name='PurchaseInfoProto.transactionId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12118,7 +12118,7 @@ _PURCHASEINFOPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='refundPolicy', full_name='PurchaseInfoProto.refundPolicy', index=4,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12139,7 +12139,7 @@ _PURCHASEINFOPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='orderId', full_name='PurchaseInfoProto.orderId', index=7,
       number=15, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12236,14 +12236,14 @@ _PURCHASEMETADATARESPONSEPROTO_COUNTRIES_COUNTRY = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='countryCode', full_name='PurchaseMetadataResponseProto.Countries.Country.countryCode', index=0,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='countryName', full_name='PurchaseMetadataResponseProto.Countries.Country.countryName', index=1,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12346,28 +12346,28 @@ _PURCHASEORDERREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='gaiaAuthToken', full_name='PurchaseOrderRequestProto.gaiaAuthToken', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='assetId', full_name='PurchaseOrderRequestProto.assetId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='transactionId', full_name='PurchaseOrderRequestProto.transactionId', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='billingInstrumentId', full_name='PurchaseOrderRequestProto.billingInstrumentId', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12388,7 +12388,7 @@ _PURCHASEORDERREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='existingOrderId', full_name='PurchaseOrderRequestProto.existingOrderId', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12402,7 +12402,7 @@ _PURCHASEORDERREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='billingParametersId', full_name='PurchaseOrderRequestProto.billingParametersId', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12437,7 +12437,7 @@ _PURCHASEORDERREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='developerPayload', full_name='PurchaseOrderRequestProto.developerPayload', index=13,
       number=14, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12514,7 +12514,7 @@ _PURCHASEPOSTREQUESTPROTO_BILLINGINSTRUMENTINFO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='billingInstrumentId', full_name='PurchasePostRequestProto.BillingInstrumentInfo.billingInstrumentId', index=0,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12562,21 +12562,21 @@ _PURCHASEPOSTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='gaiaAuthToken', full_name='PurchasePostRequestProto.gaiaAuthToken', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='assetId', full_name='PurchasePostRequestProto.assetId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='transactionId', full_name='PurchasePostRequestProto.transactionId', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12597,7 +12597,7 @@ _PURCHASEPOSTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='cbInstrumentKey', full_name='PurchasePostRequestProto.cbInstrumentKey', index=5,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12660,35 +12660,35 @@ _PURCHASEPOSTRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='termsOfServiceUrl', full_name='PurchasePostResponseProto.termsOfServiceUrl', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='termsOfServiceText', full_name='PurchasePostResponseProto.termsOfServiceText', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='termsOfServiceName', full_name='PurchasePostResponseProto.termsOfServiceName', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='termsOfServiceCheckboxText', full_name='PurchasePostResponseProto.termsOfServiceCheckboxText', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='termsOfServiceHeaderText', full_name='PurchasePostResponseProto.termsOfServiceHeaderText', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12730,7 +12730,7 @@ _PURCHASEPRODUCTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='productId', full_name='PurchaseProductRequestProto.productId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12765,28 +12765,28 @@ _PURCHASEPRODUCTRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='title', full_name='PurchaseProductResponseProto.title', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='itemTitle', full_name='PurchaseProductResponseProto.itemTitle', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='itemDescription', full_name='PurchaseProductResponseProto.itemDescription', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='merchantField', full_name='PurchaseProductResponseProto.merchantField', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12821,7 +12821,7 @@ _PURCHASERESULTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='resultCodeMessage', full_name='PurchaseResultProto.resultCodeMessage', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12849,7 +12849,7 @@ _QUERYSUGGESTIONPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='query', full_name='QuerySuggestionProto.query', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -12891,7 +12891,7 @@ _QUERYSUGGESTIONREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='query', full_name='QuerySuggestionRequestProto.query', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13002,14 +13002,14 @@ _RATECOMMENTREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='RateCommentRequestProto.assetId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='creatorId', full_name='RateCommentRequestProto.creatorId', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13121,7 +13121,7 @@ _REFUNDREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='RefundRequestProto.assetId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13163,7 +13163,7 @@ _REFUNDRESPONSEPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='resultDetail', full_name='RefundResponseProto.resultDetail', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13191,7 +13191,7 @@ _REMOVEASSETREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='RemoveAssetRequestProto.assetId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13219,7 +13219,7 @@ _REQUESTPROPERTIESPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='userAuthToken', full_name='RequestPropertiesProto.userAuthToken', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13240,70 +13240,70 @@ _REQUESTPROPERTIESPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='aid', full_name='RequestPropertiesProto.aid', index=3,
       number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='productNameAndVersion', full_name='RequestPropertiesProto.productNameAndVersion', index=4,
       number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='userLanguage', full_name='RequestPropertiesProto.userLanguage', index=5,
       number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='userCountry', full_name='RequestPropertiesProto.userCountry', index=6,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='operatorName', full_name='RequestPropertiesProto.operatorName', index=7,
       number=8, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='simOperatorName', full_name='RequestPropertiesProto.simOperatorName', index=8,
       number=9, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='operatorNumericName', full_name='RequestPropertiesProto.operatorNumericName', index=9,
       number=10, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='simOperatorNumericName', full_name='RequestPropertiesProto.simOperatorNumericName', index=10,
       number=11, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='clientId', full_name='RequestPropertiesProto.clientId', index=11,
       number=12, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='loggingId', full_name='RequestPropertiesProto.loggingId', index=12,
       number=13, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13624,7 +13624,7 @@ _REQUESTSPECIFICPROPERTIESPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='ifNoneMatch', full_name='RequestSpecificPropertiesProto.ifNoneMatch', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13666,7 +13666,7 @@ _RESPONSEPROPERTIESPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='etag', full_name='ResponsePropertiesProto.etag', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -13687,7 +13687,7 @@ _RESPONSEPROPERTIESPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='errorMessage', full_name='ResponsePropertiesProto.errorMessage', index=5,
       number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -14015,14 +14015,14 @@ _RESTOREAPPLICATIONSREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='backupAndroidId', full_name='RestoreApplicationsRequestProto.backupAndroidId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='tosVersion', full_name='RestoreApplicationsRequestProto.tosVersion', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -14085,7 +14085,7 @@ _RISKHEADERINFOPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='hashedDeviceInfo', full_name='RiskHeaderInfoProto.hashedDeviceInfo', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -14113,7 +14113,7 @@ _SIGNATUREHASHPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='packageName', full_name='SignatureHashProto.packageName', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -14155,14 +14155,14 @@ _SIGNEDDATAPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='signedData', full_name='SignedDataProto.signedData', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='signature', full_name='SignedDataProto.signature', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -14701,21 +14701,21 @@ _STATUSBARNOTIFICATIONPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='tickerText', full_name='StatusBarNotificationProto.tickerText', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='contentTitle', full_name='StatusBarNotificationProto.contentTitle', index=1,
       number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
       name='contentText', full_name='StatusBarNotificationProto.contentText', index=2,
       number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -14743,7 +14743,7 @@ _UNINSTALLREASONREQUESTPROTO = descriptor.Descriptor(
     descriptor.FieldDescriptor(
       name='assetId', full_name='UninstallReasonRequestProto.assetId', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -15248,1588 +15248,1303 @@ _SINGLERESPONSEPROTO.fields_by_name['reconstructDatabaseResponse'].message_type 
 _SINGLERESPONSEPROTO.fields_by_name['paypalMassageAddressResponse'].message_type = _PAYPALMASSAGEADDRESSRESPONSEPROTO
 _SINGLERESPONSEPROTO.fields_by_name['getAddressSnippetResponse'].message_type = _GETADDRESSSNIPPETRESPONSEPROTO
 
-class AckNotificationResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AckNotificationResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ACKNOTIFICATIONRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:AckNotificationResponse)
 
-class AndroidAppDeliveryData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AndroidAppDeliveryData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ANDROIDAPPDELIVERYDATA
-  
+
   # @@protoc_insertion_point(class_scope:AndroidAppDeliveryData)
 
-class AndroidAppPatchData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AndroidAppPatchData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ANDROIDAPPPATCHDATA
-  
+
   # @@protoc_insertion_point(class_scope:AndroidAppPatchData)
 
-class AppFileMetadata(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AppFileMetadata(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _APPFILEMETADATA
-  
+
   # @@protoc_insertion_point(class_scope:AppFileMetadata)
 
-class EncryptionParams(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class EncryptionParams(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ENCRYPTIONPARAMS
-  
+
   # @@protoc_insertion_point(class_scope:EncryptionParams)
 
-class HttpCookie(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class HttpCookie(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _HTTPCOOKIE
-  
+
   # @@protoc_insertion_point(class_scope:HttpCookie)
 
-class Address(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Address(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ADDRESS
-  
+
   # @@protoc_insertion_point(class_scope:Address)
 
-class BookAuthor(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BookAuthor(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BOOKAUTHOR
-  
+
   # @@protoc_insertion_point(class_scope:BookAuthor)
 
-class BookDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class Identifier(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class BookDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class Identifier(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _BOOKDETAILS_IDENTIFIER
-    
+
     # @@protoc_insertion_point(class_scope:BookDetails.Identifier)
   DESCRIPTOR = _BOOKDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:BookDetails)
 
-class BookSubject(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BookSubject(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BOOKSUBJECT
-  
+
   # @@protoc_insertion_point(class_scope:BookSubject)
 
-class BrowseLink(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BrowseLink(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BROWSELINK
-  
+
   # @@protoc_insertion_point(class_scope:BrowseLink)
 
-class BrowseResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BrowseResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BROWSERESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:BrowseResponse)
 
-class AddressChallenge(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AddressChallenge(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ADDRESSCHALLENGE
-  
+
   # @@protoc_insertion_point(class_scope:AddressChallenge)
 
-class AuthenticationChallenge(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AuthenticationChallenge(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _AUTHENTICATIONCHALLENGE
-  
+
   # @@protoc_insertion_point(class_scope:AuthenticationChallenge)
 
-class BuyResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class CheckoutInfo(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
-    
-    class CheckoutOption(message.Message):
-      __metaclass__ = reflection.GeneratedProtocolMessageType
+class BuyResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class CheckoutInfo(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+    class CheckoutOption(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
       DESCRIPTOR = _BUYRESPONSE_CHECKOUTINFO_CHECKOUTOPTION
-      
+
       # @@protoc_insertion_point(class_scope:BuyResponse.CheckoutInfo.CheckoutOption)
     DESCRIPTOR = _BUYRESPONSE_CHECKOUTINFO
-    
+
     # @@protoc_insertion_point(class_scope:BuyResponse.CheckoutInfo)
   DESCRIPTOR = _BUYRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:BuyResponse)
 
-class Challenge(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Challenge(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CHALLENGE
-  
+
   # @@protoc_insertion_point(class_scope:Challenge)
 
-class FormCheckbox(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class FormCheckbox(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _FORMCHECKBOX
-  
+
   # @@protoc_insertion_point(class_scope:FormCheckbox)
 
-class LineItem(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LineItem(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LINEITEM
-  
+
   # @@protoc_insertion_point(class_scope:LineItem)
 
-class Money(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Money(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _MONEY
-  
+
   # @@protoc_insertion_point(class_scope:Money)
 
-class PurchaseNotificationResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseNotificationResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASENOTIFICATIONRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseNotificationResponse)
 
-class PurchaseStatusResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseStatusResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASESTATUSRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseStatusResponse)
 
-class CheckInstrumentResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CheckInstrumentResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CHECKINSTRUMENTRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:CheckInstrumentResponse)
 
-class UpdateInstrumentRequest(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class UpdateInstrumentRequest(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _UPDATEINSTRUMENTREQUEST
-  
+
   # @@protoc_insertion_point(class_scope:UpdateInstrumentRequest)
 
-class UpdateInstrumentResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class UpdateInstrumentResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _UPDATEINSTRUMENTRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:UpdateInstrumentResponse)
 
-class InitiateAssociationResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class InitiateAssociationResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INITIATEASSOCIATIONRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:InitiateAssociationResponse)
 
-class VerifyAssociationResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class VerifyAssociationResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _VERIFYASSOCIATIONRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:VerifyAssociationResponse)
 
-class AddCreditCardPromoOffer(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AddCreditCardPromoOffer(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ADDCREDITCARDPROMOOFFER
-  
+
   # @@protoc_insertion_point(class_scope:AddCreditCardPromoOffer)
 
-class AvailablePromoOffer(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AvailablePromoOffer(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _AVAILABLEPROMOOFFER
-  
+
   # @@protoc_insertion_point(class_scope:AvailablePromoOffer)
 
-class CheckPromoOfferResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CheckPromoOfferResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CHECKPROMOOFFERRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:CheckPromoOfferResponse)
 
-class RedeemedPromoOffer(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RedeemedPromoOffer(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REDEEMEDPROMOOFFER
-  
+
   # @@protoc_insertion_point(class_scope:RedeemedPromoOffer)
 
-class Docid(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Docid(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DOCID
-  
+
   # @@protoc_insertion_point(class_scope:Docid)
 
-class Install(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Install(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INSTALL
-  
+
   # @@protoc_insertion_point(class_scope:Install)
 
-class Offer(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Offer(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _OFFER
-  
+
   # @@protoc_insertion_point(class_scope:Offer)
 
-class OwnershipInfo(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class OwnershipInfo(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _OWNERSHIPINFO
-  
+
   # @@protoc_insertion_point(class_scope:OwnershipInfo)
 
-class RentalTerms(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RentalTerms(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RENTALTERMS
-  
+
   # @@protoc_insertion_point(class_scope:RentalTerms)
 
-class SubscriptionTerms(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SubscriptionTerms(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SUBSCRIPTIONTERMS
-  
+
   # @@protoc_insertion_point(class_scope:SubscriptionTerms)
 
-class TimePeriod(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class TimePeriod(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TIMEPERIOD
-  
+
   # @@protoc_insertion_point(class_scope:TimePeriod)
 
-class BillingAddressSpec(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BillingAddressSpec(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BILLINGADDRESSSPEC
-  
+
   # @@protoc_insertion_point(class_scope:BillingAddressSpec)
 
-class CarrierBillingCredentials(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CarrierBillingCredentials(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CARRIERBILLINGCREDENTIALS
-  
+
   # @@protoc_insertion_point(class_scope:CarrierBillingCredentials)
 
-class CarrierBillingInstrument(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CarrierBillingInstrument(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CARRIERBILLINGINSTRUMENT
-  
+
   # @@protoc_insertion_point(class_scope:CarrierBillingInstrument)
 
-class CarrierBillingInstrumentStatus(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CarrierBillingInstrumentStatus(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CARRIERBILLINGINSTRUMENTSTATUS
-  
+
   # @@protoc_insertion_point(class_scope:CarrierBillingInstrumentStatus)
 
-class CarrierTos(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CarrierTos(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CARRIERTOS
-  
+
   # @@protoc_insertion_point(class_scope:CarrierTos)
 
-class CarrierTosEntry(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CarrierTosEntry(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CARRIERTOSENTRY
-  
+
   # @@protoc_insertion_point(class_scope:CarrierTosEntry)
 
-class CreditCardInstrument(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CreditCardInstrument(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CREDITCARDINSTRUMENT
-  
+
   # @@protoc_insertion_point(class_scope:CreditCardInstrument)
 
-class EfeParam(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class EfeParam(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EFEPARAM
-  
+
   # @@protoc_insertion_point(class_scope:EfeParam)
 
-class InputValidationError(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class InputValidationError(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INPUTVALIDATIONERROR
-  
+
   # @@protoc_insertion_point(class_scope:InputValidationError)
 
-class Instrument(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Instrument(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INSTRUMENT
-  
+
   # @@protoc_insertion_point(class_scope:Instrument)
 
-class PasswordPrompt(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PasswordPrompt(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PASSWORDPROMPT
-  
+
   # @@protoc_insertion_point(class_scope:PasswordPrompt)
 
-class ContainerMetadata(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ContainerMetadata(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CONTAINERMETADATA
-  
+
   # @@protoc_insertion_point(class_scope:ContainerMetadata)
 
-class FlagContentResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class FlagContentResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _FLAGCONTENTRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:FlagContentResponse)
 
-class DebugInfo(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class Timing(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class DebugInfo(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class Timing(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _DEBUGINFO_TIMING
-    
+
     # @@protoc_insertion_point(class_scope:DebugInfo.Timing)
   DESCRIPTOR = _DEBUGINFO
-  
+
   # @@protoc_insertion_point(class_scope:DebugInfo)
 
-class DeliveryResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DeliveryResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DELIVERYRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:DeliveryResponse)
 
-class BulkDetailsEntry(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BulkDetailsEntry(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BULKDETAILSENTRY
-  
+
   # @@protoc_insertion_point(class_scope:BulkDetailsEntry)
 
-class BulkDetailsRequest(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BulkDetailsRequest(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BULKDETAILSREQUEST
-  
+
   # @@protoc_insertion_point(class_scope:BulkDetailsRequest)
 
-class BulkDetailsResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BulkDetailsResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BULKDETAILSRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:BulkDetailsResponse)
 
-class DetailsResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DetailsResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DETAILSRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:DetailsResponse)
 
-class DeviceConfigurationProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DeviceConfigurationProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DEVICECONFIGURATIONPROTO
-  
+
   # @@protoc_insertion_point(class_scope:DeviceConfigurationProto)
 
-class Document(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Document(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DOCUMENT
-  
+
   # @@protoc_insertion_point(class_scope:Document)
 
-class DocumentVariant(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DocumentVariant(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DOCUMENTVARIANT
-  
+
   # @@protoc_insertion_point(class_scope:DocumentVariant)
 
-class Image(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class Dimension(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class Image(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class Dimension(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _IMAGE_DIMENSION
-    
+
     # @@protoc_insertion_point(class_scope:Image.Dimension)
-  
-  class Citation(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+
+  class Citation(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _IMAGE_CITATION
-    
+
     # @@protoc_insertion_point(class_scope:Image.Citation)
   DESCRIPTOR = _IMAGE
-  
+
   # @@protoc_insertion_point(class_scope:Image)
 
-class TranslatedText(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class TranslatedText(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TRANSLATEDTEXT
-  
+
   # @@protoc_insertion_point(class_scope:TranslatedText)
 
-class Badge(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Badge(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BADGE
-  
+
   # @@protoc_insertion_point(class_scope:Badge)
 
-class ContainerWithBanner(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ContainerWithBanner(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CONTAINERWITHBANNER
-  
+
   # @@protoc_insertion_point(class_scope:ContainerWithBanner)
 
-class DealOfTheDay(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DealOfTheDay(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DEALOFTHEDAY
-  
+
   # @@protoc_insertion_point(class_scope:DealOfTheDay)
 
-class EditorialSeriesContainer(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class EditorialSeriesContainer(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EDITORIALSERIESCONTAINER
-  
+
   # @@protoc_insertion_point(class_scope:EditorialSeriesContainer)
 
-class Link(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Link(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LINK
-  
+
   # @@protoc_insertion_point(class_scope:Link)
 
-class PlusOneData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PlusOneData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PLUSONEDATA
-  
+
   # @@protoc_insertion_point(class_scope:PlusOneData)
 
-class PlusPerson(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PlusPerson(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PLUSPERSON
-  
+
   # @@protoc_insertion_point(class_scope:PlusPerson)
 
-class PromotedDoc(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PromotedDoc(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PROMOTEDDOC
-  
+
   # @@protoc_insertion_point(class_scope:PromotedDoc)
 
-class Reason(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Reason(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REASON
-  
+
   # @@protoc_insertion_point(class_scope:Reason)
 
-class SectionMetadata(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SectionMetadata(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SECTIONMETADATA
-  
+
   # @@protoc_insertion_point(class_scope:SectionMetadata)
 
-class SeriesAntenna(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SeriesAntenna(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SERIESANTENNA
-  
+
   # @@protoc_insertion_point(class_scope:SeriesAntenna)
 
-class Template(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Template(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TEMPLATE
-  
+
   # @@protoc_insertion_point(class_scope:Template)
 
-class TileTemplate(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class TileTemplate(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TILETEMPLATE
-  
+
   # @@protoc_insertion_point(class_scope:TileTemplate)
 
-class Warning(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Warning(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _WARNING
-  
+
   # @@protoc_insertion_point(class_scope:Warning)
 
-class AlbumDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AlbumDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ALBUMDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:AlbumDetails)
 
-class AppDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AppDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _APPDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:AppDetails)
 
-class ArtistDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ArtistDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ARTISTDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:ArtistDetails)
 
-class ArtistExternalLinks(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ArtistExternalLinks(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ARTISTEXTERNALLINKS
-  
+
   # @@protoc_insertion_point(class_scope:ArtistExternalLinks)
 
-class DocumentDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DocumentDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DOCUMENTDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:DocumentDetails)
 
-class FileMetadata(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class FileMetadata(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _FILEMETADATA
-  
+
   # @@protoc_insertion_point(class_scope:FileMetadata)
 
-class MagazineDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class MagazineDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _MAGAZINEDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:MagazineDetails)
 
-class MusicDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class MusicDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _MUSICDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:MusicDetails)
 
-class SongDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SongDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SONGDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:SongDetails)
 
-class SubscriptionDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SubscriptionDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SUBSCRIPTIONDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:SubscriptionDetails)
 
-class Trailer(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Trailer(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TRAILER
-  
+
   # @@protoc_insertion_point(class_scope:Trailer)
 
-class TvEpisodeDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class TvEpisodeDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TVEPISODEDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:TvEpisodeDetails)
 
-class TvSeasonDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class TvSeasonDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TVSEASONDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:TvSeasonDetails)
 
-class TvShowDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class TvShowDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TVSHOWDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:TvShowDetails)
 
-class VideoCredit(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class VideoCredit(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _VIDEOCREDIT
-  
+
   # @@protoc_insertion_point(class_scope:VideoCredit)
 
-class VideoDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class VideoDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _VIDEODETAILS
-  
+
   # @@protoc_insertion_point(class_scope:VideoDetails)
 
-class VideoRentalTerm(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class Term(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class VideoRentalTerm(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class Term(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _VIDEORENTALTERM_TERM
-    
+
     # @@protoc_insertion_point(class_scope:VideoRentalTerm.Term)
   DESCRIPTOR = _VIDEORENTALTERM
-  
+
   # @@protoc_insertion_point(class_scope:VideoRentalTerm)
 
-class Bucket(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Bucket(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BUCKET
-  
+
   # @@protoc_insertion_point(class_scope:Bucket)
 
-class ListResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ListResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LISTRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:ListResponse)
 
-class DocV1(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DocV1(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DOCV1
-  
+
   # @@protoc_insertion_point(class_scope:DocV1)
 
-class Annotations(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Annotations(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ANNOTATIONS
-  
+
   # @@protoc_insertion_point(class_scope:Annotations)
 
-class DocV2(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DocV2(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DOCV2
-  
+
   # @@protoc_insertion_point(class_scope:DocV2)
 
-class EncryptedSubscriberInfo(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class EncryptedSubscriberInfo(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ENCRYPTEDSUBSCRIBERINFO
-  
+
   # @@protoc_insertion_point(class_scope:EncryptedSubscriberInfo)
 
-class Availability(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class PerDeviceAvailabilityRestriction(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class Availability(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class PerDeviceAvailabilityRestriction(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _AVAILABILITY_PERDEVICEAVAILABILITYRESTRICTION
-    
+
     # @@protoc_insertion_point(class_scope:Availability.PerDeviceAvailabilityRestriction)
   DESCRIPTOR = _AVAILABILITY
-  
+
   # @@protoc_insertion_point(class_scope:Availability)
 
-class FilterEvaluationInfo(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class FilterEvaluationInfo(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _FILTEREVALUATIONINFO
-  
+
   # @@protoc_insertion_point(class_scope:FilterEvaluationInfo)
 
-class Rule(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Rule(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RULE
-  
+
   # @@protoc_insertion_point(class_scope:Rule)
 
-class RuleEvaluation(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RuleEvaluation(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RULEEVALUATION
-  
+
   # @@protoc_insertion_point(class_scope:RuleEvaluation)
 
-class LibraryAppDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LibraryAppDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LIBRARYAPPDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:LibraryAppDetails)
 
-class LibraryMutation(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LibraryMutation(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LIBRARYMUTATION
-  
+
   # @@protoc_insertion_point(class_scope:LibraryMutation)
 
-class LibrarySubscriptionDetails(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LibrarySubscriptionDetails(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LIBRARYSUBSCRIPTIONDETAILS
-  
+
   # @@protoc_insertion_point(class_scope:LibrarySubscriptionDetails)
 
-class LibraryUpdate(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LibraryUpdate(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LIBRARYUPDATE
-  
+
   # @@protoc_insertion_point(class_scope:LibraryUpdate)
 
-class ClientLibraryState(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ClientLibraryState(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CLIENTLIBRARYSTATE
-  
+
   # @@protoc_insertion_point(class_scope:ClientLibraryState)
 
-class LibraryReplicationRequest(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LibraryReplicationRequest(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LIBRARYREPLICATIONREQUEST
-  
+
   # @@protoc_insertion_point(class_scope:LibraryReplicationRequest)
 
-class LibraryReplicationResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LibraryReplicationResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LIBRARYREPLICATIONRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:LibraryReplicationResponse)
 
-class ClickLogEvent(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ClickLogEvent(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CLICKLOGEVENT
-  
+
   # @@protoc_insertion_point(class_scope:ClickLogEvent)
 
-class LogRequest(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LogRequest(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LOGREQUEST
-  
+
   # @@protoc_insertion_point(class_scope:LogRequest)
 
-class LogResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LogResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LOGRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:LogResponse)
 
-class AndroidAppNotificationData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AndroidAppNotificationData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ANDROIDAPPNOTIFICATIONDATA
-  
+
   # @@protoc_insertion_point(class_scope:AndroidAppNotificationData)
 
-class InAppNotificationData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class InAppNotificationData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INAPPNOTIFICATIONDATA
-  
+
   # @@protoc_insertion_point(class_scope:InAppNotificationData)
 
-class LibraryDirtyData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class LibraryDirtyData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _LIBRARYDIRTYDATA
-  
+
   # @@protoc_insertion_point(class_scope:LibraryDirtyData)
 
-class Notification(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Notification(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _NOTIFICATION
-  
+
   # @@protoc_insertion_point(class_scope:Notification)
 
-class PurchaseDeclinedData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseDeclinedData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASEDECLINEDDATA
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseDeclinedData)
 
-class PurchaseRemovalData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseRemovalData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASEREMOVALDATA
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseRemovalData)
 
-class UserNotificationData(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class UserNotificationData(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _USERNOTIFICATIONDATA
-  
+
   # @@protoc_insertion_point(class_scope:UserNotificationData)
 
-class PlusOneResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PlusOneResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PLUSONERESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:PlusOneResponse)
 
-class RateSuggestedContentResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RateSuggestedContentResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RATESUGGESTEDCONTENTRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:RateSuggestedContentResponse)
 
-class AggregateRating(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AggregateRating(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _AGGREGATERATING
-  
+
   # @@protoc_insertion_point(class_scope:AggregateRating)
 
-class DirectPurchase(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DirectPurchase(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DIRECTPURCHASE
-  
+
   # @@protoc_insertion_point(class_scope:DirectPurchase)
 
-class ResolveLinkResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ResolveLinkResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RESOLVELINKRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:ResolveLinkResponse)
 
-class Payload(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Payload(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYLOAD
-  
+
   # @@protoc_insertion_point(class_scope:Payload)
 
-class PreFetch(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PreFetch(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PREFETCH
-  
+
   # @@protoc_insertion_point(class_scope:PreFetch)
 
-class ResponseWrapper(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ResponseWrapper(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RESPONSEWRAPPER
-  
+
   # @@protoc_insertion_point(class_scope:ResponseWrapper)
 
-class ServerCommands(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ServerCommands(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SERVERCOMMANDS
-  
+
   # @@protoc_insertion_point(class_scope:ServerCommands)
 
-class GetReviewsResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetReviewsResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETREVIEWSRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:GetReviewsResponse)
 
-class Review(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Review(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REVIEW
-  
+
   # @@protoc_insertion_point(class_scope:Review)
 
-class ReviewResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ReviewResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REVIEWRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:ReviewResponse)
 
-class RevokeResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RevokeResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REVOKERESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:RevokeResponse)
 
-class RelatedSearch(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RelatedSearch(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RELATEDSEARCH
-  
+
   # @@protoc_insertion_point(class_scope:RelatedSearch)
 
-class SearchResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SearchResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SEARCHRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:SearchResponse)
 
-class CorpusMetadata(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CorpusMetadata(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CORPUSMETADATA
-  
+
   # @@protoc_insertion_point(class_scope:CorpusMetadata)
 
-class Experiments(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class Experiments(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EXPERIMENTS
-  
+
   # @@protoc_insertion_point(class_scope:Experiments)
 
-class TocResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class TocResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _TOCRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:TocResponse)
 
-class UserSettings(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class UserSettings(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _USERSETTINGS
-  
+
   # @@protoc_insertion_point(class_scope:UserSettings)
 
-class AcceptTosResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AcceptTosResponse(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ACCEPTTOSRESPONSE
-  
+
   # @@protoc_insertion_point(class_scope:AcceptTosResponse)
 
-class AckNotificationsRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AckNotificationsRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ACKNOTIFICATIONSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:AckNotificationsRequestProto)
 
-class AckNotificationsResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AckNotificationsResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ACKNOTIFICATIONSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:AckNotificationsResponseProto)
 
-class AddressProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AddressProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ADDRESSPROTO
-  
+
   # @@protoc_insertion_point(class_scope:AddressProto)
 
-class AppDataProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AppDataProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _APPDATAPROTO
-  
+
   # @@protoc_insertion_point(class_scope:AppDataProto)
 
-class AppSuggestionProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AppSuggestionProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _APPSUGGESTIONPROTO
-  
+
   # @@protoc_insertion_point(class_scope:AppSuggestionProto)
 
-class AssetIdentifierProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AssetIdentifierProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ASSETIDENTIFIERPROTO
-  
+
   # @@protoc_insertion_point(class_scope:AssetIdentifierProto)
 
-class AssetsRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AssetsRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ASSETSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:AssetsRequestProto)
 
-class AssetsResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class AssetsResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _ASSETSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:AssetsResponseProto)
 
-class BillingEventRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BillingEventRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BILLINGEVENTREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:BillingEventRequestProto)
 
-class BillingEventResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BillingEventResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BILLINGEVENTRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:BillingEventResponseProto)
 
-class BillingParameterProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class BillingParameterProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _BILLINGPARAMETERPROTO
-  
+
   # @@protoc_insertion_point(class_scope:BillingParameterProto)
 
-class CarrierBillingCredentialsProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CarrierBillingCredentialsProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CARRIERBILLINGCREDENTIALSPROTO
-  
+
   # @@protoc_insertion_point(class_scope:CarrierBillingCredentialsProto)
 
-class CategoryProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CategoryProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CATEGORYPROTO
-  
+
   # @@protoc_insertion_point(class_scope:CategoryProto)
 
-class CheckForNotificationsRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CheckForNotificationsRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CHECKFORNOTIFICATIONSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:CheckForNotificationsRequestProto)
 
-class CheckForNotificationsResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CheckForNotificationsResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CHECKFORNOTIFICATIONSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:CheckForNotificationsResponseProto)
 
-class CheckLicenseRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CheckLicenseRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CHECKLICENSEREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:CheckLicenseRequestProto)
 
-class CheckLicenseResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CheckLicenseResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CHECKLICENSERESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:CheckLicenseResponseProto)
 
-class CommentsRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CommentsRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _COMMENTSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:CommentsRequestProto)
 
-class CommentsResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class CommentsResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _COMMENTSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:CommentsResponseProto)
 
-class ContentSyncRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class AssetInstallState(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class ContentSyncRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class AssetInstallState(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _CONTENTSYNCREQUESTPROTO_ASSETINSTALLSTATE
-    
+
     # @@protoc_insertion_point(class_scope:ContentSyncRequestProto.AssetInstallState)
-  
-  class SystemApp(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+
+  class SystemApp(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _CONTENTSYNCREQUESTPROTO_SYSTEMAPP
-    
+
     # @@protoc_insertion_point(class_scope:ContentSyncRequestProto.SystemApp)
   DESCRIPTOR = _CONTENTSYNCREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ContentSyncRequestProto)
 
-class ContentSyncResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ContentSyncResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _CONTENTSYNCRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ContentSyncResponseProto)
 
-class DataMessageProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DataMessageProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DATAMESSAGEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:DataMessageProto)
 
-class DownloadInfoProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class DownloadInfoProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _DOWNLOADINFOPROTO
-  
+
   # @@protoc_insertion_point(class_scope:DownloadInfoProto)
 
-class ExternalAssetProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class PurchaseInformation(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class ExternalAssetProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class PurchaseInformation(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _EXTERNALASSETPROTO_PURCHASEINFORMATION
-    
+
     # @@protoc_insertion_point(class_scope:ExternalAssetProto.PurchaseInformation)
-  
-  class ExtendedInfo(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
-    
-    class PackageDependency(message.Message):
-      __metaclass__ = reflection.GeneratedProtocolMessageType
+
+  class ExtendedInfo(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+    class PackageDependency(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
       DESCRIPTOR = _EXTERNALASSETPROTO_EXTENDEDINFO_PACKAGEDEPENDENCY
-      
+
       # @@protoc_insertion_point(class_scope:ExternalAssetProto.ExtendedInfo.PackageDependency)
     DESCRIPTOR = _EXTERNALASSETPROTO_EXTENDEDINFO
-    
+
     # @@protoc_insertion_point(class_scope:ExternalAssetProto.ExtendedInfo)
   DESCRIPTOR = _EXTERNALASSETPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ExternalAssetProto)
 
-class ExternalBadgeImageProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ExternalBadgeImageProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EXTERNALBADGEIMAGEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ExternalBadgeImageProto)
 
-class ExternalBadgeProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ExternalBadgeProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EXTERNALBADGEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ExternalBadgeProto)
 
-class ExternalCarrierBillingInstrumentProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ExternalCarrierBillingInstrumentProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EXTERNALCARRIERBILLINGINSTRUMENTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ExternalCarrierBillingInstrumentProto)
 
-class ExternalCommentProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ExternalCommentProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EXTERNALCOMMENTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ExternalCommentProto)
 
-class ExternalCreditCard(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ExternalCreditCard(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EXTERNALCREDITCARD
-  
+
   # @@protoc_insertion_point(class_scope:ExternalCreditCard)
 
-class ExternalPaypalInstrumentProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ExternalPaypalInstrumentProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _EXTERNALPAYPALINSTRUMENTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ExternalPaypalInstrumentProto)
 
-class FileMetadataProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class FileMetadataProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _FILEMETADATAPROTO
-  
+
   # @@protoc_insertion_point(class_scope:FileMetadataProto)
 
-class GetAddressSnippetRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetAddressSnippetRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETADDRESSSNIPPETREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetAddressSnippetRequestProto)
 
-class GetAddressSnippetResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetAddressSnippetResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETADDRESSSNIPPETRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetAddressSnippetResponseProto)
 
-class GetAssetRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetAssetRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETASSETREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetAssetRequestProto)
 
-class GetAssetResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class InstallAsset(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetAssetResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class InstallAsset(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _GETASSETRESPONSEPROTO_INSTALLASSET
-    
+
     # @@protoc_insertion_point(class_scope:GetAssetResponseProto.InstallAsset)
   DESCRIPTOR = _GETASSETRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetAssetResponseProto)
 
-class GetCarrierInfoRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetCarrierInfoRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETCARRIERINFOREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetCarrierInfoRequestProto)
 
-class GetCarrierInfoResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetCarrierInfoResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETCARRIERINFORESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetCarrierInfoResponseProto)
 
-class GetCategoriesRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetCategoriesRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETCATEGORIESREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetCategoriesRequestProto)
 
-class GetCategoriesResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetCategoriesResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETCATEGORIESRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetCategoriesResponseProto)
 
-class GetImageRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetImageRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETIMAGEREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetImageRequestProto)
 
-class GetImageResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetImageResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETIMAGERESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetImageResponseProto)
 
-class GetMarketMetadataRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetMarketMetadataRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETMARKETMETADATAREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetMarketMetadataRequestProto)
 
-class GetMarketMetadataResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetMarketMetadataResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETMARKETMETADATARESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetMarketMetadataResponseProto)
 
-class GetSubCategoriesRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetSubCategoriesRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _GETSUBCATEGORIESREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetSubCategoriesRequestProto)
 
-class GetSubCategoriesResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class SubCategory(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class GetSubCategoriesResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class SubCategory(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _GETSUBCATEGORIESRESPONSEPROTO_SUBCATEGORY
-    
+
     # @@protoc_insertion_point(class_scope:GetSubCategoriesResponseProto.SubCategory)
   DESCRIPTOR = _GETSUBCATEGORIESRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:GetSubCategoriesResponseProto)
 
-class InAppPurchaseInformationRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class InAppPurchaseInformationRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INAPPPURCHASEINFORMATIONREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:InAppPurchaseInformationRequestProto)
 
-class InAppPurchaseInformationResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class InAppPurchaseInformationResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INAPPPURCHASEINFORMATIONRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:InAppPurchaseInformationResponseProto)
 
-class InAppRestoreTransactionsRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class InAppRestoreTransactionsRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INAPPRESTORETRANSACTIONSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:InAppRestoreTransactionsRequestProto)
 
-class InAppRestoreTransactionsResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class InAppRestoreTransactionsResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _INAPPRESTORETRANSACTIONSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:InAppRestoreTransactionsResponseProto)
 
-class ModifyCommentRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ModifyCommentRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _MODIFYCOMMENTREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ModifyCommentRequestProto)
 
-class ModifyCommentResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ModifyCommentResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _MODIFYCOMMENTRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ModifyCommentResponseProto)
 
-class PaypalCountryInfoProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalCountryInfoProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALCOUNTRYINFOPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalCountryInfoProto)
 
-class PaypalCreateAccountRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalCreateAccountRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALCREATEACCOUNTREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalCreateAccountRequestProto)
 
-class PaypalCreateAccountResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalCreateAccountResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALCREATEACCOUNTRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalCreateAccountResponseProto)
 
-class PaypalCredentialsProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalCredentialsProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALCREDENTIALSPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalCredentialsProto)
 
-class PaypalMassageAddressRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalMassageAddressRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALMASSAGEADDRESSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalMassageAddressRequestProto)
 
-class PaypalMassageAddressResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalMassageAddressResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALMASSAGEADDRESSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalMassageAddressResponseProto)
 
-class PaypalPreapprovalCredentialsRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalPreapprovalCredentialsRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALPREAPPROVALCREDENTIALSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalPreapprovalCredentialsRequestProto)
 
-class PaypalPreapprovalCredentialsResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalPreapprovalCredentialsResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALPREAPPROVALCREDENTIALSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalPreapprovalCredentialsResponseProto)
 
-class PaypalPreapprovalDetailsRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalPreapprovalDetailsRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALPREAPPROVALDETAILSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalPreapprovalDetailsRequestProto)
 
-class PaypalPreapprovalDetailsResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalPreapprovalDetailsResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALPREAPPROVALDETAILSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalPreapprovalDetailsResponseProto)
 
-class PaypalPreapprovalRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalPreapprovalRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALPREAPPROVALREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalPreapprovalRequestProto)
 
-class PaypalPreapprovalResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PaypalPreapprovalResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PAYPALPREAPPROVALRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PaypalPreapprovalResponseProto)
 
-class PendingNotificationsProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PendingNotificationsProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PENDINGNOTIFICATIONSPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PendingNotificationsProto)
 
-class PrefetchedBundleProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PrefetchedBundleProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PREFETCHEDBUNDLEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PrefetchedBundleProto)
 
-class PurchaseCartInfoProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseCartInfoProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASECARTINFOPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseCartInfoProto)
 
-class PurchaseInfoProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class BillingInstruments(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
-    
-    class BillingInstrument(message.Message):
-      __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseInfoProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class BillingInstruments(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+    class BillingInstrument(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
       DESCRIPTOR = _PURCHASEINFOPROTO_BILLINGINSTRUMENTS_BILLINGINSTRUMENT
-      
+
       # @@protoc_insertion_point(class_scope:PurchaseInfoProto.BillingInstruments.BillingInstrument)
     DESCRIPTOR = _PURCHASEINFOPROTO_BILLINGINSTRUMENTS
-    
+
     # @@protoc_insertion_point(class_scope:PurchaseInfoProto.BillingInstruments)
   DESCRIPTOR = _PURCHASEINFOPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseInfoProto)
 
-class PurchaseMetadataRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseMetadataRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASEMETADATAREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseMetadataRequestProto)
 
-class PurchaseMetadataResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class Countries(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
-    
-    class Country(message.Message):
-      __metaclass__ = reflection.GeneratedProtocolMessageType
-      
-      class InstrumentAddressSpec(message.Message):
-        __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseMetadataResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class Countries(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+    class Country(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+      class InstrumentAddressSpec(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
         DESCRIPTOR = _PURCHASEMETADATARESPONSEPROTO_COUNTRIES_COUNTRY_INSTRUMENTADDRESSSPEC
-        
+
         # @@protoc_insertion_point(class_scope:PurchaseMetadataResponseProto.Countries.Country.InstrumentAddressSpec)
       DESCRIPTOR = _PURCHASEMETADATARESPONSEPROTO_COUNTRIES_COUNTRY
-      
+
       # @@protoc_insertion_point(class_scope:PurchaseMetadataResponseProto.Countries.Country)
     DESCRIPTOR = _PURCHASEMETADATARESPONSEPROTO_COUNTRIES
-    
+
     # @@protoc_insertion_point(class_scope:PurchaseMetadataResponseProto.Countries)
   DESCRIPTOR = _PURCHASEMETADATARESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseMetadataResponseProto)
 
-class PurchaseOrderRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseOrderRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASEORDERREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseOrderRequestProto)
 
-class PurchaseOrderResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseOrderResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASEORDERRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseOrderResponseProto)
 
-class PurchasePostRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class BillingInstrumentInfo(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchasePostRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class BillingInstrumentInfo(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _PURCHASEPOSTREQUESTPROTO_BILLINGINSTRUMENTINFO
-    
+
     # @@protoc_insertion_point(class_scope:PurchasePostRequestProto.BillingInstrumentInfo)
   DESCRIPTOR = _PURCHASEPOSTREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchasePostRequestProto)
 
-class PurchasePostResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchasePostResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASEPOSTRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchasePostResponseProto)
 
-class PurchaseProductRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseProductRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASEPRODUCTREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseProductRequestProto)
 
-class PurchaseProductResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseProductResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASEPRODUCTRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseProductResponseProto)
 
-class PurchaseResultProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class PurchaseResultProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _PURCHASERESULTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:PurchaseResultProto)
 
-class QuerySuggestionProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class QuerySuggestionProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _QUERYSUGGESTIONPROTO
-  
+
   # @@protoc_insertion_point(class_scope:QuerySuggestionProto)
 
-class QuerySuggestionRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class QuerySuggestionRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _QUERYSUGGESTIONREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:QuerySuggestionRequestProto)
 
-class QuerySuggestionResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class Suggestion(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class QuerySuggestionResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class Suggestion(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _QUERYSUGGESTIONRESPONSEPROTO_SUGGESTION
-    
+
     # @@protoc_insertion_point(class_scope:QuerySuggestionResponseProto.Suggestion)
   DESCRIPTOR = _QUERYSUGGESTIONRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:QuerySuggestionResponseProto)
 
-class RateCommentRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RateCommentRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RATECOMMENTREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RateCommentRequestProto)
 
-class RateCommentResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RateCommentResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RATECOMMENTRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RateCommentResponseProto)
 
-class ReconstructDatabaseRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ReconstructDatabaseRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RECONSTRUCTDATABASEREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ReconstructDatabaseRequestProto)
 
-class ReconstructDatabaseResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ReconstructDatabaseResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RECONSTRUCTDATABASERESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ReconstructDatabaseResponseProto)
 
-class RefundRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RefundRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REFUNDREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RefundRequestProto)
 
-class RefundResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RefundResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REFUNDRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RefundResponseProto)
 
-class RemoveAssetRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RemoveAssetRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REMOVEASSETREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RemoveAssetRequestProto)
 
-class RequestPropertiesProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RequestPropertiesProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REQUESTPROPERTIESPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RequestPropertiesProto)
 
-class RequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class Request(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class RequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class Request(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _REQUESTPROTO_REQUEST
-    
+
     # @@protoc_insertion_point(class_scope:RequestProto.Request)
   DESCRIPTOR = _REQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RequestProto)
 
-class RequestSpecificPropertiesProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RequestSpecificPropertiesProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _REQUESTSPECIFICPROPERTIESPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RequestSpecificPropertiesProto)
 
-class ResponsePropertiesProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class ResponsePropertiesProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RESPONSEPROPERTIESPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ResponsePropertiesProto)
 
-class ResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  
-  class Response(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
+class ResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
+  class Response(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
     DESCRIPTOR = _RESPONSEPROTO_RESPONSE
-    
+
     # @@protoc_insertion_point(class_scope:ResponseProto.Response)
   DESCRIPTOR = _RESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:ResponseProto)
 
-class RestoreApplicationsRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RestoreApplicationsRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RESTOREAPPLICATIONSREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RestoreApplicationsRequestProto)
 
-class RestoreApplicationsResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RestoreApplicationsResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RESTOREAPPLICATIONSRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RestoreApplicationsResponseProto)
 
-class RiskHeaderInfoProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class RiskHeaderInfoProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _RISKHEADERINFOPROTO
-  
+
   # @@protoc_insertion_point(class_scope:RiskHeaderInfoProto)
 
-class SignatureHashProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SignatureHashProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SIGNATUREHASHPROTO
-  
+
   # @@protoc_insertion_point(class_scope:SignatureHashProto)
 
-class SignedDataProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SignedDataProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SIGNEDDATAPROTO
-  
+
   # @@protoc_insertion_point(class_scope:SignedDataProto)
 
-class SingleRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SingleRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SINGLEREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:SingleRequestProto)
 
-class SingleResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class SingleResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _SINGLERESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:SingleResponseProto)
 
-class StatusBarNotificationProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class StatusBarNotificationProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _STATUSBARNOTIFICATIONPROTO
-  
+
   # @@protoc_insertion_point(class_scope:StatusBarNotificationProto)
 
-class UninstallReasonRequestProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class UninstallReasonRequestProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _UNINSTALLREASONREQUESTPROTO
-  
+
   # @@protoc_insertion_point(class_scope:UninstallReasonRequestProto)
 
-class UninstallReasonResponseProto(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
+class UninstallReasonResponseProto(message.Message, metaclass=reflection.GeneratedProtocolMessageType):
   DESCRIPTOR = _UNINSTALLREASONRESPONSEPROTO
-  
+
   # @@protoc_insertion_point(class_scope:UninstallReasonResponseProto)
 
 # @@protoc_insertion_point(module_scope)
