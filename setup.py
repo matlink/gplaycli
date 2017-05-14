@@ -4,7 +4,7 @@ import os
 exec(open('gplaycli/version.py').read())
 
 setup(name='GPlayCli',
-        version=__version__,
+        version='0.2.5',
         description='GPlayCli, a Google play downloader command line interface',
         author="Matlink",
         author_email="matlink@matlink.fr",
