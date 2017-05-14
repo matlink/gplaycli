@@ -65,6 +65,7 @@ class GPlaycli(object):
                 print 'Configuration file is %s' % credentials
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
+            self.logging = args.enable_logging
             self.token = args.token
             if self.token == True:
                 self.token_url = args.token_url
@@ -73,6 +74,11 @@ class GPlaycli(object):
                 self.token_url = self.config['token_url']
             if str(self.token) == 'True':
                 self.token = self.retrieve_token(self.token_url)
+
+            if self.logging:
+                self.success_logfile = "apps_downloaded.log"
+                self.failed_logfile  = "apps_failed.log"
+                self.unavail_logfile = "apps_not_available.log"
 
     def retrieve_token(self, token_url):
         if self.verbose:
@@ -204,7 +210,9 @@ class GPlaycli(object):
             sys.exit(0)
 
     def download_selection(self, playstore_api, list_of_packages_to_download, return_function):
-        failed_downloads = []
+        success_downloads = list()
+        failed_downloads  = list()
+        unavail_downloads = list()
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
@@ -229,11 +237,12 @@ class GPlaycli(object):
             # Download
             try:
                 data = playstore_api.download(packagename, vc, progress_bar=self.progress_bar)
+                success_downloads.append(packagename)
             except IndexError as exc:
                 print "Error while downloading %s : %s" % (packagename,
                                                            "this package does not exist, "
                                                            "try to search it via --search before")
-                failed_downloads.append((item, exc))
+                unavail_downloads.append((item, exc))
             except Exception as exc:
                 print "Error while downloading %s : %s" % (packagename, exc)
                 failed_downloads.append((item, exc))
@@ -249,8 +258,13 @@ class GPlaycli(object):
                     failed_downloads.append((item, exc))
             position += 1
 
-        failed_items = set([item[0] for item, error in failed_downloads])
+        success_items = set(success_downloads)
+        failed_items  = set([item[0] for item, error in failed_downloads])
+        unavail_items = set([item[0] for item, error in unavail_downloads])
         to_download_items = set([item[0] for item in list_of_packages_to_download])
+
+        self.write_logfiles(success_items, failed_items, unavail_items)
+
         return_function(failed_downloads)
         return to_download_items - failed_items
 
@@ -323,6 +337,22 @@ class GPlaycli(object):
         self.download_selection(self.playstore_api, [(pkg, None) for pkg in list_of_packages_to_download],
                                 self.after_download)
 
+    def write_logfiles(self, success, failed, unavail):
+        if len(success) != 0:
+            with open(self.success_logfile, 'w') as logfile:
+                for package in success:
+                    logfile.write('%s\n' % package)
+
+        if len(failed) != 0:
+            with open(self.failed_logfile, 'w') as logfile:
+                for package in failed:
+                    logfile.write('%s\n' % package)
+
+        if len(unavail) != 0:
+            with open(self.unavail_logfile, 'w') as logfile:
+                for package in unavail:
+                    logfile.write('%s\n' % package)
+
 
 def install_cronjob():
     import shutil
@@ -378,6 +408,8 @@ def main():
                         type=str, default=None, help="Use a different config file than credentials.conf")
     parser.add_argument('-p', '--progress', action='store_true', dest='progress_bar',
                         help='Prompt a progress bar while downloading packages')
+    parser.add_argument('-L', '--log', action='store_true', dest='enable_logging',
+                        help='Enable logging of apps status. Downloaded, failed, not available apps will be written in separate logging files')
     parser.add_argument('-ic', '--install-cronjob', action='store_true', dest='install_cronjob',
                         help='Interactively install cronjob for regular APKs update')
 
