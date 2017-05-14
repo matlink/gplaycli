@@ -28,7 +28,7 @@ def test_connection_credentials():
     assert error is None
     assert success == True
 
-def test_download_firefox():
+def test_download_duckduckgo():
     gpc.progress_bar = True
     gpc.config['download_folder_path'] = os.path.abspath('.')
-    gpc.download_packages(['org.mozilla.firefox'])
+    gpc.download_packages(['com.duckduckgo.mobile.android'])
