@@ -10,7 +10,8 @@ BUILDIR=$(CURDIR)/debian/gplaycli
 PROJECT=gplaycli
 VERSION=$(shell $(PYTHON) setup.py --version)
 GPGID=186BB3CA
-PYTEST=$(shell which pytest)
+PYTEST=$(shell which py.test)
+TESTAPK=org.mozilla.firefox
 
 all:
 	@echo "make source - Create source package"
@@ -43,3 +44,8 @@ clean:
 
 test:
 	$(PYTEST)
+	$(PROJECT) -d $(TESTAPK)
+	[ -f $(TESTAPK).apk ]
+	$(PROJECT) -d $(TESTAPK) -f download
+	[ -f download/$(TESTAPK).apk ]
+	$(PROJECT) -yu tests
