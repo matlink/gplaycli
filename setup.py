@@ -18,7 +18,6 @@ setup(name='GPlayCli',
             os.path.expanduser('~') + '/.config/gplaycli/',
             ['credentials.conf', 'cron/cronjob']
         ],
-    ],
     install_requires=[
         'requests >= 2.0.0',
         'protobuf',
