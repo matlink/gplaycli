@@ -15,15 +15,17 @@ setup(name='GPlayCli',
             'gplaycli/',
         ], 
         data_files=[
-            os.path.expanduser('~') + '/.config/gplaycli/',
-            ['credentials.conf', 'cron/cronjob']
+            [
+                os.path.expanduser('~')+'/.config/gplaycli/',
+                ['credentials.conf','cron/cronjob']
+            ],
         ],
-    install_requires=[
-        'requests >= 2.0.0',
-        'protobuf',
-        'ndg-httpsclient',
-        'pyaxmlparser',
-        'clint',
-        'pyasn1',
-    ],
+        install_requires=[
+            'requests >= 2.0.0',
+            'protobuf',
+            'ndg-httpsclient',
+            'pyaxmlparser',
+            'clint',
+            'pyasn1',
+        ],
 )
