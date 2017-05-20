@@ -86,6 +86,7 @@ class GPlaycli(object):
                 self.success_logfile = "apps_downloaded.log"
                 self.failed_logfile  = "apps_failed.log"
                 self.unavail_logfile = "apps_not_available.log"
+        self.auth_nb_tries = 3
 
     def retrieve_token(self, token_url):
         if self.verbose:
@@ -434,11 +435,14 @@ def main():
         sys.exit(install_cronjob())
 
     cli = GPlaycli(args, args.config)
-    success, error = cli.connect_to_googleplay_api()
-
-    if not success:
-        print "Cannot login to GooglePlay (", error, ")"
-        sys.exit(1)
+    success = False
+    while (not success) and (cli.auth_nb_tries > 0):
+        success, error = cli.connect_to_googleplay_api()
+        if not success:
+            cli.auth_nb_tries -= 1
+            print "Cannot login to GooglePlay ( %s ), remaining tries %s" % (error, cli.auth_nb_tries)
+        if cli.auth_nb_tries == 0:
+            sys.exit(1)
 
     if args.list:
         print cli.list_folder_apks(args.list)
