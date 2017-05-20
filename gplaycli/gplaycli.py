@@ -392,6 +392,8 @@ def install_cronjob():
     print('Cronjob installed at ' + frequence_file)
     return 0
 
+def load_from_file(filename):
+    return [ package.strip('\r\n') for package in open(filename).readlines() ]
 
 def main():
     parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
@@ -404,6 +406,8 @@ def main():
                         type=str, help="For the search option, returns the given number of matching applications")
     parser.add_argument('-d', '--download', action='store', dest='packages_to_download', metavar="AppID", nargs="+",
                         type=str, help="Download the Apps that map given AppIDs")
+    parser.add_argument('-F', '--file', action='store', dest='load_from_file', metavar="FILE",
+                        type=str, help="Load packages to download from file, one package per line")
     parser.add_argument('-u', '--update', action='store', dest='update_folder', metavar="FOLDER",
                         type=str, help="Update all APKs in a given folder")
     parser.add_argument('-f', '--folder', action='store', dest='dest_folder', metavar="FOLDER", nargs=1,
@@ -448,6 +452,9 @@ def main():
         if args.number_results:
             nb_results = args.number_results
         cli.search(list(), args.search_string, nb_results)
+
+    if args.load_from_file:
+        args.packages_to_download = load_from_file(args.load_from_file)
 
     if args.packages_to_download is not None:
         if args.dest_folder is not None:
