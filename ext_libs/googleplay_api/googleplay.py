@@ -21,7 +21,7 @@ ssl_verify="/etc/ssl/certs/ca-certificates.crt"
 conn_test_url="https://android.clients.google.com"
 try:
     requests.post(conn_test_url, verify=ssl_verify)
-except SSLError as e:
+except (SSLError, IOError) as e:
     ssl_verify=True
     requests.post(conn_test_url, verify=ssl_verify)
 
