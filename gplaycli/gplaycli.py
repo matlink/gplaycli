@@ -27,6 +27,13 @@ from ext_libs.googleplay_api.googleplay import LoginError
 from androguard.core.bytecodes import apk as androguard_apk  # Androguard
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
+try:
+    import keyring
+    HAVE_KEYRING = True
+except ImportError:
+    HAVE_KEYRING = False
+
+import ext_libs.googleplay_api.googleplay
 
 try:
     __version__ = get_distribution('gplaycli').version
@@ -109,7 +116,13 @@ class GPlaycli(object):
             if self.token is False:
                 if self.verbose:
                     print "Using credentials to connect to API"
-                api.login(self.config["gmail_address"], self.config["gmail_password"], None)
+                username = self.config["gmail_address"]
+                passwd = None
+                if HAVE_KEYRING and self.config.get("keyring_service") is not None:
+                    passwd = str(keyring.get_password(self.config["keyring_service"], username))
+                if passwd is None:
+                    passwd = self.config["gmail_password"]
+                api.login(username, passwd, None)
             else:
                 if self.verbose:
                     print "Using token to connect to API"
