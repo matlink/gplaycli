@@ -88,6 +88,7 @@ class GPlaycli(object):
             self.set_download_folder(args.update_folder)
             self.logging = args.enable_logging
             self.token = args.token
+            self.retries = int(self.config["retries"])
             if self.token == True:
                 self.token_url = args.token_url
             if self.token == False and 'token' in self.config and self.config['token'] == 'True':
@@ -454,8 +455,13 @@ def main():
     cli = GPlaycli(args, args.config)
     success, error = cli.connect_to_googleplay_api()
 
+    while not success and cli.retries != 0:
+        logging(cli, "Bad auth. Retrying ... %s retries left" % cli.retries)
+        cli.retries -= 1
+        success, error = cli.connect_to_googleplay_api()
+
     if not success:
-        print "Cannot login to GooglePlay (", error, ")"
+        logging(cli, "Cannot login to GooglePlay ( %s )" % error)
         sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
