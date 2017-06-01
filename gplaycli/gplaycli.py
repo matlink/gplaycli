@@ -22,6 +22,7 @@ import argparse
 import ConfigParser
 import time
 import requests
+from enum import IntEnum
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from androguard.core.bytecodes import apk as androguard_apk  # Androguard
@@ -39,6 +40,13 @@ try:
     __version__ = get_distribution('gplaycli').version
 except DistributionNotFound:
     __version__ = 'unknown: gplaycli not installed (version in setup.py)'
+
+
+class ERRORS(IntEnum):
+    OK = 0
+    TOKEN_DISPENSER_AUTH_ERROR = 5
+    KEYRING_NOT_INSTALLED = 10
+    CANNOT_LOGIN_GPLAY = 15
 
 class GPlaycli(object):
     def __init__(self, args=None, credentials=None):
@@ -74,9 +82,8 @@ class GPlaycli(object):
         else:
             self.yes = args.yes_to_all
             self.verbose = args.verbose
-            if self.verbose:
-                print 'GPlayCli version %s' % __version__
-                print 'Configuration file is %s' % credentials
+            logging(self, 'GPlayCli version %s' % __version__)
+            logging(self, 'Configuration file is %s' % credentials)
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
             self.logging = args.enable_logging
@@ -95,15 +102,13 @@ class GPlaycli(object):
                 self.unavail_logfile = "apps_not_available.log"
 
     def retrieve_token(self, token_url):
-        if self.verbose:
-            print "Retrieving token ..."
+        logging(self, "Retrieving token ...")
         r = requests.get(token_url)
         token = r.text
-        if self.verbose:
-            print "Token:", token
+        logging(self, "Token: %s" % token)
         if token == 'Auth error':
             print 'Token dispenser auth error, probably too many connections'
-            sys.exit(1)
+            sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
         return token
 
     def set_download_folder(self, folder):
@@ -114,18 +119,20 @@ class GPlaycli(object):
         error = None
         try:
             if self.token is False:
-                if self.verbose:
-                    print "Using credentials to connect to API"
+                logging(self, "Using credentials to connect to API")
                 username = self.config["gmail_address"]
                 passwd = None
-                if HAVE_KEYRING and self.config.get("keyring_service") is not None:
-                    passwd = str(keyring.get_password(self.config["keyring_service"], username))
-                if passwd is None:
+                if self.config["gmail_password"]:
+                    logging(self, "Using plaintext password")
                     passwd = self.config["gmail_password"]
+                elif self.config["keyring_service"] and HAVE_KEYRING == True:
+                    passwd = keyring.get_password(self.config["keyring_service"], username)
+                elif self.config["keyring_service"] and HAVE_KEYRING == False:
+                    print "You asked for keyring service but keyring package is not installed"
+                    sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
                 api.login(username, passwd, None)
             else:
-                if self.verbose:
-                    print "Using token to connect to API"
+                logging(self, "Using token to connect to API")
                 api.login(None, None, self.token)
         except LoginError, exc:
             error = exc.value
@@ -166,8 +173,7 @@ class GPlaycli(object):
         list_of_apks = [filename for filename in os.listdir(download_folder_path) if
                         os.path.splitext(filename)[1] == ".apk"]
         if len(list_of_apks) > 0:
-            if self.verbose:
-                print "Checking apks ..."
+            logging(self, "Checking apks ...")
             self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path,
                                     self.prepare_download_updates)
 
@@ -184,8 +190,7 @@ class GPlaycli(object):
         # Get APK info from store
         details = playstore_api.bulkDetails(package_bunch)
         for detail, packagename, filename in zip(details.entry, package_bunch, list_of_apks):
-            if self.verbose:
-                print "Analyzing %s" % packagename
+            logging(self, "Analyzing %s" % packagename)
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
             a = androguard_apk.APK(filepath)
@@ -217,8 +222,7 @@ class GPlaycli(object):
                 return_value = raw_input('y/n ?')
 
             if self.yes or return_value == 'y':
-                if self.verbose:
-                    print "Downloading ..."
+                logging(self, "Downloading ...")
                 downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download,
                                                               self.after_download)
                 return_string = str()
@@ -227,7 +231,7 @@ class GPlaycli(object):
                 print "Updated: " + return_string[:-1]
         else:
             print "Everything is up to date !"
-            sys.exit(0)
+            sys.exit(ERRORS.OK)
 
     def download_selection(self, playstore_api, list_of_packages_to_download, return_function):
         success_downloads = list()
@@ -240,8 +244,8 @@ class GPlaycli(object):
         position = 1
         for detail, item in zip(details.entry, list_of_packages_to_download):
             packagename, filename = item
-            if self.verbose:
-                print str(position) + "/" + str(len(list_of_packages_to_download)), packagename
+
+            logging(self, "%s / %s %s" % (position, len(list_of_packages_to_download), packagename))
 
             # Check for download folder
             download_folder_path = self.config["download_folder_path"]
@@ -403,7 +407,12 @@ def install_cronjob():
     st = os.stat(frequence_file)
     os.chmod(frequence_file, st.st_mode | stat.S_IEXEC)
     print('Cronjob installed at ' + frequence_file)
-    return 0
+    return ERRORS.OK
+
+
+def logging(gpc, message):
+    if gpc.verbose:
+        print message
 
 
 def main():
@@ -447,7 +456,7 @@ def main():
 
     if not success:
         print "Cannot login to GooglePlay (", error, ")"
-        sys.exit(1)
+        sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
         print cli.list_folder_apks(args.list)
