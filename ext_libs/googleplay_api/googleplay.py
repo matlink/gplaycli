@@ -220,7 +220,7 @@ class GooglePlayAPI(object):
         req = googleplay_pb2.BulkDetailsRequest()
         req.docid.extend(packageNames)
         data = req.SerializeToString()
-        message = self.executeRequestApi2(path, data, "application/x-protobuf")
+        message = self.executeRequestApi2(path, data.decode("utf-8"), "application/x-protobuf")
         return message.payload.bulkDetailsResponse
 
     def browse(self, cat=None, ctr=None):
