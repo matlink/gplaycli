@@ -168,7 +168,7 @@ class GPlaycli(object):
         for position, filename in enumerate(list_of_apks):
             filepath = os.path.join(download_folder_path, filename)
             a = APK(filepath)
-            packagename = a.package()
+            packagename = a.package
             package_bunch.append(packagename)
 
         # BulkDetails requires only one HTTP request
@@ -180,7 +180,7 @@ class GPlaycli(object):
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
             a = APK(filepath)
-            apk_version_code = a.version_code()
+            apk_version_code = a.version_code
             m = detail
             doc = m.doc
             store_version_code = doc.details.appDetails.versionCode

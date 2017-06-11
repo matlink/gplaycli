@@ -193,7 +193,7 @@ class GooglePlayAPI(object):
         self._try_register_preFetch(message)
 
         # Debug
-        print(text_format.MessageToString(message))
+        #print(text_format.MessageToString(message))
         return message
 
     #####################################
