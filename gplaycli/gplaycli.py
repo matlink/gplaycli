@@ -322,9 +322,7 @@ class GPlaycli(object):
 
     def search(self, results_list, search_string, nb_results, free_only=True, include_headers=True):
         results = self.raw_search(results_list, search_string, nb_results)
-        if len(results) > 0:
-            results = results[0].child
-        else:
+        if len(results) < 1:
             print "No result"
             return
         all_results = list()
@@ -333,19 +331,20 @@ class GPlaycli(object):
             col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
             all_results.append(col_names)
         # Compute results values
-        for result in results:
-            if free_only and result.offer[0].checkoutFlowRequired:  # if not Free to download
-                continue
-            l = [result.title,
-                 result.creator,
-                 self.sizeof_fmt(result.details.appDetails.installationSize),
-                 result.details.appDetails.numDownloads,
-                 result.details.appDetails.uploadDate,
-                 result.docid,
-                 result.details.appDetails.versionCode,
-                 "%.2f" % result.aggregateRating.starRating
-                 ]
-            all_results.append(l)
+        for docs in results:
+            for result in docs.child:
+                if free_only and result.offer[0].checkoutFlowRequired:  # if not Free to download
+                    continue
+                l = [result.title,
+                     result.creator,
+                     self.sizeof_fmt(result.details.appDetails.installationSize),
+                     result.details.appDetails.numDownloads,
+                     result.details.appDetails.uploadDate,
+                     result.docid,
+                     result.details.appDetails.versionCode,
+                     "%.2f" % result.aggregateRating.starRating
+                     ]
+                all_results.append(l)
 
         if self.verbose:
             # Print a nice table
