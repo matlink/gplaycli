@@ -200,7 +200,16 @@ class GooglePlayAPI(object):
             path += "&o=%d" % int(offset)
 
         message = self.executeRequestApi2(path)
-        return message.payload.searchResponse
+
+        messagenext = message
+        allmessages = message
+        for i in range(0, int(nb_results), 10):
+            pathnext = messagenext.payload.searchResponse.doc[0].containerMetadata.nextPageUrl
+            messagenext = self.executeRequestApi2(pathnext)
+            allmessages.MergeFrom(messagenext)
+
+        
+        return allmessages.payload.searchResponse
 
     def details(self, packageName):
         """Get app details from a package name.
