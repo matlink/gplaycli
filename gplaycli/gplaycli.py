@@ -344,7 +344,8 @@ class GPlaycli(object):
                      result.details.appDetails.versionCode,
                      "%.2f" % result.aggregateRating.starRating
                      ]
-                all_results.append(l)
+                if len(all_results) < int(nb_results):
+                    all_results.append(l)
 
         if self.verbose:
             # Print a nice table
