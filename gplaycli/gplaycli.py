@@ -291,7 +291,7 @@ class GPlaycli(object):
         if self.logging:
             self.write_logfiles(success_items, failed_items, unavail_items)
 
-        return_function(failed_downloads)
+        return_function(failed_downloads + unavail_downloads)
         return to_download_items - failed_items
 
     def after_download(self, failed_downloads):
