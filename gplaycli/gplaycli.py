@@ -72,7 +72,7 @@ class GPlaycli(object):
             self.config[key] = value
 
         # default settings, ie for API calls
-        if args == None:
+        if args is None:
             self.yes = False
             self.verbose = False
             self.progress_bar = False
