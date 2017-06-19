@@ -43,9 +43,10 @@ clean:
 	find . -name '*.pyc' -delete
 
 test:
-	$(PYTEST)
+	$(PYTEST) tests/
 	$(PROJECT) -d $(TESTAPK)
 	[ -f $(TESTAPK).apk ]
 	$(PROJECT) -d $(TESTAPK) -f download
 	[ -f download/$(TESTAPK).apk ]
 	$(PROJECT) -yu tests
+	[[ `$(PROJECT) -s firefox -n 44 | wc -l` -eq 45 ]]
