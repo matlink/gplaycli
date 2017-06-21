@@ -203,6 +203,8 @@ class GooglePlayAPI(object):
         while remaining > 0:
             pathnext = messagenext.payload.searchResponse.doc[0].containerMetadata.nextPageUrl
             messagenext = self.executeRequestApi2(pathnext)
+            if len(messagenext.payload.searchResponse.doc) <= 0:
+                    break
             remaining -= len(messagenext.payload.searchResponse.doc[0].child)
             allmessages.MergeFrom(messagenext)
         return allmessages.payload.searchResponse
