@@ -1,7 +1,7 @@
 # $Id: Makefile,v 1.6 2015/08/24 22:00:00 Matlink Exp $
 #
 SHELL := /bin/bash
-PYTHON=$(shell which python3)
+PYTHON=$(shell which python2)
 GIT=$(shell which git)
 GPG=$(shell which gpg)
 TWINE=$(shell which twine)
