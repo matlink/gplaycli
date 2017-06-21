@@ -44,11 +44,11 @@ clean:
 
 test:
 	$(PYTEST) tests/
-	$(PROJECT) -d $(TESTAPK)
+	$(PROJECT) -vd $(TESTAPK)
 	[ -f $(TESTAPK).apk ]
-	$(PROJECT) -d $(TESTAPK) -f download
+	$(PROJECT) -vd $(TESTAPK) -f download
 	[ -f download/$(TESTAPK).apk ]
-	$(PROJECT) -yu tests
+	$(PROJECT) -vyu tests
 	[[ `$(PROJECT) -s firefox -n 44 | wc -l` -eq 45 ]]
 	`$(PROJECT) -s com.yogavpn
 	`$(PROJECT) -s com.yogavpn -n 15
