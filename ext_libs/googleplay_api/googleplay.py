@@ -194,18 +194,13 @@ class GooglePlayAPI(object):
     def search(self, query, nb_results=None, offset=None):
         """Search for apps."""
         path = "search?c=3&q=%s" % requests.utils.quote(query) # TODO handle categories
+        if (nb_results is not None):
+            path += "&n=%d" % int(nb_results)
         if (offset is not None):
             path += "&o=%d" % int(offset)
+
         message = self.executeRequestApi2(path)
-        remaining = int(nb_results) - len(message.payload.searchResponse.doc[0].child)
-        messagenext = message
-        allmessages = message
-        while remaining > 0:
-            pathnext = messagenext.payload.searchResponse.doc[0].containerMetadata.nextPageUrl
-            messagenext = self.executeRequestApi2(pathnext)
-            remaining -= len(messagenext.payload.searchResponse.doc[0].child)
-            allmessages.MergeFrom(messagenext)
-        return allmessages.payload.searchResponse
+        return message.payload.searchResponse
 
     def details(self, packageName):
         """Get app details from a package name.
