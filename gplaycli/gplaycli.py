@@ -72,6 +72,8 @@ class GPlaycli(object):
         for key, value in self.configparser.items("Credentials"):
             self.config[key] = value
 
+        self.tokencachefile = os.path.expanduser( self.configparser.get("Cache", "token") )
+
         # default settings, ie for API calls
         if args is None:
             self.yes = False
@@ -103,7 +105,31 @@ class GPlaycli(object):
                 self.failed_logfile  = "apps_failed.log"
                 self.unavail_logfile = "apps_not_available.log"
 
+    def get_cached_token(self, tokencachefile):
+        try:
+            with open(tokencachefile, 'r') as tcf:
+                token = tcf.readline()
+        except IOError: # cache file does not exists
+            token = None
+        return token
+
+    def write_cached_token(self, tokencachefile, token):
+        try:
+            # creates cachefir if not exists
+            cachedir = os.path.dirname(tokencachefile)
+            if not os.path.exists(cachedir):
+                os.mkdir(cachedir)
+            with open(tokencachefile, 'w') as tcf:
+                tcf.write(token)
+        except IOError as e:
+            raise IOError("Failed to write token to cache file: %s %s" % (tokencachefile, e.strerror))
+
+
     def retrieve_token(self, token_url):
+        token = self.get_cached_token(self.tokencachefile)
+        if token is not None:
+            logging(self, "Using cached token.")
+            return token
         logging(self, "Retrieving token ...")
         r = requests.get(token_url)
         token = r.text
@@ -114,6 +140,7 @@ class GPlaycli(object):
         elif token == "Server error":
             print 'Token dispenser server error'
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
+        self.write_cached_token(self.tokencachefile, token)
         return token
 
     def set_download_folder(self, folder):
