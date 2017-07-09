@@ -109,6 +109,8 @@ class GPlaycli(object):
         try:
             with open(tokencachefile, 'r') as tcf:
                 token = tcf.readline()
+                if len(token) == 0:
+                    token = None
         except IOError: # cache file does not exists
             token = None
         return token
@@ -125,9 +127,9 @@ class GPlaycli(object):
             raise IOError("Failed to write token to cache file: %s %s" % (tokencachefile, e.strerror))
 
 
-    def retrieve_token(self, token_url):
+    def retrieve_token(self, token_url, force_new=False):
         token = self.get_cached_token(self.tokencachefile)
-        if token is not None:
+        if token is not None and not force_new:
             logging(self, "Using cached token.")
             return token
         logging(self, "Retrieving token ...")
@@ -171,6 +173,12 @@ class GPlaycli(object):
             success = False
         else:
             self.playstore_api = api
+            try:
+                self.raw_search(list(), 'firefox', 1)
+            except ValueError as ve: # invalid token
+                logging(self, "Token has expired or is invalid. Retrieving a new one...")
+                self.token = self.retrieve_token(self.token_url, force_new=True)
+                api.login(None, None, self.token)
             success = True
         return success, error
 
