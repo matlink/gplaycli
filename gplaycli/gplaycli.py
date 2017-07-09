@@ -142,6 +142,7 @@ class GPlaycli(object):
         elif token == "Server error":
             print 'Token dispenser server error'
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
+        self.token = token
         self.write_cached_token(self.tokencachefile, token)
         return token
 
@@ -177,7 +178,7 @@ class GPlaycli(object):
                 self.raw_search(list(), 'firefox', 1)
             except ValueError as ve: # invalid token
                 logging(self, "Token has expired or is invalid. Retrieving a new one...")
-                self.token = self.retrieve_token(self.token_url, force_new=True)
+                self.retrieve_token(self.token_url, force_new=True)
                 api.login(None, None, self.token)
             success = True
         return success, error
