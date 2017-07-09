@@ -3,7 +3,7 @@
 SHELL := /bin/bash
 PYTHON=$(shell which python2)
 GIT=$(shell which git)
-GPG=$(shell which gpg)
+GPG=$(shell which gpg2)
 TWINE=$(shell which twine)
 DESTDIR=/
 BUILDIR=$(CURDIR)/debian/gplaycli
