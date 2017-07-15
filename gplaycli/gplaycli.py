@@ -66,7 +66,10 @@ class GPlaycli(object):
                     raise OSError("No configuration file found at %s" % cred_paths_list)
             credentials = tmp_list[0]
 
-        self.configparser = ConfigParser.ConfigParser({"retries": "10"})
+        default_values = {
+            "retries": 10,
+        }
+        self.configparser = ConfigParser.ConfigParser(default_values)
         self.configparser.read(credentials)
         self.config = dict()
         for key, value in self.configparser.items("Credentials"):
