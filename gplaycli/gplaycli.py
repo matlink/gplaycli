@@ -55,9 +55,9 @@ class GPlaycli(object):
         if credentials is None:
             # default local user configs
             cred_paths_list = [
-                'credentials.conf',
-                os.path.expanduser("~")+'/.config/gplaycli/credentials.conf',
-                '/etc/gplaycli/credentials.conf'
+                'gplaycli.conf',
+                os.path.expanduser("~")+'/.config/gplaycli/gplaycli.conf',
+                '/etc/gplaycli/gplaycli.conf'
             ]
             tmp_list = list(cred_paths_list)
             while not os.path.isfile(tmp_list[0]):
@@ -426,8 +426,8 @@ class GPlaycli(object):
 def install_cronjob():
     import shutil
     import stat
-    cred_default = '/etc/gplaycli/credentials.conf'
-    credentials = raw_input('path to credentials.conf? let empty for ' + cred_default + '\n') or cred_default
+    cred_default = '/etc/gplaycli/gplaycli.conf'
+    credentials = raw_input('path to gplaycli.conf? let empty for ' + cred_default + '\n') or cred_default
     fold_default = '/opt/apks'
     folder_to_update = raw_input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
     frequence = raw_input('update it [d]aily or [w]eekly?\n')
@@ -483,7 +483,7 @@ def main():
                         type=str, default="DEFAULT_URL", help="Use the given tokendispenser URL to retrieve a token")
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Be verbose')
     parser.add_argument('-c', '--config', action='store', dest='config', metavar="CONF_FILE", nargs=1,
-                        type=str, default=None, help="Use a different config file than credentials.conf")
+                        type=str, default=None, help="Use a different config file than gplaycli.conf")
     parser.add_argument('-p', '--progress', action='store_true', dest='progress_bar',
                         help='Prompt a progress bar while downloading packages')
     parser.add_argument('-L', '--log', action='store_true', dest='enable_logging', default=False,
