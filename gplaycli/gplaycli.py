@@ -179,7 +179,7 @@ class GPlaycli(object):
             self.playstore_api = api
             try:
                 self.raw_search(list(), 'firefox', 1)
-            except ValueError as ve: # invalid token
+            except (ValueError, IndexError) as ve: # invalid token or expired
                 logging(self, "Token has expired or is invalid. Retrieving a new one...")
                 self.retrieve_token(self.token_url, force_new=True)
                 api.login(None, None, self.token)
