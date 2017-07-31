@@ -21,7 +21,7 @@ ssl_verify="/etc/ssl/certs/ca-certificates.crt"
 conn_test_url="https://android.clients.google.com"
 try:
     requests.post(conn_test_url, verify=ssl_verify)
-except SSLError as e:
+except (SSLError, IOError) as e:
     ssl_verify=True
     requests.post(conn_test_url, verify=ssl_verify)
 
@@ -194,13 +194,20 @@ class GooglePlayAPI(object):
     def search(self, query, nb_results=None, offset=None):
         """Search for apps."""
         path = "search?c=3&q=%s" % requests.utils.quote(query) # TODO handle categories
-        if (nb_results is not None):
-            path += "&n=%d" % int(nb_results)
         if (offset is not None):
             path += "&o=%d" % int(offset)
-
         message = self.executeRequestApi2(path)
-        return message.payload.searchResponse
+        remaining = int(nb_results) - len(message.payload.searchResponse.doc[0].child)
+        messagenext = message
+        allmessages = message
+        while remaining > 0:
+            pathnext = messagenext.payload.searchResponse.doc[0].containerMetadata.nextPageUrl
+            messagenext = self.executeRequestApi2(pathnext)
+            if len(messagenext.payload.searchResponse.doc) <= 0:
+                    break
+            remaining -= len(messagenext.payload.searchResponse.doc[0].child)
+            allmessages.MergeFrom(messagenext)
+        return allmessages.payload.searchResponse
 
     def details(self, packageName):
         """Get app details from a package name.
