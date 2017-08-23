@@ -466,6 +466,7 @@ def load_from_file(filename):
 
 def main():
     parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
+    parser.add_argument('-V', '--version', action='store_true', dest='version', help='Print version number and exit')
     parser.add_argument('-y', '--yes', action='store_true', dest='yes_to_all', help='Say yes to all prompted questions')
     parser.add_argument('-l', '--list', action='store', dest='list', metavar="FOLDER",
                         type=str, help="List APKS in the given folder, with details")
@@ -499,6 +500,10 @@ def main():
         sys.argv.append("-h")
 
     args = parser.parse_args()
+
+    if args.version:
+        print __version__
+        return
 
     if args.install_cronjob:
         sys.exit(install_cronjob())
