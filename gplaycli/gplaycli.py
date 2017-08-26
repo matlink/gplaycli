@@ -260,9 +260,10 @@ class GPlaycli(object):
             for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
                 message += u"\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
                 list_of_packages_to_download.append([packagename, filename])
-            message += "\n\nDo you agree?"
+            message += "\n"
             print message
             if not self.yes:
+                print "\nDo you agree?"
                 return_value = raw_input('y/n ?')
 
             if self.yes or return_value == 'y':
