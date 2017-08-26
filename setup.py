@@ -2,7 +2,7 @@ from setuptools import setup, Command
 import os
 
 setup(name='GPlayCli',
-        version='0.2.10',
+        version='0.2.11',
         description='GPlayCli, a Google play downloader command line interface',
         author="Matlink",
         author_email="matlink@matlink.fr",
