@@ -130,7 +130,7 @@ class GooglePlayAPI(object):
                                 "device_country": "fr",
                                 "operatorCountry": "fr",
                                 "lang": "fr",
-                                "sdk_version": "19"}
+                                "sdk_version": "24"}
             headers = {
                 "Accept-Encoding": "",
             }
@@ -159,7 +159,7 @@ class GooglePlayAPI(object):
                                     "X-DFE-Device-Id": self.androidId,
                                     "X-DFE-Client-Id": "am-android-google",
                                     #"X-DFE-Logging-Id": self.loggingId2, # Deprecated?
-                                    "User-Agent": "Android-Finsky/4.4.3 (api=3,versionCode=8013013,sdk=19,device=hammerhead,hardware=hammerhead,product=hammerhead)",
+                                    "User-Agent": "Android-Finsky/4.4.3 (api=3,versionCode=8013013,sdk=24,device=angler,hardware=angler,product=angler)",
                                     "X-DFE-SmallestScreenWidthDp": "335",
                                     "X-DFE-Filter-Level": "3",
                                     "Accept-Encoding": "",
