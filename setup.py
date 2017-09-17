@@ -24,5 +24,6 @@ setup(name='GPlayCli',
                 'androguard',
                 'clint',
 		'pyasn1',
+                'pycrypto',
         ],
     )
