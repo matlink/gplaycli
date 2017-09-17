@@ -5,6 +5,7 @@ import gzip
 import pprint
 import StringIO
 import requests
+import struct
 
 from google.protobuf import descriptor
 from google.protobuf.internal.containers import RepeatedCompositeFieldContainer
@@ -12,6 +13,10 @@ from google.protobuf import text_format
 from google.protobuf.message import Message, DecodeError
 
 from OpenSSL.SSL import Error as SSLError
+from Crypto.Util import asn1
+from Crypto.PublicKey import RSA
+from Crypto.Hash import SHA
+from Crypto.Cipher import PKCS1_OAEP
 
 import googleplay_pb2
 import config
@@ -24,6 +29,8 @@ try:
 except (SSLError, IOError) as e:
     ssl_verify=True
     requests.post(conn_test_url, verify=ssl_verify)
+
+GOOGLE_PUBKEY   = "AAAAgMom/1a/v0lblO2Ubrt60J2gcuXSljGFQXgcyZWveWLEwo6prwgi3iJIZdodyhKZQrNWp5nKJ3srRXcUW+F1BD3baEVGcmEgqaLZUNBjm057pKRI16kB0YppeGx5qIQ5QjKzsR8ETQbKLNWgRY0QRNVz34kMJR3P/LgHax/6rmf5AAAAAwEAAQ=="
 
 
 class LoginError(Exception):
@@ -65,6 +72,43 @@ class GooglePlayAPI(object):
         self.androidId = androidId
         self.lang = lang
         self.debug = debug
+
+
+    def encrypt_password(self, login, passwd):
+        """Encrypt the password using the google publickey, using
+        the RSA encryption algorithm"""
+
+        def readInt(byteArray, start):
+            """Read the byte array, starting from *start* position,
+            as an 32-bit unsigned integer"""
+            return struct.unpack("!L", byteArray[start:][0:4])[0]
+
+
+        def toBigInt(byteArray):
+            """Convert the byte array to a BigInteger"""
+            array = byteArray[::-1] # reverse array
+            out = 0
+            for key, value in enumerate(array):
+                decoded = struct.unpack("B", value)[0]
+                out = out | decoded << key*8
+            return out
+
+        binaryKey = base64.b64decode(GOOGLE_PUBKEY)
+        i = readInt(binaryKey, 0)
+        modulus = toBigInt(binaryKey[4:][0:i])
+        j = readInt(binaryKey, i+4)
+        exponent = toBigInt(binaryKey[i+8:][0:j])
+
+        seq = asn1.DerSequence()
+        seq.append(modulus)
+        seq.append(exponent)
+
+        publicKey = RSA.importKey(seq.encode())
+        cipher = PKCS1_OAEP.new(publicKey)
+        combined = login.encode() + b'\x00' + passwd.encode()
+        encrypted = cipher.encrypt(combined)
+        h = b'\x00' + SHA.new(binaryKey).digest()[0:4]
+        return base64.urlsafe_b64encode(h + encrypted)
 
     def toDict(self, protoObj):
         """Converts the (protobuf) result from an API call into a dict, for
@@ -118,19 +162,20 @@ class GooglePlayAPI(object):
         else:
             if (email is None or password is None):
                 raise Exception("You should provide at least authSubToken or (email and password)")
+	    encryptedPass = self.encrypt_password(email, password).decode('utf-8')
             params = {"Email": email,
-                                "Passwd": password,
-                                "service": self.SERVICE,
-                                "accountType": self.ACCOUNT_TYPE_HOSTED_OR_GOOGLE,
-                                "has_permission": "1",
-                                "source": "android",
-                                "androidId": self.androidId,
-                                "app": "com.android.vending",
-                                #"client_sig": self.client_sig,
-                                "device_country": "fr",
-                                "operatorCountry": "fr",
-                                "lang": "fr",
-                                "sdk_version": "19"}
+                      "EncryptedPasswd": encryptedPass,
+                       "service": self.SERVICE,
+                       "accountType": self.ACCOUNT_TYPE_HOSTED_OR_GOOGLE,
+                       "has_permission": "1",
+                       "source": "android",
+                       "androidId": self.androidId,
+                       "app": "com.android.vending",
+                       #"client_sig": self.client_sig,
+                       "device_country": "fr",
+                       "operatorCountry": "fr",
+                       "lang": "fr",
+                       "sdk_version": "19"}
             headers = {
                 "Accept-Encoding": "",
             }
