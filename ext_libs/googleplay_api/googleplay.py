@@ -165,17 +165,17 @@ class GooglePlayAPI(object):
 	    encryptedPass = self.encrypt_password(email, password).decode('utf-8')
             params = {"Email": email,
                       "EncryptedPasswd": encryptedPass,
-                       "service": self.SERVICE,
-                       "accountType": self.ACCOUNT_TYPE_HOSTED_OR_GOOGLE,
-                       "has_permission": "1",
-                       "source": "android",
-                       "androidId": self.androidId,
-                       "app": "com.android.vending",
-                       #"client_sig": self.client_sig,
-                       "device_country": "fr",
-                       "operatorCountry": "fr",
-                       "lang": "fr",
-                       "sdk_version": "19"}
+                      "service": self.SERVICE,
+                      "accountType": self.ACCOUNT_TYPE_HOSTED_OR_GOOGLE,
+                      "has_permission": "1",
+                      "source": "android",
+                      "androidId": self.androidId,
+                      "app": "com.android.vending",
+                      #"client_sig": self.client_sig,
+                      "device_country": "fr",
+                      "operatorCountry": "fr",
+                      "lang": "fr",
+                      "sdk_version": "19"}
             headers = {
                 "Accept-Encoding": "",
             }
@@ -204,7 +204,7 @@ class GooglePlayAPI(object):
                                     "X-DFE-Device-Id": self.androidId,
                                     "X-DFE-Client-Id": "am-android-google",
                                     #"X-DFE-Logging-Id": self.loggingId2, # Deprecated?
-                                    "User-Agent": "Android-Finsky/4.4.3 (api=3,versionCode=8013013,sdk=19,device=hammerhead,hardware=hammerhead,product=hammerhead)",
+                                    "User-Agent": "Android-Finsky/4.4.3 (api=3,versionCode=8013013,sdk=24,device=angler,hardware=angler,product=angler)",
                                     "X-DFE-SmallestScreenWidthDp": "335",
                                     "X-DFE-Filter-Level": "3",
                                     "Accept-Encoding": "",
