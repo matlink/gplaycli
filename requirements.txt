@@ -3,3 +3,4 @@ protobuf>=2.4
 androguard
 ndg-httpsclient
 clint
+pycrypto
