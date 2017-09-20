@@ -25,5 +25,6 @@ setup(name='GPlayCli',
                 'clint',
 		'pyasn1',
                 'pycrypto',
+                'pyaxmlparser',
         ],
 )
