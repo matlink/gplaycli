@@ -3,3 +3,4 @@ protobuf>=2.4
 pyaxmlparser
 ndg-httpsclient
 clint
+pycrypto

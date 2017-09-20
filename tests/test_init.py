@@ -15,18 +15,19 @@ def test_default_settings():
 
 def test_connection_token():
     gpc.token = True
-    gpc.retrieve_token(token_url)
+    gpc.token = gpc.retrieve_token(token_url)
+    gpc.token_url = token_url
     success, error = gpc.connect_to_googleplay_api()
     assert error is None
     assert success == True
 
-#def test_connection_credentials():
-#    gpc.token = False
-#    gpc.config['gmail_address']  = os.environ['GMAIL_ADDR']
-#    gpc.config['gmail_password'] = os.environ['GMAIL_PWD']
-#    success, error = gpc.connect_to_googleplay_api()
-#    assert error is None
-#    assert success == True
+def test_connection_credentials():
+    gpc.token = False
+    gpc.config['gmail_address']  = os.environ['GMAIL_ADDR']
+    gpc.config['gmail_password'] = os.environ['GMAIL_PWD']
+    success, error = gpc.connect_to_googleplay_api()
+    assert error is None
+    assert success == True
 
 def test_download_duckduckgo():
     gpc.progress_bar = True
