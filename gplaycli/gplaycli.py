@@ -73,7 +73,7 @@ class GPlaycli(object):
         default_values = {
             "retries": 10,
         }
-        self.configparser = ConfigParser.ConfigParser(default_values)
+        self.configparser = configparser.ConfigParser(default_values)
         self.configparser.read(credentials)
         self.config = dict()
         for key, value in self.configparser.items("Credentials"):
@@ -144,10 +144,10 @@ class GPlaycli(object):
         token = r.text
         logging(self, "Token: %s" % token)
         if token == 'Auth error':
-            print 'Token dispenser auth error, probably too many connections'
+            print('Token dispenser auth error, probably too many connections')
             sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
         elif token == "Server error":
-            print 'Token dispenser server error'
+            print('Token dispenser server error')
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
         self.token = token
         self.write_cached_token(self.tokencachefile, token)
@@ -170,7 +170,7 @@ class GPlaycli(object):
                 elif self.config["keyring_service"] and HAVE_KEYRING == True:
                     passwd = keyring.get_password(self.config["keyring_service"], username)
                 elif self.config["keyring_service"] and HAVE_KEYRING == False:
-                    print "You asked for keyring service but keyring package is not installed"
+                    print("You asked for keyring service but keyring package is not installed")
                     sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
                 api.login(username, passwd, None)
             else:
@@ -265,9 +265,9 @@ class GPlaycli(object):
                 message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
                 list_of_packages_to_download.append([packagename, filename])
             message += "\n"
-            print message
+            print(message)
             if not self.yes:
-                print "\nDo you agree?"
+                print("\nDo you agree?")
                 return_value = raw_input('y/n ?')
 
             if self.yes or return_value == 'y':
@@ -279,7 +279,7 @@ class GPlaycli(object):
                     return_string += package + " "
                 print("Updated: " + return_string[:-1])
         else:
-            print "Everything is up to date !"
+            print("Everything is up to date !")
             sys.exit(ERRORS.OK)
 
     def download_selection(self, playstore_api, list_of_packages_to_download, return_function):
@@ -374,7 +374,7 @@ class GPlaycli(object):
     def search(self, results_list, search_string, nb_results, free_only=True, include_headers=True):
         results = self.raw_search(results_list, search_string, nb_results)
         if len(results) < 1:
-            print "No result"
+            print("No result")
             return
         all_results = list()
         if include_headers:
@@ -472,7 +472,7 @@ def install_cronjob(automatic=False):
 
 def logging(gpc, message):
     if gpc.verbose:
-        print message
+        print(message)
 
 def load_from_file(filename):
     return [ package.strip('\r\n') for package in open(filename).readlines() ]
@@ -515,7 +515,7 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print __version__
+        print(__version__)
         return
 
     if args.install_cronjob:
