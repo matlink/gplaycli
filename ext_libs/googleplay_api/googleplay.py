@@ -2,6 +2,7 @@
 
 import requests
 import struct
+import base64
 
 from google.protobuf import descriptor
 from google.protobuf.internal.containers import RepeatedCompositeFieldContainer
@@ -93,7 +94,7 @@ class GooglePlayAPI(object):
             array = byteArray[::-1] # reverse array
             out = 0
             for key, value in enumerate(array):
-                decoded = struct.unpack("B", value)[0]
+                decoded = struct.unpack("B", bytes([value]))[0]
                 out = out | decoded << key*8
             return out
 
@@ -168,7 +169,7 @@ class GooglePlayAPI(object):
         else:
             if (email is None or password is None):
                 raise Exception("You should provide at least authSubToken or (email and password)")
-	    encryptedPass = self.encrypt_password(email, password).decode('utf-8')
+            encryptedPass = self.encrypt_password(email, password).decode('utf-8')
             params = {"Email": email,
                       "EncryptedPasswd": encryptedPass,
                       "service": self.SERVICE,
