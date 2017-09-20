@@ -1,4 +1,5 @@
 CREDENTIALS=PL_CRED
 FOLDER_TO_UPDATE=PL_FOLD
 
-gplaycli --config "$CREDENTIALS" --update "$FOLDER_TO_UPDATE"
+gplaycli --config "$CREDENTIALS" --update "$FOLDER_TO_UPDATE" --yes
+#cd "$FOLDER_TO_UPDATE"/..; fdroid update -q

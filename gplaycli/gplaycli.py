@@ -21,11 +21,19 @@ import os
 import argparse
 import time
 import requests
+from enum import IntEnum
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
 from pyaxmlparser import APK  # Pyaxmlparser
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
+try:
+    import keyring
+    HAVE_KEYRING = True
+except ImportError:
+    HAVE_KEYRING = False
+
+import ext_libs.googleplay_api.googleplay
 
 try:  # Support both python2 and python3
     import configparser
@@ -37,15 +45,23 @@ try:
 except DistributionNotFound:
     __version__ = 'unknown: gplaycli not installed (version in setup.py)'
 
+
+class ERRORS(IntEnum):
+    OK = 0
+    TOKEN_DISPENSER_AUTH_ERROR = 5
+    TOKEN_DISPENSER_SERVER_ERROR = 6
+    KEYRING_NOT_INSTALLED = 10
+    CANNOT_LOGIN_GPLAY = 15
+
 class GPlaycli(object):
     def __init__(self, args=None, credentials=None):
         # no config file given, look for one
         if credentials is None:
             # default local user configs
             cred_paths_list = [
-                'credentials.conf',
-                os.path.expanduser("~")+'/.config/gplaycli/credentials.conf',
-                '/etc/gplaycli/credentials.conf'
+                'gplaycli.conf',
+                os.path.expanduser("~")+'/.config/gplaycli/gplaycli.conf',
+                '/etc/gplaycli/gplaycli.conf'
             ]
             tmp_list = list(cred_paths_list)
             while not os.path.isfile(tmp_list[0]):
@@ -54,14 +70,19 @@ class GPlaycli(object):
                     raise OSError("No configuration file found at %s" % cred_paths_list)
             credentials = tmp_list[0]
 
-        self.configparser = configparser.ConfigParser()
+        default_values = {
+            "retries": 10,
+        }
+        self.configparser = ConfigParser.ConfigParser(default_values)
         self.configparser.read(credentials)
         self.config = dict()
         for key, value in self.configparser.items("Credentials"):
             self.config[key] = value
 
+        self.tokencachefile = os.path.expanduser( self.configparser.get("Cache", "token") )
+
         # default settings, ie for API calls
-        if args == None:
+        if args is None:
             self.yes = False
             self.verbose = False
             self.progress_bar = False
@@ -71,13 +92,13 @@ class GPlaycli(object):
         else:
             self.yes = args.yes_to_all
             self.verbose = args.verbose
-            if self.verbose:
-                print(('GPlayCli version %s' % __version__))
-                print(('Configuration file is %s' % credentials))
+            logging(self, 'GPlayCli version %s' % __version__)
+            logging(self, 'Configuration file is %s' % credentials)
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
             self.logging = args.enable_logging
             self.token = args.token
+            self.retries = int(self.config["retries"])
             if self.token == True:
                 self.token_url = args.token_url
             if self.token == False and 'token' in self.config and self.config['token'] == 'True':
@@ -91,16 +112,45 @@ class GPlaycli(object):
                 self.failed_logfile  = "apps_failed.log"
                 self.unavail_logfile = "apps_not_available.log"
 
-    def retrieve_token(self, token_url):
-        if self.verbose:
-            print("Retrieving token ...")
+    def get_cached_token(self, tokencachefile):
+        try:
+            with open(tokencachefile, 'r') as tcf:
+                token = tcf.readline()
+                if len(token) == 0:
+                    token = None
+        except IOError: # cache file does not exists
+            token = None
+        return token
+
+    def write_cached_token(self, tokencachefile, token):
+        try:
+            # creates cachefir if not exists
+            cachedir = os.path.dirname(tokencachefile)
+            if not os.path.exists(cachedir):
+                os.mkdir(cachedir)
+            with open(tokencachefile, 'w') as tcf:
+                tcf.write(token)
+        except IOError as e:
+            raise IOError("Failed to write token to cache file: %s %s" % (tokencachefile, e.strerror))
+
+
+    def retrieve_token(self, token_url, force_new=False):
+        token = self.get_cached_token(self.tokencachefile)
+        if token is not None and not force_new:
+            logging(self, "Using cached token.")
+            return token
+        logging(self, "Retrieving token ...")
         r = requests.get(token_url)
         token = r.text
-        if self.verbose:
-            print("Token:", token)
+        logging(self, "Token: %s" % token)
         if token == 'Auth error':
-            print('Token dispenser auth error, probably too many connections')
-            sys.exit(1)
+            print 'Token dispenser auth error, probably too many connections'
+            sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
+        elif token == "Server error":
+            print 'Token dispenser server error'
+            sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
+        self.token = token
+        self.write_cached_token(self.tokencachefile, token)
         return token
 
     def set_download_folder(self, folder):
@@ -111,18 +161,32 @@ class GPlaycli(object):
         error = None
         try:
             if self.token is False:
-                if self.verbose:
-                    print("Using credentials to connect to API")
-                api.login(self.config["gmail_address"], self.config["gmail_password"], None)
+                logging(self, "Using credentials to connect to API")
+                username = self.config["gmail_address"]
+                passwd = None
+                if self.config["gmail_password"]:
+                    logging(self, "Using plaintext password")
+                    passwd = self.config["gmail_password"]
+                elif self.config["keyring_service"] and HAVE_KEYRING == True:
+                    passwd = keyring.get_password(self.config["keyring_service"], username)
+                elif self.config["keyring_service"] and HAVE_KEYRING == False:
+                    print "You asked for keyring service but keyring package is not installed"
+                    sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
+                api.login(username, passwd, None)
             else:
-                if self.verbose:
-                    print("Using token to connect to API")
+                logging(self, "Using token to connect to API")
                 api.login(None, None, self.token)
         except LoginError as exc:
             error = exc.value
             success = False
         else:
             self.playstore_api = api
+            try:
+                self.raw_search(list(), 'firefox', 1)
+            except (ValueError, IndexError) as ve: # invalid token or expired
+                logging(self, "Token has expired or is invalid. Retrieving a new one...")
+                self.retrieve_token(self.token_url, force_new=True)
+                api.login(None, None, self.token)
             success = True
         return success, error
 
@@ -157,8 +221,7 @@ class GPlaycli(object):
         list_of_apks = [filename for filename in os.listdir(download_folder_path) if
                         os.path.splitext(filename)[1] == ".apk"]
         if len(list_of_apks) > 0:
-            if self.verbose:
-                print("Checking apks ...")
+            logging(self, "Checking apks ...")
             self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path,
                                     self.prepare_download_updates)
 
@@ -175,8 +238,7 @@ class GPlaycli(object):
         # Get APK info from store
         details = playstore_api.bulkDetails(package_bunch)
         for detail, packagename, filename in zip(details.entry, package_bunch, list_of_apks):
-            if self.verbose:
-                print("Analyzing %s" % packagename)
+            logging(self, "Analyzing %s" % packagename)
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
             a = APK(filepath)
@@ -202,14 +264,14 @@ class GPlaycli(object):
             for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
                 message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
                 list_of_packages_to_download.append([packagename, filename])
-            message += "\n\nDo you agree?"
-            print(message)
+            message += "\n"
+            print message
             if not self.yes:
-                return_value = input('y/n ?')
+                print "\nDo you agree?"
+                return_value = raw_input('y/n ?')
 
             if self.yes or return_value == 'y':
-                if self.verbose:
-                    print("Downloading ...")
+                logging(self, "Downloading ...")
                 downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download,
                                                               self.after_download)
                 return_string = str()
@@ -217,8 +279,8 @@ class GPlaycli(object):
                     return_string += package + " "
                 print("Updated: " + return_string[:-1])
         else:
-            print("Everything is up to date !")
-            sys.exit(0)
+            print "Everything is up to date !"
+            sys.exit(ERRORS.OK)
 
     def download_selection(self, playstore_api, list_of_packages_to_download, return_function):
         success_downloads = list()
@@ -231,8 +293,8 @@ class GPlaycli(object):
         position = 1
         for detail, item in zip(details.entry, list_of_packages_to_download):
             packagename, filename = item
-            if self.verbose:
-                print(str(position) + "/" + str(len(list_of_packages_to_download)), packagename)
+
+            logging(self, "%s / %s %s" % (position, len(list_of_packages_to_download), packagename))
 
             # Check for download folder
             download_folder_path = self.config["download_folder_path"]
@@ -247,7 +309,10 @@ class GPlaycli(object):
 
             # Download
             try:
-                data = playstore_api.download(packagename, vc, progress_bar=self.progress_bar)
+                if doc.offer[0].checkoutFlowRequired:
+                    data = playstore_api.delivery(packagename, vc, progress_bar=self.progress_bar)
+                else:
+                    data = playstore_api.download(packagename, vc, progress_bar=self.progress_bar)
                 success_downloads.append(packagename)
             except IndexError as exc:
                 print("Error while downloading %s : %s" % (packagename,
@@ -277,7 +342,7 @@ class GPlaycli(object):
         if self.logging:
             self.write_logfiles(success_items, failed_items, unavail_items)
 
-        return_function(failed_downloads)
+        return_function(failed_downloads + unavail_downloads)
         return to_download_items - failed_items
 
     def after_download(self, failed_downloads):
@@ -308,10 +373,8 @@ class GPlaycli(object):
 
     def search(self, results_list, search_string, nb_results, free_only=True, include_headers=True):
         results = self.raw_search(results_list, search_string, nb_results)
-        if len(results) > 0:
-            results = results[0].child
-        else:
-            print("No result")
+        if len(results) < 1:
+            print "No result"
             return
         all_results = list()
         if include_headers:
@@ -319,19 +382,21 @@ class GPlaycli(object):
             col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
             all_results.append(col_names)
         # Compute results values
-        for result in results:
-            if free_only and result.offer[0].checkoutFlowRequired:  # if not Free to download
-                continue
-            l = [result.title,
-                 result.creator,
-                 self.sizeof_fmt(result.details.appDetails.installationSize),
-                 result.details.appDetails.numDownloads,
-                 result.details.appDetails.uploadDate,
-                 result.docid,
-                 result.details.appDetails.versionCode,
-                 "%.2f" % result.aggregateRating.starRating
-                 ]
-            all_results.append(l)
+        for docs in results:
+            for result in docs.child:
+                if free_only and result.offer[0].checkoutFlowRequired:  # if not Free to download
+                    continue
+                l = [result.title,
+                     result.creator,
+                     self.sizeof_fmt(result.details.appDetails.installationSize),
+                     result.details.appDetails.numDownloads,
+                     result.details.appDetails.uploadDate,
+                     result.docid,
+                     result.details.appDetails.versionCode,
+                     "%.2f" % result.aggregateRating.starRating
+                     ]
+                if len(all_results) < int(nb_results)+1:
+                    all_results.append(l)
 
         if self.verbose:
             # Print a nice table
@@ -366,20 +431,28 @@ class GPlaycli(object):
                     logfile.write('%s\n' % package)
 
 
-def install_cronjob():
+def install_cronjob(automatic=False):
     import shutil
     import stat
-    cred_default = '/etc/gplaycli/credentials.conf'
-    credentials = input('path to credentials.conf? let empty for ' + cred_default + '\n') or cred_default
+    cred_default = '/etc/gplaycli/gplaycli.conf'
     fold_default = '/opt/apks'
-    folder_to_update = input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
-    frequence = input('update it [d]aily or [w]eekly?\n')
-    if frequence == 'd':
-        frequence_folder = '/etc/cron.daily'
-    elif frequence == 'w':
-        frequence_folder = '/etc/cron.weekly'
+    frequence_default = "/etc/cron.daily"
+
+    if not automatic:
+        credentials = raw_input('path to gplaycli.conf? let empty for ' + cred_default + '\n') or cred_default
+        folder_to_update = raw_input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
+        frequence = raw_input('update it [d]aily or [w]eekly?\n')
+        if frequence == 'd':
+            frequence_folder = '/etc/cron.daily'
+        elif frequence == 'w':
+            frequence_folder = '/etc/cron.weekly'
+        else:
+            raise Exception('please type d/w to make your choice')
+
     else:
-        raise Exception('please type d/w to make your choice')
+        credentials = cred_default
+        folder_to_update = fold_default
+        frequence_folder = frequence_default
 
     frequence_file = frequence_folder + '/gplaycli'
     shutil.copyfile('/etc/gplaycli/cronjob', frequence_file)
@@ -393,21 +466,32 @@ def install_cronjob():
 
     st = os.stat(frequence_file)
     os.chmod(frequence_file, st.st_mode | stat.S_IEXEC)
-    print(('Cronjob installed at ' + frequence_file))
-    return 0
+    print('Cronjob installed at ' + frequence_file)
+    return ERRORS.OK
 
+
+def logging(gpc, message):
+    if gpc.verbose:
+        print message
+
+def load_from_file(filename):
+    return [ package.strip('\r\n') for package in open(filename).readlines() ]
 
 def main():
     parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
+    parser.add_argument('-V', '--version', action='store_true', dest='version', help='Print version number and exit')
     parser.add_argument('-y', '--yes', action='store_true', dest='yes_to_all', help='Say yes to all prompted questions')
     parser.add_argument('-l', '--list', action='store', dest='list', metavar="FOLDER",
                         type=str, help="List APKS in the given folder, with details")
     parser.add_argument('-s', '--search', action='store', dest='search_string', metavar="SEARCH",
                         type=str, help="Search the given string in Google Play Store")
+    parser.add_argument('-P', '--paid', action='store_true', dest='paid', default=False, help='Also search for paid apps')
     parser.add_argument('-n', '--number', action='store', dest='number_results', metavar="NUMBER",
                         type=str, help="For the search option, returns the given number of matching applications")
     parser.add_argument('-d', '--download', action='store', dest='packages_to_download', metavar="AppID", nargs="+",
                         type=str, help="Download the Apps that map given AppIDs")
+    parser.add_argument('-F', '--file', action='store', dest='load_from_file', metavar="FILE",
+                        type=str, help="Load packages to download from file, one package per line")
     parser.add_argument('-u', '--update', action='store', dest='update_folder', metavar="FOLDER",
                         type=str, help="Update all APKs in a given folder")
     parser.add_argument('-f', '--folder', action='store', dest='dest_folder', metavar="FOLDER", nargs=1,
@@ -417,28 +501,35 @@ def main():
                         type=str, default="DEFAULT_URL", help="Use the given tokendispenser URL to retrieve a token")
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Be verbose')
     parser.add_argument('-c', '--config', action='store', dest='config', metavar="CONF_FILE", nargs=1,
-                        type=str, default=None, help="Use a different config file than credentials.conf")
+                        type=str, default=None, help="Use a different config file than gplaycli.conf")
     parser.add_argument('-p', '--progress', action='store_true', dest='progress_bar',
                         help='Prompt a progress bar while downloading packages')
     parser.add_argument('-L', '--log', action='store_true', dest='enable_logging', default=False,
                         help='Enable logging of apps status. Downloaded, failed, not available apps will be written in separate logging files')
     parser.add_argument('-ic', '--install-cronjob', action='store_true', dest='install_cronjob',
-                        help='Interactively install cronjob for regular APKs update')
+                        help='Install cronjob for regular APKs update. Use --yes to automatically install to default locations')
 
     if len(sys.argv) < 2:
         sys.argv.append("-h")
 
     args = parser.parse_args()
 
+    if args.version:
+        print __version__
+        return
+
     if args.install_cronjob:
-        sys.exit(install_cronjob())
+        sys.exit(install_cronjob(args.yes_to_all))
 
     cli = GPlaycli(args, args.config)
-    success, error = cli.connect_to_googleplay_api()
-
-    if not success:
-        print("Cannot login to GooglePlay (", error, ")")
-        sys.exit(1)
+    success = False
+    while (not success) and (cli.retries != 0):
+        success, error = cli.connect_to_googleplay_api()
+        if not success:
+            cli.retries -= 1
+            logging(cli, "Cannot login to GooglePlay ( %s ), remaining tries %s" % (error, cli.retries))
+        if cli.retries == 0:
+            sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
         print(cli.list_folder_apks(args.list))
@@ -451,7 +542,10 @@ def main():
         nb_results = 10
         if args.number_results:
             nb_results = args.number_results
-        cli.search(list(), args.search_string, nb_results)
+        cli.search(list(), args.search_string, nb_results, not args.paid)
+
+    if args.load_from_file:
+        args.packages_to_download = load_from_file(args.load_from_file)
 
     if args.packages_to_download is not None:
         if args.dest_folder is not None:

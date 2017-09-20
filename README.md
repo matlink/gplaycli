@@ -4,39 +4,46 @@ Google Play Downloader via Command line, based on https://framagit.org/tuxicoman
 
 GPlayCli is a command line tool to search, install, update Android applications from the Google Play Store. The main goal was to be able to run this script with a cronjob, in order to automatically update an F-Droid server instance.
 
-	$ ./gplaycli.py 
-	usage: gplaycli.py [-h] [-y] [-s SEARCH] [-n NUMBER] [-d AppID [AppID ...]]
-                    [-u FOLDER] [-f FOLDER] [-v] [-c CONF_FILE] [-p]
+	$ gplaycli --help
+	usage: gplaycli [-h] [-V] [-y] [-l FOLDER] [-s SEARCH] [-P] [-n NUMBER]
+	                [-d AppID [AppID ...]] [-F FILE] [-u FOLDER] [-f FOLDER] [-t]
+	                [-tu TOKEN_URL] [-v] [-c CONF_FILE] [-p] [-L] [-ic]
 
-		A Google Play Store Apk downloader and manager for command line
+	A Google Play Store Apk downloader and manager for command line
 
-		optional arguments:
-		  -h, --help            show this help message and exit
-		  -y, --yes             Say yes to all prompted questions
-		  -s SEARCH, --search SEARCH
-		                        Search the given string in Google Play Store
-		  -n NUMBER, --number NUMBER
-		                        For the search option, returns the given number of
-		                        matching applications
-		  -d AppID [AppID ...], --download AppID [AppID ...]
-		                        Download the Apps that map given AppIDs
-		  -u FOLDER, --update FOLDER
-		                        Update all APKs in a given folder
-		  -f FOLDER, --folder FOLDER
-		                        Where to put the downloaded Apks, only for -d command
-		  -t, --token           Instead of classical credentials, use the tokenize
-		                        version
-		  -tu TOKEN_URL, --token-url TOKEN_URL
-		                        Use the given tokendispenser URL to retrieve a token
-		  -v, --verbose         Be verbose
-		  -c CONF_FILE, --config CONF_FILE
-		                        Use a different config file than credentials.conf
-		  -p, --progress        Prompt a progress bar while downloading packages
-		  -ic, --install-cronjob
-                		        Interactively install cronjob for regular APKs update
-
-
-Keep in mind that GPlayCli is not able to download apps that are not gratis, costless.
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -V, --version         Print version number and exit
+	  -y, --yes             Say yes to all prompted questions
+	  -l FOLDER, --list FOLDER
+	                        List APKS in the given folder, with details
+	  -s SEARCH, --search SEARCH
+	                        Search the given string in Google Play Store
+	  -P, --paid            Also search for paid apps
+	  -n NUMBER, --number NUMBER
+	                        For the search option, returns the given number of
+	                        matching applications
+	  -d AppID [AppID ...], --download AppID [AppID ...]
+	                        Download the Apps that map given AppIDs
+	  -F FILE, --file FILE  Load packages to download from file, one package per
+	                        line
+	  -u FOLDER, --update FOLDER
+	                        Update all APKs in a given folder
+	  -f FOLDER, --folder FOLDER
+	                        Where to put the downloaded Apks, only for -d command
+	  -t, --token           Instead of classical credentials, use the tokenize
+	                        version
+	  -tu TOKEN_URL, --token-url TOKEN_URL
+	                        Use the given tokendispenser URL to retrieve a token
+	  -v, --verbose         Be verbose
+	  -c CONF_FILE, --config CONF_FILE
+	                        Use a different config file than gplaycli.conf
+	  -p, --progress        Prompt a progress bar while downloading packages
+	  -L, --log             Enable logging of apps status. Downloaded, failed, not
+	                        available apps will be written in separate logging
+	                        files
+	  -ic, --install-cronjob
+	                        Interactively install cronjob for regular APKs update
 
 Changelog
 =========

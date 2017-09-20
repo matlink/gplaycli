@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import requests
+import struct
 
 from google.protobuf import descriptor
 from google.protobuf.internal.containers import RepeatedCompositeFieldContainer
@@ -10,15 +11,23 @@ from google.protobuf.message import Message
 from . import googleplay_pb2
 from . import config
 
-# ssl_verify="/etc/ssl/certs/ca-certificates.crt"
-#
-# conn_test_url="https://android.clients.google.com"
-# try:
-#     requests.post(conn_test_url, verify=ssl_verify)
-# except SSLError as e:
-#     ssl_verify=True
-#     requests.post(conn_test_url, verify=ssl_verify)
-ssl_verify = True
+from OpenSSL.SSL import Error as SSLError
+from Crypto.Util import asn1
+from Crypto.PublicKey import RSA
+from Crypto.Hash import SHA
+from Crypto.Cipher import PKCS1_OAEP
+
+
+ssl_verify="/etc/ssl/certs/ca-certificates.crt"
+
+conn_test_url="https://android.clients.google.com"
+try:
+    requests.post(conn_test_url, verify=ssl_verify)
+except (SSLError, IOError) as e:
+    ssl_verify=True
+    requests.post(conn_test_url, verify=ssl_verify)
+
+GOOGLE_PUBKEY   = "AAAAgMom/1a/v0lblO2Ubrt60J2gcuXSljGFQXgcyZWveWLEwo6prwgi3iJIZdodyhKZQrNWp5nKJ3srRXcUW+F1BD3baEVGcmEgqaLZUNBjm057pKRI16kB0YppeGx5qIQ5QjKzsR8ETQbKLNWgRY0QRNVz34kMJR3P/LgHax/6rmf5AAAAAwEAAQ=="
 
 
 class LoginError(Exception):
@@ -67,6 +76,43 @@ class GooglePlayAPI(object):
         self.androidId = androidId
         self.lang = lang
         self.debug = debug
+
+
+    def encrypt_password(self, login, passwd):
+        """Encrypt the password using the google publickey, using
+        the RSA encryption algorithm"""
+
+        def readInt(byteArray, start):
+            """Read the byte array, starting from *start* position,
+            as an 32-bit unsigned integer"""
+            return struct.unpack("!L", byteArray[start:][0:4])[0]
+
+
+        def toBigInt(byteArray):
+            """Convert the byte array to a BigInteger"""
+            array = byteArray[::-1] # reverse array
+            out = 0
+            for key, value in enumerate(array):
+                decoded = struct.unpack("B", value)[0]
+                out = out | decoded << key*8
+            return out
+
+        binaryKey = base64.b64decode(GOOGLE_PUBKEY)
+        i = readInt(binaryKey, 0)
+        modulus = toBigInt(binaryKey[4:][0:i])
+        j = readInt(binaryKey, i+4)
+        exponent = toBigInt(binaryKey[i+8:][0:j])
+
+        seq = asn1.DerSequence()
+        seq.append(modulus)
+        seq.append(exponent)
+
+        publicKey = RSA.importKey(seq.encode())
+        cipher = PKCS1_OAEP.new(publicKey)
+        combined = login.encode() + b'\x00' + passwd.encode()
+        encrypted = cipher.encrypt(combined)
+        h = b'\x00' + SHA.new(binaryKey).digest()[0:4]
+        return base64.urlsafe_b64encode(h + encrypted)
 
     def toDict(self, protoObj):
         """Converts the (protobuf) result from an API call into a dict, for
@@ -122,15 +168,16 @@ class GooglePlayAPI(object):
         else:
             if (email is None or password is None):
                 raise Exception("You should provide at least authSubToken or (email and password)")
+	    encryptedPass = self.encrypt_password(email, password).decode('utf-8')
             params = {"Email": email,
-                      "Passwd": password,
+                      "EncryptedPasswd": encryptedPass,
                       "service": self.SERVICE,
                       "accountType": self.ACCOUNT_TYPE_HOSTED_OR_GOOGLE,
                       "has_permission": "1",
                       "source": "android",
                       "androidId": self.androidId,
                       "app": "com.android.vending",
-                      # "client_sig": self.client_sig,
+                      #"client_sig": self.client_sig,
                       "device_country": "fr",
                       "operatorCountry": "fr",
                       "lang": "fr",
@@ -159,18 +206,18 @@ class GooglePlayAPI(object):
         if (datapost is None and path in self.preFetch):
             data = self.preFetch[path]
         else:
-            headers = {"Accept-Language": self.lang,
-                       "Authorization": "GoogleLogin auth=%s" % self.authSubToken,
-                       "X-DFE-Enabled-Experiments": "cl:billing.select_add_instrument_by_default",
-                       "X-DFE-Unsupported-Experiments": "nocache:billing.use_charging_poller,market_emails,buyer_currency,prod_baseline,checkin.set_asset_paid_app_field,shekel_test,content_ratings,buyer_currency_in_app,nocache:encrypted_apk,recent_changes",
-                       "X-DFE-Device-Id": self.androidId,
-                       "X-DFE-Client-Id": "am-android-google",
-                       # "X-DFE-Logging-Id": self.loggingId2, # Deprecated?
-                       "User-Agent": "Android-Finsky/4.4.3 (api=3,versionCode=8013013,sdk=19,device=hammerhead,hardware=hammerhead,product=hammerhead)",
-                       "X-DFE-SmallestScreenWidthDp": "335",
-                       "X-DFE-Filter-Level": "3",
-                       "Accept-Encoding": "",
-                       "Host": "android.clients.google.com"}
+            headers = { "Accept-Language": self.lang,
+                                    "Authorization": "GoogleLogin auth=%s" % self.authSubToken,
+                                    "X-DFE-Enabled-Experiments": "cl:billing.select_add_instrument_by_default",
+                                    "X-DFE-Unsupported-Experiments": "nocache:billing.use_charging_poller,market_emails,buyer_currency,prod_baseline,checkin.set_asset_paid_app_field,shekel_test,content_ratings,buyer_currency_in_app,nocache:encrypted_apk,recent_changes",
+                                    "X-DFE-Device-Id": self.androidId,
+                                    "X-DFE-Client-Id": "am-android-google",
+                                    #"X-DFE-Logging-Id": self.loggingId2, # Deprecated?
+                                    "User-Agent": "Android-Finsky/4.4.3 (api=3,versionCode=8013013,sdk=24,device=angler,hardware=angler,product=angler)",
+                                    "X-DFE-SmallestScreenWidthDp": "335",
+                                    "X-DFE-Filter-Level": "3",
+                                    "Accept-Encoding": "",
+                                    "Host": "android.clients.google.com"}
 
             if datapost is not None:
                 headers["Content-Type"] = post_content_type
@@ -203,13 +250,20 @@ class GooglePlayAPI(object):
     def search(self, query, nb_results=None, offset=None):
         """Search for apps."""
         path = "search?c=3&q=%s" % requests.utils.quote(query) # TODO handle categories
-        if (nb_results is not None):
-            path += "&n=%d" % int(nb_results)
         if (offset is not None):
             path += "&o=%d" % int(offset)
-
         message = self.executeRequestApi2(path)
-        return message.payload.searchResponse
+        remaining = int(nb_results) - len(message.payload.searchResponse.doc[0].child)
+        messagenext = message
+        allmessages = message
+        while remaining > 0:
+            pathnext = messagenext.payload.searchResponse.doc[0].containerMetadata.nextPageUrl
+            messagenext = self.executeRequestApi2(pathnext)
+            if len(messagenext.payload.searchResponse.doc) <= 0:
+                    break
+            remaining -= len(messagenext.payload.searchResponse.doc[0].child)
+            allmessages.MergeFrom(messagenext)
+        return allmessages.payload.searchResponse
 
     def details(self, packageName):
         """Get app details from a package name.
@@ -287,6 +341,25 @@ class GooglePlayAPI(object):
         url = message.payload.buyResponse.purchaseStatusResponse.appDeliveryData.downloadUrl
         cookie = message.payload.buyResponse.purchaseStatusResponse.appDeliveryData.downloadAuthCookie[0]
 
+        return self.download_package(url, progress_bar, cookie)
+
+    def delivery(self, packageName, versionCode, offerType=1, progress_bar=False):
+        """Download a prepaid app and return its raw data (APK file).
+
+        packageName is the app unique ID (usually starting with 'com.').
+
+        versionCode can be grabbed by using the details() method on the given
+        app."""
+        path = "delivery?ot=%d&doc=%s&vc=%d" % (offerType, packageName, versionCode)
+        message = self.executeRequestApi2(path)
+
+        url = message.payload.deliveryResponse.appDeliveryData.downloadUrl
+        cookie = message.payload.deliveryResponse.appDeliveryData.downloadAuthCookie[0]
+
+        return self.download_package(url, progress_bar, cookie)
+
+
+    def download_package(self, url, progress_bar, cookie):
         cookies = {
             str(cookie.name): str(cookie.value) # python-requests #459 fixes this
         }
