@@ -1,5 +1,14 @@
 from setuptools import setup, Command
 import os
+import sys
+
+if sys.version_info[0] == 2:
+    basedir = 'python2'
+    python3 = False
+else:
+    basedir = 'python3'
+    python3 = True
+
 
 setup(name='GPlayCli',
         version='0.2.13',
@@ -8,12 +17,17 @@ setup(name='GPlayCli',
         author_email="matlink@matlink.fr",
         url="https://github.com/matlink/gplaycli",
         license="AGPLv3",
-        scripts=['gplaycli/gplaycli'],
+        scripts=[basedir+'/gplaycli/gplaycli'],
         packages=[
-            'ext_libs/googleplay_api/',
-            'ext_libs/',
-            'gplaycli/',
+            'ext_libs.googleplay_api',
+            'ext_libs',
+            'gplaycli',
         ],
+        package_dir={
+            'ext_libs.googleplay_api': basedir+'/ext_libs/googleplay_api',
+            'ext_libs': basedir+'/ext_libs',
+            'gplaycli': basedir+'/gplaycli',
+        },
         data_files=[
             [os.path.expanduser('~')+'/.config/gplaycli/', ['gplaycli.conf','cron/cronjob']],
         ],
@@ -21,10 +35,9 @@ setup(name='GPlayCli',
                 'requests >= 2.0.0',
                 'protobuf',
                 'ndg-httpsclient',
-                'androguard',
                 'clint',
 		'pyasn1',
                 'pycrypto',
-                'pyaxmlparser',
+                'pyaxmlparser' if python3 else 'androguard',
         ],
 )

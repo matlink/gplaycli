@@ -21,7 +21,7 @@ import os
 import argparse
 import time
 import requests
-import ConfigParser as configparser
+import configparser
 from enum import IntEnum
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
@@ -35,7 +35,7 @@ except ImportError:
     HAVE_KEYRING = False
 
 try:
-    __version__ = get_distribution('gplaycli').version
+    __version__ = '%s [Python%s] ' % (get_distribution('gplaycli').version, sys.version.split()[0])
 except DistributionNotFound:
     __version__ = 'unknown: gplaycli not installed (version in setup.py)'
 
