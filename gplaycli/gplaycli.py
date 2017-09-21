@@ -21,6 +21,7 @@ import os
 import argparse
 import time
 import requests
+import ConfigParser as configparser
 from enum import IntEnum
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
@@ -32,13 +33,6 @@ try:
     HAVE_KEYRING = True
 except ImportError:
     HAVE_KEYRING = False
-
-import ext_libs.googleplay_api.googleplay
-
-try:  # Support both python2 and python3
-    import configparser
-except ImportError:
-    import ConfigParser as configparser
 
 try:
     __version__ = get_distribution('gplaycli').version
