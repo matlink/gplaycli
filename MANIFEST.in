@@ -1,2 +1,4 @@
 include credentials.conf
 include cron/cronjob
+recursive-include python2 *
+recursive-include python3 *
