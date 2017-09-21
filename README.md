@@ -4,6 +4,7 @@ Google Play Downloader via Command line, based on https://framagit.org/tuxicoman
 
 GPlayCli is a command line tool to search, install, update Android applications from the Google Play Store. The main goal was to be able to run this script with a cronjob, in order to automatically update an F-Droid server instance.
 
+
 	$ gplaycli --help
 	usage: gplaycli [-h] [-V] [-y] [-l FOLDER] [-s SEARCH] [-P] [-n NUMBER]
 	                [-d AppID [AppID ...]] [-F FILE] [-u FOLDER] [-f FOLDER] [-t]
@@ -43,10 +44,13 @@ GPlayCli is a command line tool to search, install, update Android applications 
 	                        available apps will be written in separate logging
 	                        files
 	  -ic, --install-cronjob
-	                        Interactively install cronjob for regular APKs update
+	                        Install cronjob for regular APKs update. Use --yes to
+	                        automatically install to default locations
 
 Changelog
 =========
+- Now supports both Python2.7 and 3.5.
+- Added EncryptedPsswd header to fix credentials authentication.
 - A new way for authentication has been added to GPlayCli: the tokens. I've set up a token-dispenser server (https://github.com/yeriomin/token-dispenser) at this address : https://token.matlink.fr/token/email/gplaycliacc@gmail.com . The settings has been added to credenttials.conf, and by default GPlayCli will retrieve token from this URL. If you want to keep using your credentials, set token=False in credentials.conf. You can also change the URL and setup your own token-dispenser server and then changing the token_url in the credentials.conf.
 
 Debian installation
