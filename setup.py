@@ -11,7 +11,7 @@ else:
 
 
 setup(name='GPlayCli',
-        version='0.2.13',
+        version='2.14',
         description='GPlayCli, a Google play downloader command line interface',
         author="Matlink",
         author_email="matlink@matlink.fr",
