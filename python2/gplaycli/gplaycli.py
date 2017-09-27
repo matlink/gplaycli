@@ -67,7 +67,6 @@ class GPlaycli(object):
             credentials = tmp_list[0]
 
         default_values = {
-            "retries": 10,
         }
         self.configparser = ConfigParser.ConfigParser(default_values)
         self.configparser.read(credentials)
@@ -94,7 +93,6 @@ class GPlaycli(object):
             self.set_download_folder(args.update_folder)
             self.logging = args.enable_logging
             self.token = args.token
-            self.retries = int(self.config["retries"])
             if self.token == True:
                 self.token_url = args.token_url
             if self.token == False and 'token' in self.config and self.config['token'] == 'True':
@@ -518,14 +516,10 @@ def main():
         sys.exit(install_cronjob(args.yes_to_all))
 
     cli = GPlaycli(args, args.config)
-    success = False
-    while (not success) and (cli.retries != 0):
-        success, error = cli.connect_to_googleplay_api()
-        if not success:
-            cli.retries -= 1
-            logging(cli, "Cannot login to GooglePlay ( %s ), remaining tries %s" % (error, cli.retries))
-        if cli.retries == 0:
-            sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
+    success, error = cli.connect_to_googleplay_api()
+    if not success:
+        logging(cli, "Cannot login to GooglePlay ( %s )" % error)
+        sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
         print cli.list_folder_apks(args.list)
