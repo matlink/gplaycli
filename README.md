@@ -1,4 +1,4 @@
-# gplaycli [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=master)](https://travis-ci.org/matlink/gplaycli) (Python3 migration : [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=python3)](https://travis-ci.org/matlink/gplaycli))
+# gplaycli [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=master)](https://travis-ci.org/matlink/gplaycli) (Python3 migration : [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=master)](https://travis-ci.org/matlink/gplaycli))
 
 Google Play Downloader via Command line, based on https://framagit.org/tuxicoman/googleplaydownloader See package Readme for python modules to install.
 
