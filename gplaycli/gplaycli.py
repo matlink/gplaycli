@@ -16,23 +16,39 @@ You should have received a copy of the GNU Affero General Public License along w
 see <http://www.gnu.org/licenses/>.
 """
 
+from __future__ import print_function
+
 import sys
 import os
 import argparse
 import time
 import requests
-import configparser
+
 from enum import IntEnum
 from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from ext_libs.googleplay_api.googleplay import LoginError
-from pyaxmlparser import APK  # Pyaxmlparser
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
+
+try:
+    from pyaxmlparser import APK  # Pyaxmlparser
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
+    from androguard.core.bytecodes.apk import APK as androguard_apk  # Androguard
+    class APK(androguard_apk):
+        @property
+        def get_androidversion_code(self):
+            return androguard_apk.get_androidversion_code(self)
+        version_code = get_androidversion_code
+
 try:
     import keyring
     HAVE_KEYRING = True
 except ImportError:
     HAVE_KEYRING = False
+
+
 
 try:
     __version__ = '%s [Python%s] ' % (get_distribution('gplaycli').version, sys.version.split()[0])
