@@ -17,7 +17,7 @@ setup(name='GPlayCli',
         author_email="matlink@matlink.fr",
         url="https://github.com/matlink/gplaycli",
         license="AGPLv3",
-        scripts=[basedir+'/gplaycli/gplaycli'],
+        scripts=['gplaycli/gplaycli'],
         packages=[
             'ext_libs.googleplay_api',
             'ext_libs',
@@ -26,7 +26,7 @@ setup(name='GPlayCli',
         package_dir={
             'ext_libs.googleplay_api': basedir+'/ext_libs/googleplay_api',
             'ext_libs': basedir+'/ext_libs',
-            'gplaycli': basedir+'/gplaycli',
+            'gplaycli': 'gplaycli',
         },
         data_files=[
             [os.path.expanduser('~')+'/.config/gplaycli/', ['gplaycli.conf','cron/cronjob']],
