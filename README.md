@@ -58,6 +58,7 @@ Installation
 
 - Best way to install it is using pip: `pip install gplaycli` or `pip install gplaycli --user` if you are non-root
 - Cleanest way is using virtualenv: `virtualenv gplaycli; cd gplaycli; source bin/activate`, then either `pip install gplaycli` or `git clone https://github.com/matlink/gplaycli && pip install ./gplaycli/`
+- Use docker : https://github.com/rande/docker-gplaycli
 
 Debian installation
 --------------------
