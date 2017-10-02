@@ -380,7 +380,10 @@ class GPlaycli(object):
         return self.playstore_api.search(search_string, nb_results=nb_results).doc
 
     def search(self, results_list, search_string, nb_results, free_only=True, include_headers=True):
-        results = self.raw_search(results_list, search_string, nb_results)
+        try:
+            results = self.raw_search(results_list, search_string, nb_results)
+        except IndexError:
+            results = list()
         if len(results) < 1:
             print("No result")
             return
