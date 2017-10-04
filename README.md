@@ -84,4 +84,4 @@ If you plan to use it with F-Droid-server, remember that fdroidserver needs Java
 
 Uninstall
 =========
-Use `pip uninstall gplaycli`, and remove conf and cronjob with `rm -rf /etc/gplaycli /etc/cron.daily/gplaycli`. Should be clean, except python dependancies for gplaycli.
+Use `pip uninstall gplaycli`, and remove conf and cronjob with `rm -rf /etc/gplaycli /etc/cron.daily/gplaycli`. Should be clean, except python dependencies for gplaycli.
