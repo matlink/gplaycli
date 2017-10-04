@@ -25,8 +25,10 @@ import time
 import requests
 
 from enum import IntEnum
-from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
-from ext_libs.googleplay_api.googleplay import LoginError
+#from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
+from gpapi.googleplay import GooglePlayAPI
+from gpapi.googleplay import LoginError
+#from ext_libs.googleplay_api.googleplay import LoginError
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 
@@ -165,7 +167,7 @@ class GPlaycli(object):
         self.config["download_folder_path"] = folder
 
     def connect_to_googleplay_api(self):
-        api = GooglePlayAPI(androidId=self.config["android_id"], lang=self.config["language"])
+        api = GooglePlayAPI()
         error = None
         try:
             if self.token is False:
@@ -180,10 +182,10 @@ class GPlaycli(object):
                 elif self.config["keyring_service"] and HAVE_KEYRING == False:
                     print("You asked for keyring service but keyring package is not installed")
                     sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
-                api.login(username, passwd, None)
+                api.login(email=username, password=passwd)
             else:
                 logging(self, "Using token to connect to API")
-                api.login(None, None, self.token)
+                api.login(authSubToken=self.token, gsfId=0x3c12bbb53d92a937)
         except LoginError as exc:
             error = exc.value
             success = False
@@ -194,7 +196,7 @@ class GPlaycli(object):
             except (ValueError, IndexError) as ve: # invalid token or expired
                 logging(self, "Token has expired or is invalid. Retrieving a new one...")
                 self.retrieve_token(self.token_url, force_new=True)
-                api.login(None, None, self.token)
+                api.login(authSubToken=self.token, gsfId=0x3c12bbb53d92a937)
             success = True
         return success, error
 
@@ -245,15 +247,13 @@ class GPlaycli(object):
         # BulkDetails requires only one HTTP request
         # Get APK info from store
         details = playstore_api.bulkDetails(package_bunch)
-        for detail, packagename, filename in zip(details.entry, package_bunch, list_of_apks):
+        for detail, packagename, filename in zip(details, package_bunch, list_of_apks):
             logging(self, "Analyzing %s" % packagename)
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
             a = APK(filepath)
             apk_version_code = a.version_code
-            m = detail
-            doc = m.doc
-            store_version_code = doc.details.appDetails.versionCode
+            store_version_code = detail['versionCode']
 
             # Compare
             if apk_version_code != "" and int(apk_version_code) < int(store_version_code) and int(
@@ -299,7 +299,7 @@ class GPlaycli(object):
         # Get APK info from store
         details = playstore_api.bulkDetails([item for item, item2 in list_of_packages_to_download])
         position = 1
-        for detail, item in zip(details.entry, list_of_packages_to_download):
+        for detail, item in zip(details, list_of_packages_to_download):
             packagename, filename = item
 
             logging(self, "%s / %s %s" % (position, len(list_of_packages_to_download), packagename))
@@ -311,13 +311,11 @@ class GPlaycli(object):
 
             # Get the version code and the offer type from the app details
             # m = playstore_api.details(packagename)
-            m = detail
-            doc = m.doc
-            vc = doc.details.appDetails.versionCode
+            vc = detail['versionCode']
 
             # Download
             try:
-                if doc.offer[0].checkoutFlowRequired:
+                if detail['offer'][0]['checkoutFlowRequired']:
                     data = playstore_api.delivery(packagename, vc, progress_bar=self.progress_bar)
                 else:
                     data = playstore_api.download(packagename, vc, progress_bar=self.progress_bar)
@@ -377,7 +375,7 @@ class GPlaycli(object):
 
     def raw_search(self, results_list, search_string, nb_results):
         # Query results
-        return self.playstore_api.search(search_string, nb_results=nb_results).doc
+        return self.playstore_api.search(search_string, nb_result=nb_results)
 
     def search(self, results_list, search_string, nb_results, free_only=True, include_headers=True):
         try:
@@ -393,21 +391,20 @@ class GPlaycli(object):
             col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
             all_results.append(col_names)
         # Compute results values
-        for docs in results:
-            for result in docs.child:
-                if free_only and result.offer[0].checkoutFlowRequired:  # if not Free to download
-                    continue
-                l = [result.title,
-                     result.creator,
-                     self.sizeof_fmt(result.details.appDetails.installationSize),
-                     result.details.appDetails.numDownloads,
-                     result.details.appDetails.uploadDate,
-                     result.docid,
-                     result.details.appDetails.versionCode,
-                     "%.2f" % result.aggregateRating.starRating
-                     ]
-                if len(all_results) < int(nb_results)+1:
-                    all_results.append(l)
+        for result in results:
+            if free_only and result['offer'][0]['checkoutFlowRequired']:  # if not Free to download
+                continue
+            l = [result['title'],
+                 result['author'],
+                 self.sizeof_fmt(result['installationSize']),
+                 result['numDownloads'],
+                 result['uploadDate'],
+                 result['docId'],
+                 result['versionCode'],
+                 "%.2f" % result["aggregateRating"]["starRating"]
+                 ]
+            if len(all_results) < int(nb_results)+1:
+                all_results.append(l)
 
         if self.verbose:
             # Print a nice table

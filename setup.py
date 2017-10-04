@@ -4,9 +4,11 @@ import sys
 
 if sys.version_info[0] == 2:
     basedir = 'python2'
+    python2 = True
     python3 = False
 else:
     basedir = 'python3'
+    python2 = False
     python3 = True
 
 
@@ -22,10 +24,17 @@ setup(name='GPlayCli',
             'ext_libs.googleplay_api',
             'ext_libs',
             'gplaycli',
-        ],
+        ] if python2 else [
+            'gpapi',
+            'gplaycli'
+        ]
+            ,
         package_dir={
             'ext_libs.googleplay_api': basedir+'/ext_libs/googleplay_api',
             'ext_libs': basedir+'/ext_libs',
+            'gplaycli': 'gplaycli',
+        } if python2 else {
+            'gpapi': basedir+'/googleplay-api/gpapi',
             'gplaycli': 'gplaycli',
         },
         data_files=[
