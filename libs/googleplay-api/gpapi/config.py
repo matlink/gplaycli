@@ -1,7 +1,13 @@
 from . import googleplay_pb2
 import time
 import os
-import configparser
+import sys
+
+VERSION = sys.version_info[0]
+if VERSION == 2:
+    import ConfigParser
+else:
+    import configparser
 
 # separator used by search.py, categories.py, ...
 SEPARATOR = ";"
@@ -13,7 +19,11 @@ GOOGLE_PUBKEY   = "AAAAgMom/1a/v0lblO2Ubrt60J2gcuXSljGFQXgcyZWveWLEwo6prwgi3iJIZ
 # if you want to add another phone, just create another section in
 # the file. Some configurations for common phones can be found here:
 # https://github.com/yeriomin/play-store-api/tree/master/src/main/resources
-config = configparser.ConfigParser()
+if VERSION == 2:
+    config = ConfigParser.ConfigParser()
+else:
+    config = configparser.ConfigParser()
+
 filepath = os.path.join( os.path.dirname( os.path.realpath(__file__) ), 'device.properties')
 config.read(filepath)
 device = {}

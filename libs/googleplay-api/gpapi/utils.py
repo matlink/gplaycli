@@ -1,4 +1,7 @@
 import struct
+import sys
+
+VERSION = sys.version_info[0]
 
 def fromDocToDictionary(app):
     return {
@@ -65,6 +68,9 @@ def toBigInt(byteArray):
     array = byteArray[::-1] # reverse array
     out = 0
     for key, value in enumerate(array):
-        decoded = struct.unpack("B", bytes([value]))[0]
+        if VERSION == 3:
+            decoded = struct.unpack("B", bytes([value]))[0]
+        else:
+            decoded = struct.unpack("B", value)[0]
         out = out | decoded << key*8
     return out
