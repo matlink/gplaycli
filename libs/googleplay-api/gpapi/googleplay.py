@@ -274,19 +274,31 @@ class GooglePlayAPI(object):
     def search(self, query, nb_result, offset=None):
         if self.authSubToken == None:
             raise Exception("You need to login before executing any request")
-        path = "search?c=3&q=%s" % requests.utils.quote(query)
 
+        remaining = nb_result
+        output = []
+
+        nextPath = "search?c=3&q=%s" % requests.utils.quote(query)
         if (offset is not None):
-            path += "&o=%d" % int(offset)
+            nextPath += "&o=%d" % int(offset)
+        while remaining > 0 and nextPath != None:
+            currentPath = nextPath
+            data = self.executeRequestApi2(currentPath)
+            if len(data.preFetch) == 0:
+                cluster = data.payload.listResponse.cluster[0]
+            else:
+                cluster = data.preFetch[0].response.payload.listResponse.cluster[0]
+            if cluster.doc[0].containerMetadata.nextPageUrl != "":
+                nextPath = cluster.doc[0].containerMetadata.nextPageUrl
+            else:
+                nextPath = None
+            apps = list(itertools.chain.from_iterable([doc.child for doc in cluster.doc]))
+            output += list(map(utils.fromDocToDictionary, apps))
+            remaining -= len(apps)
 
-        data = self.executeRequestApi2(path)
-        # TODO: can response contain more than 1 cluster?
-        cluster = data.preFetch[0].response.payload.listResponse.cluster[0]
-        # cluster has more than 1 doc usually, and each doc has some
-        # childs representing the applications. So we chain together every child
-        # of every doc
-        apps = itertools.chain.from_iterable([doc.child for doc in cluster.doc])
-        output = list(map(utils.fromDocToDictionary, apps))
+        if len(output) > nb_result:
+            output = output[:nb_result]
+
         return output
 
     def details(self, packageName):

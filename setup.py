@@ -21,21 +21,15 @@ setup(name='GPlayCli',
         license="AGPLv3",
         scripts=['gplaycli/gplaycli'],
         packages=[
-            'ext_libs.googleplay_api',
-            'ext_libs',
-            'gplaycli',
-        ] if python2 else [
             'gpapi',
-            'gplaycli'
-        ]
-            ,
+            'gplaycli',
+        ],
         package_dir={
-            'ext_libs.googleplay_api': basedir+'/ext_libs/googleplay_api',
-            'ext_libs': basedir+'/ext_libs',
+            'gpapi'   : 'libs/googleplay-api/gpapi',
             'gplaycli': 'gplaycli',
-        } if python2 else {
-            'gpapi': basedir+'/googleplay-api/gpapi',
-            'gplaycli': 'gplaycli',
+        },
+        package_data={
+            'gpapi': ['device.properties'],
         },
         data_files=[
             [os.path.expanduser('~')+'/.config/gplaycli/', ['gplaycli.conf','cron/cronjob']],

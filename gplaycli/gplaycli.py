@@ -25,17 +25,16 @@ import time
 import requests
 
 from enum import IntEnum
-#from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
 from gpapi.googleplay import GooglePlayAPI
 from gpapi.googleplay import LoginError
-#from ext_libs.googleplay_api.googleplay import LoginError
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 
-try:
+try: #Python3+
     from pyaxmlparser import APK  # Pyaxmlparser
     import configparser
-except ImportError:
+    unicode = None
+except ImportError: #Python2
     import ConfigParser as configparser
     from androguard.core.bytecodes.apk import APK as androguard_apk  # Androguard
     class APK(androguard_apk):
@@ -403,6 +402,9 @@ class GPlaycli(object):
                  result['versionCode'],
                  "%.2f" % result["aggregateRating"]["starRating"]
                  ]
+            for indice, item in enumerate(l):
+                if type(item) is unicode:
+                    l[indice] = item.encode('utf-8')
             if len(all_results) < int(nb_results)+1:
                 all_results.append(l)
 
@@ -414,7 +416,7 @@ class GPlaycli(object):
                 col_width.append(col_length + 2)
 
             for result in all_results:
-                print("".join(str(("%s" % item).encode('utf-8')).strip().ljust(col_width[indice]) for indice, item in
+                print("".join(str("%s" % item).strip().ljust(col_width[indice]) for indice, item in
                               enumerate(result)))
         return all_results
 
@@ -495,7 +497,7 @@ def main():
                         type=str, help="Search the given string in Google Play Store")
     parser.add_argument('-P', '--paid', action='store_true', dest='paid', default=False, help='Also search for paid apps')
     parser.add_argument('-n', '--number', action='store', dest='number_results', metavar="NUMBER",
-                        type=str, help="For the search option, returns the given number of matching applications")
+                        type=int, help="For the search option, returns the given number of matching applications")
     parser.add_argument('-d', '--download', action='store', dest='packages_to_download', metavar="AppID", nargs="+",
                         type=str, help="Download the Apps that map given AppIDs")
     parser.add_argument('-F', '--file', action='store', dest='load_from_file', metavar="FILE",
