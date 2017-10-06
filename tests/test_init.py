@@ -22,6 +22,12 @@ def test_connection_token():
     assert success == True
 
 def test_connection_credentials():
+    try: # You are travis
+        if os.environ['TRAVIS_PULL_REQUEST'] != "false": # If current job is a Pull Request
+            print("Job is pull request. Won't check credentials")
+            return
+    except KeyError: # You are not travis
+        pass
     gpc.token = False
     gpc.config['gmail_address']  = os.environ['GMAIL_ADDR']
     gpc.config['gmail_password'] = os.environ['GMAIL_PWD']
