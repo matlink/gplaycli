@@ -1,4 +1,4 @@
-from setuptools import setup, Command
+from setuptools import setup
 import os
 import sys
 
@@ -13,7 +13,7 @@ else:
 
 
 setup(name='GPlayCli',
-        version='2.16',
+        version='3.0',
         description='GPlayCli, a Google play downloader command line interface',
         author="Matlink",
         author_email="matlink@matlink.fr",
