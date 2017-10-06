@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath('.'))
 from gplaycli import gplaycli
 gpc = gplaycli.GPlaycli()
 
-token_url = "https://matlink.fr/token/email/gplaycliacc@gmail.com"
+token_url = "https://matlink.fr/token/email/gsfid"
 
 def test_default_settings():
     assert gpc.yes == False
@@ -15,8 +15,8 @@ def test_default_settings():
 
 def test_connection_token():
     gpc.token = True
-    gpc.token = gpc.retrieve_token(token_url)
     gpc.token_url = token_url
+    gpc.token, gpc.gsfid = gpc.retrieve_token(token_url, force_new=True)
     success, error = gpc.connect_to_googleplay_api()
     assert error is None
     assert success == True

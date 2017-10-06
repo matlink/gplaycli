@@ -25,15 +25,16 @@ import time
 import requests
 
 from enum import IntEnum
-from ext_libs.googleplay_api.googleplay import GooglePlayAPI  # GooglePlayAPI
-from ext_libs.googleplay_api.googleplay import LoginError
+from gpapi.googleplay import GooglePlayAPI
+from gpapi.googleplay import LoginError
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 
-try:
+try: #Python3+
     from pyaxmlparser import APK  # Pyaxmlparser
     import configparser
-except ImportError:
+    unicode = None
+except ImportError: #Python2
     import ConfigParser as configparser
     from androguard.core.bytecodes.apk import APK as androguard_apk  # Androguard
     class APK(androguard_apk):
@@ -113,7 +114,7 @@ class GPlaycli(object):
                 self.token = self.config['token']
                 self.token_url = self.config['token_url']
             if str(self.token) == 'True':
-                self.token = self.retrieve_token(self.token_url)
+                self.token, self.gsfid = self.retrieve_token(self.token_url)
 
             if self.logging:
                 self.success_logfile = "apps_downloaded.log"
@@ -123,49 +124,53 @@ class GPlaycli(object):
     def get_cached_token(self, tokencachefile):
         try:
             with open(tokencachefile, 'r') as tcf:
-                token = tcf.readline()
+                token, gsfid = tcf.readline().split()
                 if len(token) == 0:
                     token = None
+                    gsfid = None
         except IOError: # cache file does not exists
             token = None
-        return token
+            gsfid = None
+        return token, gsfid
 
-    def write_cached_token(self, tokencachefile, token):
+    def write_cached_token(self, tokencachefile, token, gsfid):
         try:
             # creates cachefir if not exists
             cachedir = os.path.dirname(tokencachefile)
             if not os.path.exists(cachedir):
                 os.mkdir(cachedir)
             with open(tokencachefile, 'w') as tcf:
-                tcf.write(token)
+                tcf.write( "%s %s" % (token, gsfid) )
         except IOError as e:
             raise IOError("Failed to write token to cache file: %s %s" % (tokencachefile, e.strerror))
 
 
     def retrieve_token(self, token_url, force_new=False):
-        token = self.get_cached_token(self.tokencachefile)
+        token, gsfid = self.get_cached_token(self.tokencachefile)
         if token is not None and not force_new:
             logging(self, "Using cached token.")
-            return token
+            return token, gsfid
         logging(self, "Retrieving token ...")
         r = requests.get(token_url)
-        token = r.text
-        logging(self, "Token: %s" % token)
-        if token == 'Auth error':
+        if r.text == 'Auth error':
             print('Token dispenser auth error, probably too many connections')
             sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
-        elif token == "Server error":
+        elif r.text == "Server error":
             print('Token dispenser server error')
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
+        token, gsfid = r.text.split(" ")
+        logging(self, "Token: %s" % token)
+        logging(self, "GSFId: %s" % gsfid)
         self.token = token
-        self.write_cached_token(self.tokencachefile, token)
-        return token
+        self.gsfid = gsfid
+        self.write_cached_token(self.tokencachefile, token, gsfid)
+        return token, gsfid
 
     def set_download_folder(self, folder):
         self.config["download_folder_path"] = folder
 
     def connect_to_googleplay_api(self):
-        api = GooglePlayAPI(androidId=self.config["android_id"], lang=self.config["language"])
+        api = GooglePlayAPI()
         error = None
         try:
             if self.token is False:
@@ -180,10 +185,10 @@ class GPlaycli(object):
                 elif self.config["keyring_service"] and HAVE_KEYRING == False:
                     print("You asked for keyring service but keyring package is not installed")
                     sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
-                api.login(username, passwd, None)
+                api.login(email=username, password=passwd)
             else:
                 logging(self, "Using token to connect to API")
-                api.login(None, None, self.token)
+                api.login(authSubToken=self.token, gsfId=int(self.gsfid,16))
         except LoginError as exc:
             error = exc.value
             success = False
@@ -194,7 +199,7 @@ class GPlaycli(object):
             except (ValueError, IndexError) as ve: # invalid token or expired
                 logging(self, "Token has expired or is invalid. Retrieving a new one...")
                 self.retrieve_token(self.token_url, force_new=True)
-                api.login(None, None, self.token)
+                api.login(authSubToken=self.token, gsfId=int(self.gsfid,16))
             success = True
         return success, error
 
@@ -245,15 +250,13 @@ class GPlaycli(object):
         # BulkDetails requires only one HTTP request
         # Get APK info from store
         details = playstore_api.bulkDetails(package_bunch)
-        for detail, packagename, filename in zip(details.entry, package_bunch, list_of_apks):
+        for detail, packagename, filename in zip(details, package_bunch, list_of_apks):
             logging(self, "Analyzing %s" % packagename)
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
             a = APK(filepath)
             apk_version_code = a.version_code
-            m = detail
-            doc = m.doc
-            store_version_code = doc.details.appDetails.versionCode
+            store_version_code = detail['versionCode']
 
             # Compare
             if apk_version_code != "" and int(apk_version_code) < int(store_version_code) and int(
@@ -299,7 +302,7 @@ class GPlaycli(object):
         # Get APK info from store
         details = playstore_api.bulkDetails([item for item, item2 in list_of_packages_to_download])
         position = 1
-        for detail, item in zip(details.entry, list_of_packages_to_download):
+        for detail, item in zip(details, list_of_packages_to_download):
             packagename, filename = item
 
             logging(self, "%s / %s %s" % (position, len(list_of_packages_to_download), packagename))
@@ -311,13 +314,11 @@ class GPlaycli(object):
 
             # Get the version code and the offer type from the app details
             # m = playstore_api.details(packagename)
-            m = detail
-            doc = m.doc
-            vc = doc.details.appDetails.versionCode
+            vc = detail['versionCode']
 
             # Download
             try:
-                if doc.offer[0].checkoutFlowRequired:
+                if detail['offer'][0]['checkoutFlowRequired']:
                     data = playstore_api.delivery(packagename, vc, progress_bar=self.progress_bar)
                 else:
                     data = playstore_api.download(packagename, vc, progress_bar=self.progress_bar)
@@ -377,7 +378,7 @@ class GPlaycli(object):
 
     def raw_search(self, results_list, search_string, nb_results):
         # Query results
-        return self.playstore_api.search(search_string, nb_results=nb_results).doc
+        return self.playstore_api.search(search_string, nb_result=nb_results)
 
     def search(self, results_list, search_string, nb_results, free_only=True, include_headers=True):
         try:
@@ -393,21 +394,23 @@ class GPlaycli(object):
             col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
             all_results.append(col_names)
         # Compute results values
-        for docs in results:
-            for result in docs.child:
-                if free_only and result.offer[0].checkoutFlowRequired:  # if not Free to download
-                    continue
-                l = [result.title,
-                     result.creator,
-                     self.sizeof_fmt(result.details.appDetails.installationSize),
-                     result.details.appDetails.numDownloads,
-                     result.details.appDetails.uploadDate,
-                     result.docid,
-                     result.details.appDetails.versionCode,
-                     "%.2f" % result.aggregateRating.starRating
-                     ]
-                if len(all_results) < int(nb_results)+1:
-                    all_results.append(l)
+        for result in results:
+            if free_only and result['offer'][0]['checkoutFlowRequired']:  # if not Free to download
+                continue
+            l = [result['title'],
+                 result['author'],
+                 self.sizeof_fmt(result['installationSize']),
+                 result['numDownloads'],
+                 result['uploadDate'],
+                 result['docId'],
+                 result['versionCode'],
+                 "%.2f" % result["aggregateRating"]["starRating"]
+                 ]
+            for indice, item in enumerate(l):
+                if type(item) is unicode:
+                    l[indice] = item.encode('utf-8')
+            if len(all_results) < int(nb_results)+1:
+                all_results.append(l)
 
         if self.verbose:
             # Print a nice table
@@ -417,7 +420,7 @@ class GPlaycli(object):
                 col_width.append(col_length + 2)
 
             for result in all_results:
-                print("".join(str(("%s" % item).encode('utf-8')).strip().ljust(col_width[indice]) for indice, item in
+                print("".join(str("%s" % item).strip().ljust(col_width[indice]) for indice, item in
                               enumerate(result)))
         return all_results
 
@@ -498,7 +501,7 @@ def main():
                         type=str, help="Search the given string in Google Play Store")
     parser.add_argument('-P', '--paid', action='store_true', dest='paid', default=False, help='Also search for paid apps')
     parser.add_argument('-n', '--number', action='store', dest='number_results', metavar="NUMBER",
-                        type=str, help="For the search option, returns the given number of matching applications")
+                        type=int, help="For the search option, returns the given number of matching applications")
     parser.add_argument('-d', '--download', action='store', dest='packages_to_download', metavar="AppID", nargs="+",
                         type=str, help="Download the Apps that map given AppIDs")
     parser.add_argument('-F', '--file', action='store', dest='load_from_file', metavar="FILE",
