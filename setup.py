@@ -21,15 +21,10 @@ setup(name='GPlayCli',
         license="AGPLv3",
         scripts=['gplaycli/gplaycli'],
         packages=[
-            'gpapi',
             'gplaycli',
         ],
         package_dir={
-            'gpapi'   : 'libs/googleplay-api/gpapi',
             'gplaycli': 'gplaycli',
-        },
-        package_data={
-            'gpapi': ['device.properties'],
         },
         data_files=[
             [os.path.expanduser('~')+'/.config/gplaycli/', ['gplaycli.conf','cron/cronjob']],
@@ -41,6 +36,7 @@ setup(name='GPlayCli',
                 'clint',
 		'pyasn1',
                 'pycrypto',
+                'gpapi',
                 'pyaxmlparser' if python3 else 'androguard',
         ],
 )
