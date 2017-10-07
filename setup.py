@@ -33,5 +33,6 @@ setup(name='GPlayCli',
                 'protobuf',
                 'gpapi == 0.1.3',
                 'pyaxmlparser' if python3 else 'androguard',
+                'enum34' if python2 else '',
         ],
 )
