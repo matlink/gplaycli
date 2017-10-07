@@ -44,6 +44,7 @@ clean:
 
 test:
 	$(PYTEST) tests/
+	rm -f ~/.cache/gplaycli/token
 	$(PROJECT) -vd $(TESTAPK)
 	[ -f $(TESTAPK).apk ]
 	$(PROJECT) -vd $(TESTAPK) -f download
