@@ -36,7 +36,7 @@ setup(name='GPlayCli',
                 'clint',
 		'pyasn1',
                 'pycrypto',
-                'gpapi',
+                'gpapi == 0.1.3',
                 'pyaxmlparser' if python3 else 'androguard',
         ],
 )
