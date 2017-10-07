@@ -128,7 +128,7 @@ class GPlaycli(object):
                 if len(token) == 0:
                     token = None
                     gsfid = None
-        except IOError: # cache file does not exists
+        except (IOError, ValueError): # cache file does not exists or is corrupted
             token = None
             gsfid = None
         return token, gsfid
