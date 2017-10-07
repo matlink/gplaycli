@@ -11,7 +11,7 @@ PROJECT=gplaycli
 VERSION=$(shell $(PYTHON) setup.py --version)
 GPGID=186BB3CA
 PYTEST=$(shell which py.test)
-TESTAPK=org.mozilla.firefox
+TESTAPK=org.mozilla.focus
 
 all:
 	@echo "make source - Create source package"
