@@ -12,6 +12,7 @@ def test_default_settings():
     assert gpc.yes == False
     assert gpc.verbose == False
     assert gpc.progress_bar == False
+    assert gpc.device_codename == 'angler'
 
 def test_connection_token():
     gpc.token = True
