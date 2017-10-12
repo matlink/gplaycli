@@ -19,7 +19,11 @@ setup(name='GPlayCli',
         author_email="matlink@matlink.fr",
         url="https://github.com/matlink/gplaycli",
         license="AGPLv3",
-        scripts=['gplaycli/gplaycli'],
+        entry_points={
+            'console_scripts': [
+                'gplaycli = gplaycli.gplaycli:main',
+            ],
+        },
         packages=[
             'gplaycli',
         ],
@@ -27,7 +31,7 @@ setup(name='GPlayCli',
             'gplaycli': 'gplaycli',
         },
         data_files=[
-            [os.path.expanduser('~')+'/.config/gplaycli/', ['gplaycli.conf','cron/cronjob']],
+            [os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf','cron/cronjob']],
         ],
         install_requires=[
                 'protobuf',
