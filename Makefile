@@ -53,3 +53,4 @@ test:
 	[[ `$(PROJECT) -s fire -n 30 | wc -l` -eq 31 ]]
 	$(PROJECT) -s com.yogavpn
 	$(PROJECT) -s com.yogavpn -n 15
+	$(PROJECT) -vd $(TESTAPK) -dc hammerhead
