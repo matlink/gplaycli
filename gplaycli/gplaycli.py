@@ -97,7 +97,7 @@ class GPlaycli(object):
             self.verbose = False
             self.progress_bar = False
             self.logging = False
-            self.device_codename = 'angler'
+            self.device_codename = 'bacon'
 
         # if args are passed
         else:
@@ -172,7 +172,7 @@ class GPlaycli(object):
         self.config["download_folder_path"] = folder
 
     def connect_to_googleplay_api(self):
-        api = GooglePlayAPI()
+        api = GooglePlayAPI(device_codename=self.device_codename)
         error = None
         try:
             if self.token is False:
@@ -187,10 +187,10 @@ class GPlaycli(object):
                 elif self.config["keyring_service"] and HAVE_KEYRING == False:
                     print("You asked for keyring service but keyring package is not installed")
                     sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
-                api.login(email=username, password=passwd, device_codename=self.device_codename)
+                api.login(email=username, password=passwd)
             else:
                 logging(self, "Using token to connect to API")
-                api.login(authSubToken=self.token, gsfId=int(self.gsfid,16), device_codename=self.device_codename)
+                api.login(authSubToken=self.token, gsfId=int(self.gsfid,16))
         except LoginError as exc:
             error = exc.value
             success = False
@@ -201,7 +201,7 @@ class GPlaycli(object):
             except (ValueError, IndexError) as ve: # invalid token or expired
                 logging(self, "Token has expired or is invalid. Retrieving a new one...")
                 self.retrieve_token(self.token_url, force_new=True)
-                api.login(authSubToken=self.token, gsfId=int(self.gsfid,16), device_codename=self.device_codename)
+                api.login(authSubToken=self.token, gsfId=int(self.gsfid,16))
             success = True
         return success, error
 
@@ -512,8 +512,8 @@ def main():
                         type=str, help="Update all APKs in a given folder")
     parser.add_argument('-f', '--folder', action='store', dest='dest_folder', metavar="FOLDER", nargs=1,
                         type=str, default=".", help="Where to put the downloaded Apks, only for -d command")
-    parser.add_argument('-dc', '--device-codename', action='store', dest='device_codename', metavar="DEVICE_CODENAME", nargs=1,
-                        type=str, default="angler", help="The device codename to fake", choices=GooglePlayAPI.getDevicesCodenames())
+    parser.add_argument('-dc', '--device-codename', action='store', dest='device_codename', metavar="DEVICE_CODENAME",
+                        type=str, default="bacon", help="The device codename to fake", choices=GooglePlayAPI.getDevicesCodenames())
     parser.add_argument('-t', '--token', action='store_true', dest='token', default=False, help='Instead of classical credentials, use the tokenize version')
     parser.add_argument('-tu', '--token-url', action='store', dest='token_url', metavar="TOKEN_URL",
                         type=str, default="DEFAULT_URL", help="Use the given tokendispenser URL to retrieve a token")
