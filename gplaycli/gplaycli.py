@@ -20,6 +20,7 @@ from __future__ import print_function
 
 import sys
 import os
+import logging
 import argparse
 import requests
 
@@ -93,6 +94,7 @@ class GPlaycli(object):
         if args is None:
             self.yes = False
             self.verbose = False
+            logging.basicConfig()
             self.progress_bar = False
             self.logging = False
             self.device_codename = 'bacon'
@@ -101,8 +103,10 @@ class GPlaycli(object):
         else:
             self.yes = args.yes_to_all
             self.verbose = args.verbose
-            logging(self, 'GPlayCli version %s' % __version__)
-            logging(self, 'Configuration file is %s' % credentials)
+            if args.verbose:
+                logging.basicConfig(level=logging.INFO)
+            logging.info('GPlayCli version %s' % __version__)
+            logging.info('Configuration file is %s' % credentials)
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
             self.logging = args.enable_logging
@@ -148,9 +152,9 @@ class GPlaycli(object):
     def retrieve_token(self, token_url, force_new=False):
         token, gsfid = self.get_cached_token(self.tokencachefile)
         if token is not None and not force_new:
-            logging(self, "Using cached token.")
+            logging.info("Using cached token.")
             return token, gsfid
-        logging(self, "Retrieving token ...")
+        logging.info("Retrieving token ...")
         r = requests.get(token_url)
         if r.text == 'Auth error':
             print('Token dispenser auth error, probably too many connections')
@@ -159,8 +163,8 @@ class GPlaycli(object):
             print('Token dispenser server error')
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
         token, gsfid = r.text.split(" ")
-        logging(self, "Token: %s" % token)
-        logging(self, "GSFId: %s" % gsfid)
+        logging.info("Token: %s" % token)
+        logging.info("GSFId: %s" % gsfid)
         self.token = token
         self.gsfid = gsfid
         self.write_cached_token(self.tokencachefile, token, gsfid)
@@ -174,11 +178,11 @@ class GPlaycli(object):
         error = None
         try:
             if self.token is False:
-                logging(self, "Using credentials to connect to API")
+                logging.info("Using credentials to connect to API")
                 username = self.config["gmail_address"]
                 passwd = None
                 if self.config["gmail_password"]:
-                    logging(self, "Using plaintext password")
+                    logging.info("Using plaintext password")
                     passwd = self.config["gmail_password"]
                 elif self.config["keyring_service"] and HAVE_KEYRING == True:
                     passwd = keyring.get_password(self.config["keyring_service"], username)
@@ -187,7 +191,7 @@ class GPlaycli(object):
                     sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
                 api.login(email=username, password=passwd)
             else:
-                logging(self, "Using token to connect to API")
+                logging.info("Using token to connect to API")
                 api.login(authSubToken=self.token, gsfId=int(self.gsfid,16))
         except LoginError as exc:
             error = exc.value
@@ -197,7 +201,7 @@ class GPlaycli(object):
             try:
                 self.raw_search(list(), 'firefox', 1)
             except (ValueError, IndexError) as ve: # invalid token or expired
-                logging(self, "Token has expired or is invalid. Retrieving a new one...")
+                logging.info("Token has expired or is invalid. Retrieving a new one...")
                 self.retrieve_token(self.token_url, force_new=True)
                 api.login(authSubToken=self.token, gsfId=int(self.gsfid,16))
             success = True
@@ -213,7 +217,7 @@ class GPlaycli(object):
         list_of_apks = [filename for filename in os.listdir(download_folder_path) if
                         os.path.splitext(filename)[1] == ".apk"]
         if len(list_of_apks) > 0:
-            logging(self, "Checking apks ...")
+            logging.info("Checking apks ...")
             self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path,
                                     self.prepare_download_updates)
 
@@ -230,7 +234,7 @@ class GPlaycli(object):
         # Get APK info from store
         details = playstore_api.bulkDetails(package_bunch)
         for detail, packagename, filename in zip(details, package_bunch, list_of_apks):
-            logging(self, "Analyzing %s" % packagename)
+            logging.info("Analyzing %s" % packagename)
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
             a = APK(filepath)
@@ -261,7 +265,7 @@ class GPlaycli(object):
                 return_value = raw_input('y/n ?')
 
             if self.yes or return_value == 'y':
-                logging(self, "Downloading ...")
+                logging.info("Downloading ...")
                 downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download,
                                                               self.after_download)
                 return_string = str()
@@ -284,7 +288,7 @@ class GPlaycli(object):
         for detail, item in zip(details, list_of_packages_to_download):
             packagename, filename = item
 
-            logging(self, "%s / %s %s" % (position, len(list_of_packages_to_download), packagename))
+            logging.info("%s / %s %s" % (position, len(list_of_packages_to_download), packagename))
 
             # Check for download folder
             download_folder_path = self.config["download_folder_path"]
@@ -463,10 +467,6 @@ def install_cronjob(automatic=False):
     return ERRORS.OK
 
 
-def logging(gpc, message):
-    if gpc.verbose:
-        print(message)
-
 def load_from_file(filename):
     return [ package.strip('\r\n') for package in open(filename).readlines() ]
 
@@ -519,7 +519,7 @@ def main():
     cli = GPlaycli(args, args.config)
     success, error = cli.connect_to_googleplay_api()
     if not success:
-        logging(cli, "Cannot login to GooglePlay ( %s )" % error)
+        logging.error("Cannot login to GooglePlay ( %s )" % error)
         sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
@@ -529,7 +529,6 @@ def main():
         cli.prepare_analyse_apks()
 
     if args.search_string:
-        cli.verbose = True
         nb_results = 10
         if args.number_results:
             nb_results = args.number_results
