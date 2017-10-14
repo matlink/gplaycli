@@ -122,16 +122,16 @@ class GPlaycli(object):
                 self.token = self.config['token']
                 self.token_url = self.config['token_url']
             if str(self.token) == 'True':
-                self.token, self.gsfid = self.retrieve_token(self.token_url)
+                self.token, self.gsfid = self.retrieve_token()
 
             if self.logging:
                 self.success_logfile = "apps_downloaded.log"
                 self.failed_logfile  = "apps_failed.log"
                 self.unavail_logfile = "apps_not_available.log"
 
-    def get_cached_token(self, tokencachefile):
+    def get_cached_token(self):
         try:
-            with open(tokencachefile, 'r') as tcf:
+            with open(self.tokencachefile, 'r') as tcf:
                 token, gsfid = tcf.readline().split()
                 if len(token) == 0:
                     token = None
@@ -141,25 +141,25 @@ class GPlaycli(object):
             gsfid = None
         return token, gsfid
 
-    def write_cached_token(self, tokencachefile, token, gsfid):
+    def write_cached_token(self, token, gsfid):
         try:
             # creates cachefir if not exists
-            cachedir = os.path.dirname(tokencachefile)
+            cachedir = os.path.dirname(self.tokencachefile)
             if not os.path.exists(cachedir):
                 os.mkdir(cachedir)
-            with open(tokencachefile, 'w') as tcf:
+            with open(self.tokencachefile, 'w') as tcf:
                 tcf.write( "%s %s" % (token, gsfid) )
         except IOError as e:
-            raise IOError("Failed to write token to cache file: %s %s" % (tokencachefile, e.strerror))
+            raise IOError("Failed to write token to cache file: %s %s" % (self.tokencachefile, e.strerror))
 
 
-    def retrieve_token(self, token_url, force_new=False):
-        token, gsfid = self.get_cached_token(self.tokencachefile)
+    def retrieve_token(self, force_new=False):
+        token, gsfid = self.get_cached_token()
         if token is not None and not force_new:
             logging.info("Using cached token.")
             return token, gsfid
         logging.info("Retrieving token ...")
-        r = requests.get(token_url)
+        r = requests.get(self.token_url)
         if r.text == 'Auth error':
             print('Token dispenser auth error, probably too many connections')
             sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
@@ -171,7 +171,7 @@ class GPlaycli(object):
         logging.info("GSFId: %s" % gsfid)
         self.token = token
         self.gsfid = gsfid
-        self.write_cached_token(self.tokencachefile, token, gsfid)
+        self.write_cached_token(token, gsfid)
         return token, gsfid
 
     def set_download_folder(self, folder):
@@ -206,7 +206,7 @@ class GPlaycli(object):
                 self.raw_search(list(), 'firefox', 1)
             except (ValueError, IndexError) as ve: # invalid token or expired
                 logging.info("Token has expired or is invalid. Retrieving a new one...")
-                self.retrieve_token(self.token_url, force_new=True)
+                self.retrieve_token(force_new=True)
                 api.login(authSubToken=self.token, gsfId=int(self.gsfid,16))
             success = True
         return success, error

@@ -17,7 +17,7 @@ def test_default_settings():
 def test_connection_token():
     gpc.token = True
     gpc.token_url = token_url
-    gpc.token, gpc.gsfid = gpc.retrieve_token(token_url, force_new=True)
+    gpc.token, gpc.gsfid = gpc.retrieve_token(force_new=True)
     success, error = gpc.connect_to_googleplay_api()
     assert error is None
     assert success == True
