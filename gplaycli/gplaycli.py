@@ -21,13 +21,11 @@ from __future__ import print_function
 import sys
 import os
 import argparse
-import time
 import requests
 
 from enum import IntEnum
 from gpapi.googleplay import GooglePlayAPI
 from gpapi.googleplay import LoginError
-from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 
 try: #Python3+
@@ -210,27 +208,6 @@ class GPlaycli(object):
         list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
         return list_of_apks
 
-    def get_bulk_details(self, list_of_apks):
-        try:
-            results = self.playstore_api.bulkDetails(list_of_apks)
-        except DecodeError:
-            time.sleep(1)
-            results = self.playstore_api.bulkDetails(list_of_apks)
-        details = dict()
-        for pos, apk in enumerate(list_of_apks):
-            det = results.entry[pos]
-            doc = det.doc
-            details[apk] = [doc.title,
-                            doc.creator,
-                            self.sizeof_fmt(doc.details.appDetails.installationSize),
-                            doc.details.appDetails.numDownloads,
-                            doc.details.appDetails.uploadDate,
-                            doc.docid,
-                            str(doc.details.appDetails.versionCode),
-                            "%.2f" % doc.aggregateRating.starRating
-                            ]
-        return details
-
     def prepare_analyse_apks(self):
         download_folder_path = self.config["download_folder_path"]
         list_of_apks = [filename for filename in os.listdir(download_folder_path) if
@@ -302,7 +279,7 @@ class GPlaycli(object):
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
-        details = playstore_api.bulkDetails([item for item, item2 in list_of_packages_to_download])
+        details = playstore_api.bulkDetails([pkg[0] for pkg in list_of_packages_to_download])
         position = 1
         for detail, item in zip(details, list_of_packages_to_download):
             packagename, filename = item
