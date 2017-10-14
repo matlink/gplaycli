@@ -23,6 +23,8 @@ import os
 import logging
 import argparse
 import requests
+import shutil
+import stat
 
 from enum import IntEnum
 from gpapi.googleplay import GooglePlayAPI
@@ -33,6 +35,7 @@ try: #Python3+
     from pyaxmlparser import APK  # Pyaxmlparser
     import configparser
     unicode = None
+    read_input = input
 except ImportError: #Python2
     import ConfigParser as configparser
     from androguard.core.bytecodes.apk import APK as androguard_apk  # Androguard
@@ -41,6 +44,7 @@ except ImportError: #Python2
         def get_androidversion_code(self):
             return androguard_apk.get_androidversion_code(self)
         version_code = get_androidversion_code
+    read_input = raw_input
 
 try:
     import keyring
@@ -262,7 +266,7 @@ class GPlaycli(object):
             print(message)
             if not self.yes:
                 print("\nDo you agree?")
-                return_value = raw_input('y/n ?')
+                return_value = read_input('y/n ?')
 
             if self.yes or return_value == 'y':
                 logging.info("Downloading ...")
@@ -429,16 +433,14 @@ class GPlaycli(object):
 
 
 def install_cronjob(automatic=False):
-    import shutil
-    import stat
     cred_default = '/etc/gplaycli/gplaycli.conf'
     fold_default = '/opt/apks'
     frequence_default = "/etc/cron.daily"
 
     if not automatic:
-        credentials = raw_input('path to gplaycli.conf? let empty for ' + cred_default + '\n') or cred_default
-        folder_to_update = raw_input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
-        frequence = raw_input('update it [d]aily or [w]eekly?\n')
+        credentials = read_input('path to gplaycli.conf? let empty for ' + cred_default + '\n') or cred_default
+        folder_to_update = read_input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
+        frequence = read_input('update it [d]aily or [w]eekly?\n')
         if frequence == 'd':
             frequence_folder = '/etc/cron.daily'
         elif frequence == 'w':
