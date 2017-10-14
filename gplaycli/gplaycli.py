@@ -80,7 +80,7 @@ class GPlaycli(object):
             tmp_list = list(cred_paths_list)
             while not os.path.isfile(tmp_list[0]):
                 tmp_list.pop(0)
-                if len(tmp_list) == 0:
+                if not tmp_list:
                     raise OSError("No configuration file found at %s" % cred_paths_list)
             credentials = tmp_list[0]
 
@@ -92,7 +92,7 @@ class GPlaycli(object):
         for key, value in self.configparser.items("Credentials"):
             self.config[key] = value
 
-        self.tokencachefile = os.path.expanduser( self.configparser.get("Cache", "token") )
+        self.tokencachefile = os.path.expanduser(self.configparser.get("Cache", "token"))
 
         # default settings, ie for API calls
         if args is None:
@@ -133,7 +133,7 @@ class GPlaycli(object):
         try:
             with open(self.tokencachefile, 'r') as tcf:
                 token, gsfid = tcf.readline().split()
-                if len(token) == 0:
+                if not token:
                     token = None
                     gsfid = None
         except (IOError, ValueError): # cache file does not exists or is corrupted
@@ -220,7 +220,7 @@ class GPlaycli(object):
         download_folder_path = self.config["download_folder_path"]
         list_of_apks = [filename for filename in os.listdir(download_folder_path) if
                         os.path.splitext(filename)[1] == ".apk"]
-        if len(list_of_apks) > 0:
+        if list_of_apks:
             logging.info("Checking apks ...")
             self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path,
                                     self.prepare_download_updates)
@@ -254,7 +254,7 @@ class GPlaycli(object):
         return_function(list_apks_to_update)
 
     def prepare_download_updates(self, list_apks_to_update):
-        if len(list_apks_to_update) > 0:
+        if list_apks_to_update:
             list_of_packages_to_download = []
 
             # Ask confirmation before downloading
@@ -343,7 +343,7 @@ class GPlaycli(object):
 
     def after_download(self, failed_downloads):
         # Info message
-        if len(failed_downloads) == 0:
+        if not failed_downloads:
             message = "Download complete"
         else:
             message = "A few packages could not be downloaded :"
@@ -372,7 +372,7 @@ class GPlaycli(object):
             results = self.raw_search(results_list, search_string, nb_results)
         except IndexError:
             results = list()
-        if len(results) < 1:
+        if not results:
             print("No result")
             return
         all_results = list()
@@ -416,17 +416,17 @@ class GPlaycli(object):
                                 self.after_download)
 
     def write_logfiles(self, success, failed, unavail):
-        if len(success) != 0:
+        if success:
             with open(self.success_logfile, 'w') as logfile:
                 for package in success:
                     logfile.write('%s\n' % package)
 
-        if len(failed) != 0:
+        if failed:
             with open(self.failed_logfile, 'w') as logfile:
                 for package in failed:
                     logfile.write('%s\n' % package)
 
-        if len(unavail) != 0:
+        if unavail:
             with open(self.unavail_logfile, 'w') as logfile:
                 for package in unavail:
                     logfile.write('%s\n' % package)
