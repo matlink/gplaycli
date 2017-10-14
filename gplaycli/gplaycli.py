@@ -107,7 +107,7 @@ class GPlaycli(object):
         else:
             self.yes = args.yes_to_all
             self.verbose = args.verbose
-            if args.verbose:
+            if self.verbose:
                 logging.basicConfig(level=logging.INFO, format=("[%(levelname)s] %(message)s"))
             logging.info('GPlayCli version %s' % __version__)
             logging.info('Configuration file is %s' % credentials)
@@ -531,6 +531,7 @@ def main():
         cli.prepare_analyse_apks()
 
     if args.search_string:
+        cli.verbose = True
         nb_results = 10
         if args.number_results:
             nb_results = args.number_results
