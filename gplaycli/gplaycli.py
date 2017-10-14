@@ -108,7 +108,7 @@ class GPlaycli(object):
             self.yes = args.yes_to_all
             self.verbose = args.verbose
             if args.verbose:
-                logging.basicConfig(level=logging.INFO)
+                logging.basicConfig(level=logging.INFO, format=("[%(levelname)s] %(message)s"))
             logging.info('GPlayCli version %s' % __version__)
             logging.info('Configuration file is %s' % credentials)
             self.progress_bar = args.progress_bar
