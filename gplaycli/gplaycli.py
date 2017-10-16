@@ -116,13 +116,13 @@ class GPlaycli(object):
             self.set_download_folder(args.update_folder)
             self.logging = args.enable_logging
             self.device_codename = args.device_codename
-            self.token = args.token
-            if self.token is True:
-                self.token_url = args.token_url
-            if self.token is False and 'token' in self.config and self.config['token'] == 'True':
-                self.token = self.config['token']
-                self.token_url = self.config['token_url']
-            if str(self.token) == 'True':
+            if args.token_enable is None:
+                self.token_enable = self.configparser.getboolean('Credentials', 'token')
+            if self.token_enable:
+                if args.token_url is None:
+                    self.token_url = self.configparser.get('Credentials', 'token_url')
+                else:
+                    self.token_url = args.token_url
                 self.token, self.gsfid = self.retrieve_token()
 
             if self.logging:
@@ -495,10 +495,10 @@ def main():
                         type=str, default=".", help="Where to put the downloaded Apks, only for -d command")
     parser.add_argument('-dc', '--device-codename', action='store', dest='device_codename', metavar="DEVICE_CODENAME",
                         type=str, default="bacon", help="The device codename to fake", choices=GooglePlayAPI.getDevicesCodenames())
-    parser.add_argument('-t', '--token', action='store_true', dest='token', default=False,
+    parser.add_argument('-t', '--token', action='store_true', dest='token_enable', default=None,
                         help='Instead of classical credentials, use the tokenize version')
     parser.add_argument('-tu', '--token-url', action='store', dest='token_url', metavar="TOKEN_URL",
-                        type=str, default="DEFAULT_URL", help="Use the given tokendispenser URL to retrieve a token")
+                        type=str, default=None, help="Use the given tokendispenser URL to retrieve a token")
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Be verbose')
     parser.add_argument('-c', '--config', action='store', dest='config', metavar="CONF_FILE", nargs=1,
                         type=str, default=None, help="Use a different config file than gplaycli.conf")
