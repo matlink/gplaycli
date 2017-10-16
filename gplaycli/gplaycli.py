@@ -117,9 +117,9 @@ class GPlaycli(object):
             self.logging = args.enable_logging
             self.device_codename = args.device_codename
             self.token = args.token
-            if self.token == True:
+            if self.token is True:
                 self.token_url = args.token_url
-            if self.token == False and 'token' in self.config and self.config['token'] == 'True':
+            if self.token is False and 'token' in self.config and self.config['token'] == 'True':
                 self.token = self.config['token']
                 self.token_url = self.config['token_url']
             if str(self.token) == 'True':
@@ -188,9 +188,9 @@ class GPlaycli(object):
                 if self.config["gmail_password"]:
                     logging.info("Using plaintext password")
                     passwd = self.config["gmail_password"]
-                elif self.config["keyring_service"] and HAVE_KEYRING == True:
+                elif self.config["keyring_service"] and HAVE_KEYRING is True:
                     passwd = keyring.get_password(self.config["keyring_service"], username)
-                elif self.config["keyring_service"] and HAVE_KEYRING == False:
+                elif self.config["keyring_service"] and HAVE_KEYRING is False:
                     print("You asked for keyring service but keyring package is not installed")
                     sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
                 api.login(email=username, password=passwd)
@@ -392,7 +392,7 @@ class GPlaycli(object):
                  result['docId'],
                  result['versionCode'],
                  "%.2f" % result["aggregateRating"]["starRating"]
-                 ]
+                ]
             for indice, item in enumerate(l):
                 if type(item) is unicode:
                     l[indice] = item.encode('utf-8')
