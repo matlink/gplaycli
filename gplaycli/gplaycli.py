@@ -85,15 +85,13 @@ class GPlaycli(object):
                     raise OSError("No configuration file found at %s" % cred_paths_list)
             credentials = tmp_list[0]
 
-        default_values = {
-        }
+        default_values = dict()
         self.configparser = configparser.ConfigParser(default_values)
         self.configparser.read(credentials)
-        self.config = dict()
-        for key, value in self.configparser.items("Credentials"):
-            self.config[key] = value
+        self.config = {key: value for key, value in self.configparser.items("Credentials")}
 
         self.tokencachefile = os.path.expanduser(self.configparser.get("Cache", "token"))
+        self.playstore_api = None
 
         # default settings, ie for API calls
         if args is None:
@@ -101,7 +99,7 @@ class GPlaycli(object):
             self.verbose = False
             logging.basicConfig()
             self.progress_bar = False
-            self.logging = False
+            self.logging_enable = False
             self.device_codename = 'bacon'
 
         # if args are passed
@@ -110,11 +108,11 @@ class GPlaycli(object):
             self.verbose = args.verbose
             if self.verbose:
                 logging.basicConfig(level=logging.INFO, format=("[%(levelname)s] %(message)s"))
-            logging.info('GPlayCli version %s' % __version__)
-            logging.info('Configuration file is %s' % credentials)
+            logging.info('GPlayCli version %s', __version__)
+            logging.info('Configuration file is %s', credentials)
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
-            self.logging = args.enable_logging
+            self.logging_enable = args.logging_enable
             self.device_codename = args.device_codename
             if args.token_enable is None:
                 self.token_enable = self.configparser.getboolean('Credentials', 'token')
@@ -125,7 +123,7 @@ class GPlaycli(object):
                     self.token_url = args.token_url
                 self.token, self.gsfid = self.retrieve_token()
 
-            if self.logging:
+            if self.logging_enable:
                 self.success_logfile = "apps_downloaded.log"
                 self.failed_logfile = "apps_failed.log"
                 self.unavail_logfile = "apps_not_available.log"
@@ -167,8 +165,8 @@ class GPlaycli(object):
             print('Token dispenser server error')
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
         token, gsfid = r.text.split(" ")
-        logging.info("Token: %s" % token)
-        logging.info("GSFId: %s" % gsfid)
+        logging.info("Token: %s", token)
+        logging.info("GSFId: %s", gsfid)
         self.token = token
         self.gsfid = gsfid
         self.write_cached_token(token, gsfid)
@@ -238,7 +236,7 @@ class GPlaycli(object):
         # Get APK info from store
         details = playstore_api.bulkDetails(package_bunch)
         for detail, packagename, filename in zip(details, package_bunch, list_of_apks):
-            logging.info("Analyzing %s" % packagename)
+            logging.info("Analyzing %s", packagename)
             # Getting Apk infos
             filepath = os.path.join(download_folder_path, filename)
             a = APK(filepath)
@@ -292,7 +290,7 @@ class GPlaycli(object):
         for detail, item in zip(details, list_of_packages_to_download):
             packagename, filename = item
 
-            logging.info("%s / %s %s" % (position, len(list_of_packages_to_download), packagename))
+            logging.info("%s / %s %s", position, len(list_of_packages_to_download), packagename)
 
             # Check for download folder
             download_folder_path = self.config["download_folder_path"]
@@ -335,7 +333,7 @@ class GPlaycli(object):
         unavail_items = set([item[0] for item, error in unavail_downloads])
         to_download_items = set([item[0] for item in list_of_packages_to_download])
 
-        if self.logging:
+        if self.logging_enable:
             self.write_logfiles(success_items, failed_items, unavail_items)
 
         return_function(failed_downloads + unavail_downloads)
@@ -504,7 +502,7 @@ def main():
                         type=str, default=None, help="Use a different config file than gplaycli.conf")
     parser.add_argument('-p', '--progress', action='store_true', dest='progress_bar',
                         help='Prompt a progress bar while downloading packages')
-    parser.add_argument('-L', '--log', action='store_true', dest='enable_logging', default=False,
+    parser.add_argument('-L', '--log', action='store_true', dest='logging_enable', default=False,
                         help='Enable logging of apps status. Downloaded, failed, not available apps will be written in separate logging files')
     parser.add_argument('-ic', '--install-cronjob', action='store_true', dest='install_cronjob',
                         help='Install cronjob for regular APKs update. Use --yes to automatically install to default locations')
