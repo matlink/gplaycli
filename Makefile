@@ -54,3 +54,7 @@ test:
 	$(PROJECT) -s com.yogavpn
 	$(PROJECT) -s com.yogavpn -n 15
 	$(PROJECT) -vd $(TESTAPK) -dc hammerhead
+	$(PROJECT) -d com.mapswithme.maps.pro
+	[ -f com.mapswithme.maps.pro.apk ]
+	[ -f main.*.com.mapswithme.maps.pro.obb ]
+	[ -f patch.*.com.mapswithme.maps.pro.obb ]
