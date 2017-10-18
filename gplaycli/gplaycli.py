@@ -101,6 +101,7 @@ class GPlaycli(object):
             self.progress_bar = False
             self.logging_enable = False
             self.device_codename = 'bacon'
+            self.addfiles_enable = False
 
         # if args are passed
         else:
@@ -114,6 +115,7 @@ class GPlaycli(object):
             self.set_download_folder(args.update_folder)
             self.logging_enable = args.logging_enable
             self.device_codename = args.device_codename
+            self.addfiles_enable = args.addfiles_enable
             if args.token_enable is None:
                 self.token_enable = self.configparser.getboolean('Credentials', 'token')
             if self.token_enable:
@@ -303,7 +305,7 @@ class GPlaycli(object):
 
             # Download
             try:
-                data_dict = playstore_api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=True)
+                data_dict = playstore_api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
                 print("Error while downloading %s : %s" % (packagename,
@@ -490,6 +492,8 @@ def main():
                         type=int, help="For the search option, returns the given number of matching applications")
     parser.add_argument('-d', '--download', action='store', dest='packages_to_download', metavar="AppID", nargs="+",
                         type=str, help="Download the Apps that map given AppIDs")
+    parser.add_argument('-a', '--additional-files', action='store_true', dest='addfiles_enable',
+                        default=False, help="Enable the download of additional files")
     parser.add_argument('-F', '--file', action='store', dest='load_from_file', metavar="FILE",
                         type=str, help="Load packages to download from file, one package per line")
     parser.add_argument('-u', '--update', action='store', dest='update_folder', metavar="FOLDER",
