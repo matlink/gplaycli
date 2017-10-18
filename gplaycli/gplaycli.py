@@ -303,10 +303,7 @@ class GPlaycli(object):
 
             # Download
             try:
-                if detail['offer'][0]['checkoutFlowRequired']:
-                    data = playstore_api.delivery(packagename, vc, progress_bar=self.progress_bar)
-                else:
-                    data = playstore_api.download(packagename, vc, progress_bar=self.progress_bar)
+                data_dict = playstore_api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=True)
                 success_downloads.append(packagename)
             except IndexError as exc:
                 print("Error while downloading %s : %s" % (packagename,
@@ -321,8 +318,16 @@ class GPlaycli(object):
                     filename = packagename + ".apk"
                 filepath = os.path.join(download_folder_path, filename)
 
+                data = data_dict['data']
+                additional_data = data_dict['additionalData']
+
                 try:
                     open(filepath, "wb").write(data)
+                    if additional_data:
+                        for obb_file in additional_data:
+                            obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_dict["docId"])
+                            obb_filename = os.path.join(download_folder_path, obb_filename)
+                            open(obb_filename, "wb").write(obb_file["data"])
                 except IOError as exc:
                     print("Error while writing %s : %s" % (packagename, exc))
                     failed_downloads.append((item, exc))
