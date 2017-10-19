@@ -15,7 +15,7 @@ def test_default_settings():
     assert gpc.device_codename == 'bacon'
 
 def test_connection_token():
-    gpc.token = True
+    gpc.token_enable = True
     gpc.token_url = token_url
     gpc.token, gpc.gsfid = gpc.retrieve_token(force_new=True)
     success, error = gpc.connect_to_googleplay_api()
@@ -29,7 +29,7 @@ def test_connection_credentials():
             return
     except KeyError: # You are not travis
         pass
-    gpc.token = False
+    gpc.token_enable = False
     gpc.config['gmail_address']  = os.environ['GMAIL_ADDR']
     gpc.config['gmail_password'] = os.environ['GMAIL_PWD']
     success, error = gpc.connect_to_googleplay_api()
