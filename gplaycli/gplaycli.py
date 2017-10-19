@@ -118,6 +118,8 @@ class GPlaycli(object):
             self.addfiles_enable = args.addfiles_enable
             if args.token_enable is None:
                 self.token_enable = self.configparser.getboolean('Credentials', 'token')
+            else:
+                self.token_enable = args.token_enable
             if self.token_enable:
                 if args.token_url is None:
                     self.token_url = self.configparser.get('Credentials', 'token_url')
