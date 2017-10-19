@@ -181,7 +181,7 @@ class GPlaycli(object):
         api = GooglePlayAPI(device_codename=self.device_codename)
         error = None
         try:
-            if self.token is False:
+            if self.token_enable is False:
                 logging.info("Using credentials to connect to API")
                 username = self.config["gmail_address"]
                 passwd = None
