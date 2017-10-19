@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 GPlay-Cli
@@ -16,8 +16,6 @@ You should have received a copy of the GNU Affero General Public License along w
 see <http://www.gnu.org/licenses/>.
 """
 
-from __future__ import print_function
-
 import sys
 import os
 import logging
@@ -25,27 +23,13 @@ import argparse
 import requests
 import shutil
 import stat
+import configparser
 
 from enum import IntEnum
 from gpapi.googleplay import GooglePlayAPI
 from gpapi.googleplay import LoginError
 from pkg_resources import get_distribution, DistributionNotFound
-
-try:  # Python3+
-    from pyaxmlparser import APK  # Pyaxmlparser
-    import configparser
-    unicode = None
-    read_input = input
-except ImportError:  # Python2
-    import ConfigParser as configparser
-    from androguard.core.bytecodes.apk import APK as androguard_apk  # Androguard
-
-    class APK(androguard_apk):
-        @property
-        def get_androidversion_code(self):
-            return androguard_apk.get_androidversion_code(self)
-        version_code = get_androidversion_code
-    read_input = raw_input
+from pyaxmlparser import APK
 
 try:
     import keyring
@@ -146,7 +130,7 @@ class GPlaycli(object):
 
     def write_cached_token(self, token, gsfid):
         try:
-            # creates cachefir if not exists
+            # creates cachedir if not exists
             cachedir = os.path.dirname(self.tokencachefile)
             if not os.path.exists(cachedir):
                 os.mkdir(cachedir)
@@ -216,7 +200,6 @@ class GPlaycli(object):
         success = True
         return success, error
 
-    # List apks in the given folder
     def list_folder_apks(self, folder):
         list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
         return list_of_apks
@@ -271,7 +254,7 @@ class GPlaycli(object):
             print(message)
             if not self.yes:
                 print("\nDo you agree?")
-                return_value = read_input('y/n ?')
+                return_value = input('y/n ?')
 
             if self.yes or return_value == 'y':
                 logging.info("Downloading ...")
@@ -403,9 +386,6 @@ class GPlaycli(object):
                  result['versionCode'],
                  "%.2f" % result["aggregateRating"]["starRating"]
                 ]
-            for indice, item in enumerate(l):
-                if type(item) is unicode:
-                    l[indice] = item.encode('utf-8')
             if len(all_results) < int(nb_results) + 1:
                 all_results.append(l)
 
@@ -426,20 +406,14 @@ class GPlaycli(object):
                                 self.after_download)
 
     def write_logfiles(self, success, failed, unavail):
-        if success:
-            with open(self.success_logfile, 'w') as logfile:
-                for package in success:
-                    logfile.write('%s\n' % package)
-
-        if failed:
-            with open(self.failed_logfile, 'w') as logfile:
-                for package in failed:
-                    logfile.write('%s\n' % package)
-
-        if unavail:
-            with open(self.unavail_logfile, 'w') as logfile:
-                for package in unavail:
-                    logfile.write('%s\n' % package)
+        for result, logfile in [(success, self.success_logfile),
+                                (failed, self.failed_logfile),
+                                (unavail, self.unavail_logfile)
+                               ]:
+            if result:
+                with open(logfile, 'w') as _buffer:
+                    for package in result:
+                        print(package, file=_buffer)
 
 
 def install_cronjob(automatic=False):
@@ -448,9 +422,9 @@ def install_cronjob(automatic=False):
     frequence_default = "/etc/cron.daily"
 
     if not automatic:
-        credentials = read_input('path to gplaycli.conf? let empty for ' + cred_default + '\n') or cred_default
-        folder_to_update = read_input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
-        frequence = read_input('update it [d]aily or [w]eekly?\n')
+        credentials = input('path to gplaycli.conf? let empty for ' + cred_default + '\n') or cred_default
+        folder_to_update = input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
+        frequence = input('update it [d]aily or [w]eekly?\n')
         if frequence == 'd':
             frequence_folder = '/etc/cron.daily'
         elif frequence == 'w':

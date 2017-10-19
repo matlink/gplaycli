@@ -3,14 +3,11 @@ import os
 import sys
 
 if sys.version_info[0] == 2:
-    basedir = 'python2'
-    python2 = True
-    python3 = False
-else:
-    basedir = 'python3'
-    python2 = False
-    python3 = True
-
+    sys.stderr.write("""
+    Python2 support has been removed since version 3.9
+    Please install GPlayCli with Python3
+    Or install version 3.8 but don't expect support""")
+    sys.exit(1)
 
 setup(name='GPlayCli',
         version='3.8',
@@ -36,7 +33,6 @@ setup(name='GPlayCli',
         install_requires=[
                 'protobuf',
                 'gpapi >= 0.1.5',
-                'pyaxmlparser' if python3 else 'androguard',
-                'enum34' if python2 else '',
+                'pyaxmlparser',
         ],
 )
