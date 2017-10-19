@@ -180,37 +180,40 @@ class GPlaycli(object):
         self.config["download_folder_path"] = folder
 
     def connect_to_googleplay_api(self):
-        api = GooglePlayAPI(device_codename=self.device_codename)
+        self.playstore_api = GooglePlayAPI(device_codename=self.device_codename)
         error = None
+        email = None
+        password = None
+        authSubToken = None
+        gsfId = None
+        if self.token_enable is False:
+            logging.info("Using credentials to connect to API")
+            email = self.config["gmail_address"]
+            if self.config["gmail_password"]:
+                logging.info("Using plaintext password")
+                password = self.config["gmail_password"]
+            elif self.config["keyring_service"] and HAVE_KEYRING is True:
+                password = keyring.get_password(self.config["keyring_service"], email)
+            elif self.config["keyring_service"] and HAVE_KEYRING is False:
+                print("You asked for keyring service but keyring package is not installed")
+                sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
+        else:
+            logging.info("Using token to connect to API")
+            authSubToken = self.token
+            gsfId = int(self.gsfid, 16)
         try:
-            if self.token_enable is False:
-                logging.info("Using credentials to connect to API")
-                username = self.config["gmail_address"]
-                passwd = None
-                if self.config["gmail_password"]:
-                    logging.info("Using plaintext password")
-                    passwd = self.config["gmail_password"]
-                elif self.config["keyring_service"] and HAVE_KEYRING is True:
-                    passwd = keyring.get_password(self.config["keyring_service"], username)
-                elif self.config["keyring_service"] and HAVE_KEYRING is False:
-                    print("You asked for keyring service but keyring package is not installed")
-                    sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
-                api.login(email=username, password=passwd)
-            else:
-                logging.info("Using token to connect to API")
-                api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
+            self.playstore_api.login(email=email,
+                                     password=password,
+                                     authSubToken=authSubToken,
+                                     gsfId=gsfId)
         except LoginError as exc:
             error = exc.value
             success = False
-        else:
-            self.playstore_api = api
-            try:
-                self.raw_search(list(), 'firefox', 1)
-            except (ValueError, IndexError) as ve:  # invalid token or expired
-                logging.info("Token has expired or is invalid. Retrieving a new one...")
-                self.retrieve_token(force_new=True)
-                api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
-            success = True
+        except (ValueError, IndexError) as ve:  # invalid token or expired
+            logging.info("Token has expired or is invalid. Retrieving a new one...")
+            self.retrieve_token(force_new=True)
+            self.playstore_api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
+        success = True
         return success, error
 
     # List apks in the given folder
