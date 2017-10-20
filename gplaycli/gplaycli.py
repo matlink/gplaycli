@@ -31,6 +31,8 @@ from gpapi.googleplay import LoginError
 from pkg_resources import get_distribution, DistributionNotFound
 from pyaxmlparser import APK
 
+from . import util
+
 try:
     import keyring
     HAVE_KEYRING = True
@@ -350,12 +352,6 @@ class GPlaycli(object):
 
         print(message)
 
-    def sizeof_fmt(self, num):
-        for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
-            if num < 1024.0:
-                return "%3.1f%s" % (num, x)
-            num /= 1024.0
-
     def raw_search(self, results_list, search_string, nb_results):
         # Query results
         return self.playstore_api.search(search_string, nb_result=nb_results)
@@ -379,7 +375,7 @@ class GPlaycli(object):
                 continue
             l = [result['title'],
                  result['author'],
-                 self.sizeof_fmt(result['installationSize']),
+                 util.sizeof_fmt(result['installationSize']),
                  result['numDownloads'],
                  result['uploadDate'],
                  result['docId'],
