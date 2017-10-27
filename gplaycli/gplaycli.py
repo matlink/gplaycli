@@ -215,21 +215,19 @@ class GPlaycli(object):
     def analyse_local_apks(self, list_of_apks, playstore_api, download_folder_path, return_function):
         list_apks_to_update = []
         package_bunch = []
+        version_codes = []
         for position, filename in enumerate(list_of_apks):
             filepath = os.path.join(download_folder_path, filename)
+            logging.info("Analyzing %s", filepath)
             a = APK(filepath)
             packagename = a.package
             package_bunch.append(packagename)
+            version_codes.append(a.version_code)
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
         details = playstore_api.bulkDetails(package_bunch)
-        for detail, packagename, filename in zip(details, package_bunch, list_of_apks):
-            logging.info("Analyzing %s", packagename)
-            # Getting Apk infos
-            filepath = os.path.join(download_folder_path, filename)
-            a = APK(filepath)
-            apk_version_code = a.version_code
+        for detail, packagename, apk_version_code in zip(details, package_bunch, version_codes):
             store_version_code = detail['versionCode']
 
             # Compare
