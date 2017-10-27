@@ -192,10 +192,7 @@ class GPlaycli(object):
                                      password=password,
                                      authSubToken=authSubToken,
                                      gsfId=gsfId)
-        except LoginError as exc:
-            error = exc.value
-            success = False
-        except (ValueError, IndexError) as ve:  # invalid token or expired
+        except (ValueError, IndexError, LoginError) as ve:  # invalid token or expired
             logging.info("Token has expired or is invalid. Retrieving a new one...")
             self.retrieve_token(force_new=True)
             self.playstore_api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
