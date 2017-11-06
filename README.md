@@ -1,5 +1,4 @@
-# gplaycli [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=master)](https://travis-ci.org/matlink/gplaycli) (Python3 migration : [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=master)](https://travis-ci.org/matlink/gplaycli))
-
+# gplaycli [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=master)](https://travis-ci.org/matlink/gplaycli)
 Google Play Downloader via Command line, based on https://framagit.org/tuxicoman/googleplaydownloader See package Readme for python modules to install.
 
 GPlayCli is a command line tool to search, install, update Android applications from the Google Play Store. The main goal was to be able to run this script with a cronjob, in order to automatically update an F-Droid server instance.
@@ -57,8 +56,8 @@ See https://github.com/matlink/gplaycli/releases for releases and changelogs
 Installation
 ============
 
-- Best way to install it is using pip: `pip install gplaycli` or `pip install gplaycli --user` if you are non-root
-- Cleanest way is using virtualenv: `virtualenv gplaycli; cd gplaycli; source bin/activate`, then either `pip install gplaycli` or `git clone https://github.com/matlink/gplaycli && pip install ./gplaycli/`
+- Best way to install it is using pip3: `pip3 install gplaycli` or `pip3 install gplaycli --user` if you are non-root
+- Cleanest way is using virtualenv: `virtualenv gplaycli; cd gplaycli; source bin/activate`, then either `pip install gplaycli` or `git clone https://github.com/matlink/gplaycli && pip3 install ./gplaycli/`
 
 Debian installation
 --------------------
@@ -66,14 +65,14 @@ Releases are available here https://github.com/matlink/gplaycli/releases/ as deb
 
 Requirements
 ----------
-Works on GNU/Linux or Windows with `pip` and Python 2.7. First of all, ensure these packages are installed on your system : 
+Works on GNU/Linux or Windows with `pip` and Python 3. First of all, ensure these packages are installed on your system : 
 
-- python-dev package -> `apt-get install python-dev`
+- python3-dev package -> `apt-get install python3-dev`
 - libffi package -> `apt-get install libffi-dev`
 - libssl-dev -> `apt-get install libssl-dev` (for pypi's `cryptography` compilation)
-- python (>=2.7)
+- python (>=3)
 
-Then, you need to install it with some needed libraries using either `pip install gplaycli` or `python setup.py install` after cloning it, then it will be available with `gplaycli` command. If you don't want to install it, only install requirements with `pip install -r requirements.txt` and use it as it.
+Then, you need to install it with some needed libraries using either `pip3 install gplaycli` or `python3 setup.py install` after cloning it, then it will be available with `gplaycli` command. If you don't want to install it, only install requirements with `pip install -r requirements.txt` and use it as it.
 
 If you want to use your own Google credentials, simply change them in the `credentials.conf` file with your own settings. 
 
