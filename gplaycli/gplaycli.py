@@ -45,6 +45,8 @@ try:
 except DistributionNotFound:
     __version__ = 'unknown: gplaycli not installed (version in setup.py)'
 
+logger = logging.getLogger(__name__)  # default level is WARNING
+
 
 class ERRORS(IntEnum):
     OK = 0
@@ -83,7 +85,6 @@ class GPlaycli(object):
         if args is None:
             self.yes = False
             self.verbose = False
-            logging.basicConfig()
             self.progress_bar = False
             self.logging_enable = False
             self.device_codename = 'bacon'
@@ -94,9 +95,14 @@ class GPlaycli(object):
             self.yes = args.yes_to_all
             self.verbose = args.verbose
             if self.verbose:
-                logging.basicConfig(level=logging.INFO, format=("[%(levelname)s] %(message)s"))
-            logging.info('GPlayCli version %s', __version__)
-            logging.info('Configuration file is %s', credentials)
+                logger.setLevel(logging.INFO)
+                handler = logging.StreamHandler()
+                formatter = logging.Formatter("[%(levelname)s] %(message)s")
+                handler.setFormatter(formatter)
+                logger.addHandler(handler)
+                logger.propagate = False
+            logger.info('GPlayCli version %s', __version__)
+            logger.info('Configuration file is %s', credentials)
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
             self.logging_enable = args.logging_enable
@@ -128,6 +134,7 @@ class GPlaycli(object):
         except (IOError, ValueError):  # cache file does not exists or is corrupted
             token = None
             gsfid = None
+            logger.error('cache file does not exists or is corrupted')
         return token, gsfid
 
     def write_cached_token(self, token, gsfid):
@@ -139,7 +146,9 @@ class GPlaycli(object):
             with open(self.tokencachefile, 'w') as tcf:
                 tcf.write("%s %s" % (token, gsfid))
         except IOError as e:
-            raise IOError("Failed to write token to cache file: %s %s" % (self.tokencachefile, e.strerror))
+            err_str = "Failed to write token to cache file: %s %s" % (self.tokencachefile, e.strerror)
+            logger.error(err_str)
+            raise IOError(err_str)
 
     def retrieve_token(self, force_new=False):
         token, gsfid = self.get_cached_token()
@@ -208,7 +217,7 @@ class GPlaycli(object):
         list_of_apks = [filename for filename in os.listdir(download_folder_path) if
                         os.path.splitext(filename)[1] == ".apk"]
         if list_of_apks:
-            logging.info("Checking apks ...")
+            logger.info("Checking apks ...")
             self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path,
                                     self.prepare_download_updates)
 
@@ -218,7 +227,7 @@ class GPlaycli(object):
         version_codes = []
         for position, filename in enumerate(list_of_apks):
             filepath = os.path.join(download_folder_path, filename)
-            logging.info("Analyzing %s", filepath)
+            logger.info("Analyzing %s", filepath)
             a = APK(filepath)
             packagename = a.package
             package_bunch.append(packagename)
@@ -254,7 +263,7 @@ class GPlaycli(object):
                 return_value = input('y/n ?')
 
             if self.yes or return_value == 'y':
-                logging.info("Downloading ...")
+                logger.info("Downloading ...")
                 downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download,
                                                               self.after_download)
                 return_string = str()
@@ -277,7 +286,7 @@ class GPlaycli(object):
         for detail, item in zip(details, list_of_packages_to_download):
             packagename, filename = item
 
-            logging.info("%s / %s %s", position, len(list_of_packages_to_download), packagename)
+            logger.info("%s / %s %s", position, len(list_of_packages_to_download), packagename)
 
             # Check for download folder
             download_folder_path = self.config["download_folder_path"]
@@ -293,12 +302,12 @@ class GPlaycli(object):
                 data_dict = playstore_api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
-                print("Error while downloading %s : %s" % (packagename,
-                                                           "this package does not exist, "
-                                                           "try to search it via --search before"))
+                logger.error("Error while downloading %s : %s" % (packagename,
+                                                                  "this package does not exist, "
+                                                                  "try to search it via --search before"))
                 unavail_downloads.append((item, exc))
             except Exception as exc:
-                print("Error while downloading %s : %s" % (packagename, exc))
+                logger.error("Error while downloading %s : %s" % (packagename, exc))
                 failed_downloads.append((item, exc))
             else:
                 if filename is None:
@@ -316,7 +325,7 @@ class GPlaycli(object):
                             obb_filename = os.path.join(download_folder_path, obb_filename)
                             open(obb_filename, "wb").write(obb_file["data"])
                 except IOError as exc:
-                    print("Error while writing %s : %s" % (packagename, exc))
+                    logger.error("Error while writing %s : %s" % (packagename, exc))
                     failed_downloads.append((item, exc))
             position += 1
 
@@ -501,7 +510,7 @@ def main():
     cli = GPlaycli(args, args.config)
     success, error = cli.connect_to_googleplay_api()
     if not success:
-        logging.error("Cannot login to GooglePlay ( %s )" % error)
+        logger.error("Cannot login to GooglePlay ( %s )" % error)
         sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
