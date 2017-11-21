@@ -236,7 +236,7 @@ class GPlaycli(object):
         # BulkDetails requires only one HTTP request
         # Get APK info from store
         details = playstore_api.bulkDetails(package_bunch)
-        for detail, packagename, apk_version_code in zip(details, package_bunch, version_codes):
+        for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
             store_version_code = detail['versionCode']
 
             # Compare
