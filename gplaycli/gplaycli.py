@@ -153,9 +153,9 @@ class GPlaycli(object):
     def retrieve_token(self, force_new=False):
         token, gsfid = self.get_cached_token()
         if token is not None and not force_new:
-            logging.info("Using cached token.")
+            logger.info("Using cached token.")
             return token, gsfid
-        logging.info("Retrieving token ...")
+        logger.info("Retrieving token ...")
         r = requests.get(self.token_url)
         if r.text == 'Auth error':
             print('Token dispenser auth error, probably too many connections')
@@ -164,8 +164,8 @@ class GPlaycli(object):
             print('Token dispenser server error')
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
         token, gsfid = r.text.split(" ")
-        logging.info("Token: %s", token)
-        logging.info("GSFId: %s", gsfid)
+        logger.info("Token: %s", token)
+        logger.info("GSFId: %s", gsfid)
         self.token = token
         self.gsfid = gsfid
         self.write_cached_token(token, gsfid)
@@ -182,10 +182,10 @@ class GPlaycli(object):
         authSubToken = None
         gsfId = None
         if self.token_enable is False:
-            logging.info("Using credentials to connect to API")
+            logger.info("Using credentials to connect to API")
             email = self.config["gmail_address"]
             if self.config["gmail_password"]:
-                logging.info("Using plaintext password")
+                logger.info("Using plaintext password")
                 password = self.config["gmail_password"]
             elif self.config["keyring_service"] and HAVE_KEYRING is True:
                 password = keyring.get_password(self.config["keyring_service"], email)
@@ -193,7 +193,7 @@ class GPlaycli(object):
                 print("You asked for keyring service but keyring package is not installed")
                 sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
         else:
-            logging.info("Using token to connect to API")
+            logger.info("Using token to connect to API")
             authSubToken = self.token
             gsfId = int(self.gsfid, 16)
         try:
@@ -202,7 +202,7 @@ class GPlaycli(object):
                                      authSubToken=authSubToken,
                                      gsfId=gsfId)
         except (ValueError, IndexError, LoginError) as ve:  # invalid token or expired
-            logging.info("Token has expired or is invalid. Retrieving a new one...")
+            logger.info("Token has expired or is invalid. Retrieving a new one...")
             self.retrieve_token(force_new=True)
             self.playstore_api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
         success = True
