@@ -375,7 +375,12 @@ class GPlaycli(object):
             all_results.append(col_names)
         # Compute results values
         for result in results:
-            if free_only and result['offer'][0]['checkoutFlowRequired']:  # if not Free to download
+            # skip that app if it not free
+            # or if it's beta (pre-registration)
+            if (len(result['offer']) == 0 # beta apps (pre-registration)
+                or free_only
+                and result['offer'][0]['checkoutFlowRequired'] # not free to download
+                ):
                 continue
             l = [result['title'],
                  result['author'],
