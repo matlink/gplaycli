@@ -28,6 +28,7 @@ import configparser
 from enum import IntEnum
 from gpapi.googleplay import GooglePlayAPI
 from gpapi.googleplay import LoginError
+from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 from pyaxmlparser import APK
 
@@ -201,7 +202,7 @@ class GPlaycli(object):
                                      password=password,
                                      authSubToken=authSubToken,
                                      gsfId=gsfId)
-        except (ValueError, IndexError, LoginError) as ve:  # invalid token or expired
+        except (ValueError, IndexError, LoginError, DecodeError) as ve:  # invalid token or expired
             logger.info("Token has expired or is invalid. Retrieving a new one...")
             self.retrieve_token(force_new=True)
             self.playstore_api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
