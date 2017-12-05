@@ -109,6 +109,7 @@ class GPlaycli(object):
             self.logging_enable = args.logging_enable
             self.device_codename = args.device_codename
             self.addfiles_enable = args.addfiles_enable
+            self.token_passed = False
             if args.token_enable is None:
                 self.token_enable = self.configparser.getboolean('Credentials', 'token')
             else:
@@ -118,7 +119,15 @@ class GPlaycli(object):
                     self.token_url = self.configparser.get('Credentials', 'token_url')
                 else:
                     self.token_url = args.token_url
-                self.token, self.gsfid = self.retrieve_token()
+
+                if (args.token_str is None) and (args.gsf_id is None):
+                    self.token, self.gsfid = self.retrieve_token()
+                elif (args.token_str is not None) and (args.gsf_id is not None):
+                    self.token = args.token_str
+                    self.gsfid = args.gsf_id
+                    self.token_passed = True
+                else:  # Either args.token_str or args.gsf_id is None
+                    raise TypeError("Token string and GSFID have to be passed at the same time.")
 
             if self.logging_enable:
                 self.success_logfile = "apps_downloaded.log"
@@ -194,7 +203,10 @@ class GPlaycli(object):
                 print("You asked for keyring service but keyring package is not installed")
                 sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
         else:
-            logger.info("Using token to connect to API")
+            if self.token_passed:
+                logger.info("Using passed token to connect to API")
+            else:
+                logger.info("Using auto retrieved token to connect to API")
             authSubToken = self.token
             gsfId = int(self.gsfid, 16)
         try:
@@ -487,6 +499,10 @@ def main():
                         type=str, default=".", help="Where to put the downloaded Apks, only for -d command")
     parser.add_argument('-dc', '--device-codename', action='store', dest='device_codename', metavar="DEVICE_CODENAME",
                         type=str, default="bacon", help="The device codename to fake", choices=GooglePlayAPI.getDevicesCodenames())
+    parser.add_argument('-ts', '--token-str', action='store', dest='token_str', metavar="TOKEN_STR",
+                        type=str, default=None, help="Supply token string by yourself, need to supply GSF_ID at the same time")
+    parser.add_argument('-g', '--gsf-id', action='store', dest='gsf_id', metavar="GSF_ID",
+                        type=str, default=None, help="Supply GSF_ID by yourself, need to supply token string at the same time")
     parser.add_argument('-t', '--token', action='store_true', dest='token_enable', default=None,
                         help='Instead of classical credentials, use the tokenize version')
     parser.add_argument('-tu', '--token-url', action='store', dest='token_url', metavar="TOKEN_URL",
