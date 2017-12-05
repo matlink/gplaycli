@@ -81,6 +81,7 @@ class GPlaycli(object):
 
         self.tokencachefile = os.path.expanduser(self.configparser.get("Cache", "token"))
         self.playstore_api = None
+        self.token_passed = False
 
         # default settings, ie for API calls
         if args is None:
@@ -109,7 +110,7 @@ class GPlaycli(object):
             self.logging_enable = args.logging_enable
             self.device_codename = args.device_codename
             self.addfiles_enable = args.addfiles_enable
-            self.token_passed = False
+
             if args.token_enable is None:
                 self.token_enable = self.configparser.getboolean('Credentials', 'token')
             else:
