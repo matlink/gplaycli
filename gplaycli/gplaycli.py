@@ -217,10 +217,13 @@ class GPlaycli(object):
                                      gsfId=gsfId)
         except (ValueError, IndexError, LoginError, DecodeError) as ve:  # invalid token or expired
             logger.info("Token has expired or is invalid. Retrieving a new one...")
-            self.retrieve_token(force_new=True)
-            self.playstore_api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
+            self.refresh_token()
         success = True
         return success, error
+
+    def refresh_token(self):
+        self.retrieve_token(force_new=True)
+        self.playstore_api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
 
     def list_folder_apks(self, folder):
         list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
@@ -296,6 +299,10 @@ class GPlaycli(object):
         # BulkDetails requires only one HTTP request
         # Get APK info from store
         details = playstore_api.bulkDetails([pkg[0] for pkg in list_of_packages_to_download])
+        if any([d is None for d in details]):
+            logger.info("Token has expired while downloading. Retrieving a new one.")
+            self.refresh_token()
+            details = playstore_api.bulkDetails([pkg[0] for pkg in list_of_packages_to_download])
         position = 1
         for detail, item in zip(details, list_of_packages_to_download):
             packagename, filename = item
