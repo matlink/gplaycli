@@ -429,43 +429,6 @@ class GPlaycli(object):
                         print(package, file=_buffer)
 
 
-def install_cronjob(automatic=False):
-    cred_default = '/etc/gplaycli/gplaycli.conf'
-    fold_default = '/opt/apks'
-    frequence_default = "/etc/cron.daily"
-
-    if not automatic:
-        credentials = input('path to gplaycli.conf? let empty for ' + cred_default + '\n') or cred_default
-        folder_to_update = input('path to apks folder? let empty for ' + fold_default + '\n') or fold_default
-        frequence = input('update it [d]aily or [w]eekly?\n')
-        if frequence == 'd':
-            frequence_folder = '/etc/cron.daily'
-        elif frequence == 'w':
-            frequence_folder = '/etc/cron.weekly'
-        else:
-            raise Exception('please type d/w to make your choice')
-
-    else:
-        credentials = cred_default
-        folder_to_update = fold_default
-        frequence_folder = frequence_default
-
-    frequence_file = frequence_folder + '/gplaycli'
-    shutil.copyfile('/etc/gplaycli/cronjob', frequence_file)
-
-    with open('/etc/gplaycli/cronjob', 'r') as fi:
-        with open(frequence_file, 'w') as fo:
-            for line in fi:
-                line = line.replace('PL_FOLD', folder_to_update)
-                line = line.replace('PL_CRED', credentials)
-                fo.write(line)
-
-    st = os.stat(frequence_file)
-    os.chmod(frequence_file, st.st_mode | stat.S_IEXEC)
-    print('Cronjob installed at ' + frequence_file)
-    return ERRORS.OK
-
-
 def load_from_file(filename):
     return [package.strip('\r\n') for package in open(filename).readlines()]
 
@@ -509,8 +472,6 @@ def main():
                         help='Prompt a progress bar while downloading packages')
     parser.add_argument('-L', '--log', action='store_true', dest='logging_enable', default=False,
                         help='Enable logging of apps status. Downloaded, failed, not available apps will be written in separate logging files')
-    parser.add_argument('-ic', '--install-cronjob', action='store_true', dest='install_cronjob',
-                        help='Install cronjob for regular APKs update. Use --yes to automatically install to default locations')
 
     if len(sys.argv) < 2:
         sys.argv.append("-h")
@@ -520,9 +481,6 @@ def main():
     if args.version:
         print(__version__)
         return
-
-    if args.install_cronjob:
-        sys.exit(install_cronjob(args.yes_to_all))
 
     cli = GPlaycli(args, args.config)
     success, error = cli.connect_to_googleplay_api()
