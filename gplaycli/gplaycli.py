@@ -369,13 +369,13 @@ class GPlaycli(object):
 
         print(message)
 
-    def raw_search(self, results_list, search_string, nb_results):
+    def raw_search(self, search_string, nb_results):
         # Query results
         return self.playstore_api.search(search_string, nb_result=nb_results)
 
-    def search(self, results_list, search_string, nb_results, free_only=True, include_headers=True):
+    def search(self, search_string, nb_results, free_only=True, include_headers=True):
         try:
-            results = self.raw_search(results_list, search_string, nb_results)
+            results = self.raw_search(search_string, nb_results)
         except IndexError:
             results = list()
         if not results:
@@ -545,7 +545,7 @@ def main():
         nb_results = 10
         if args.number_results:
             nb_results = args.number_results
-        cli.search(list(), args.search_string, nb_results, not args.paid)
+        cli.search(args.search_string, nb_results, not args.paid)
 
     if args.load_from_file:
         args.packages_to_download = load_from_file(args.load_from_file)
