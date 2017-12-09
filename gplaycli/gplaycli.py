@@ -358,18 +358,17 @@ class GPlaycli(object):
     def print_failed(self, failed_downloads):
         # Info message
         if not failed_downloads:
-            message = "Download complete"
+            logger.info("Download complete")
         else:
             message = "A few packages could not be downloaded :"
-            for item, exception in failed_downloads:
-                package_name, filename = item
+            for pkg, exception in failed_downloads:
+                package_name, filename = pkg
                 if filename is not None:
                     message += "\n%s : %s" % (filename, package_name)
                 else:
                     message += "\n%s" % package_name
                 message += "\n%s\n" % exception
-
-        print(message)
+            logger.error(message)
 
     def search(self, search_string, nb_results, free_only=True, include_headers=True):
         try:
