@@ -430,10 +430,6 @@ class GPlaycli(object):
                         print(package, file=_buffer)
 
 
-def load_from_file(filename):
-    return [package.strip('\r\n') for package in open(filename).readlines()]
-
-
 def main():
     parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
     parser.add_argument('-V', '--version', action='store_true', dest='version', help='Print version number and exit')
@@ -503,7 +499,7 @@ def main():
         cli.search(args.search_string, nb_results, not args.paid)
 
     if args.load_from_file:
-        args.packages_to_download = load_from_file(args.load_from_file)
+        args.packages_to_download = util.load_from_file(args.load_from_file)
 
     if args.packages_to_download is not None:
         if args.dest_folder is not None:
