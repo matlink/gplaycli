@@ -183,7 +183,7 @@ class GPlaycli(object):
         return token, gsfid
 
     def set_download_folder(self, folder):
-        self.config["download_folder_path"] = folder
+        self.config["download_folder"] = folder
 
     def connect_to_googleplay_api(self):
         self.playstore_api = GooglePlayAPI(device_codename=self.device_codename)
@@ -227,20 +227,20 @@ class GPlaycli(object):
         return list_of_apks
 
     def prepare_analyse_apks(self):
-        download_folder_path = self.config["download_folder_path"]
-        list_of_apks = [filename for filename in os.listdir(download_folder_path) if
+        download_folder = self.config["download_folder"]
+        list_of_apks = [filename for filename in os.listdir(download_folder) if
                         os.path.splitext(filename)[1] == ".apk"]
         if list_of_apks:
             logger.info("Checking apks ...")
-            to_update = self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path)
+            to_update = self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder)
             self.prepare_download_updates(to_update)
 
-    def analyse_local_apks(self, list_of_apks, playstore_api, download_folder_path):
+    def analyse_local_apks(self, list_of_apks, playstore_api, download_folder):
         list_apks_to_update = []
         package_bunch = []
         version_codes = []
         for position, filename in enumerate(list_of_apks):
-            filepath = os.path.join(download_folder_path, filename)
+            filepath = os.path.join(download_folder, filename)
             logger.info("Analyzing %s", filepath)
             a = APK(filepath)
             packagename = a.package
@@ -307,9 +307,9 @@ class GPlaycli(object):
             logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
 
             # Check for download folder
-            download_folder_path = self.config["download_folder_path"]
-            if not os.path.isdir(download_folder_path):
-                os.mkdir(download_folder_path)
+            download_folder = self.config["download_folder"]
+            if not os.path.isdir(download_folder):
+                os.mkdir(download_folder)
 
             # Get the version code and the offer type from the app details
             vc = detail['versionCode']
@@ -329,7 +329,7 @@ class GPlaycli(object):
             else:
                 if filename is None:
                     filename = packagename + ".apk"
-                filepath = os.path.join(download_folder_path, filename)
+                filepath = os.path.join(download_folder, filename)
 
                 data = data_dict['data']
                 additional_data = data_dict['additionalData']
@@ -339,7 +339,7 @@ class GPlaycli(object):
                     if additional_data:
                         for obb_file in additional_data:
                             obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_dict["docId"])
-                            obb_filename = os.path.join(download_folder_path, obb_filename)
+                            obb_filename = os.path.join(download_folder, obb_filename)
                             open(obb_filename, "wb").write(obb_file["data"])
                 except IOError as exc:
                     logger.error("Error while writing %s : %s" % (packagename, exc))
