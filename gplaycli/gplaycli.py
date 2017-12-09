@@ -278,7 +278,7 @@ class GPlaycli(object):
 
             if self.yes or return_value == 'y':
                 logger.info("Downloading ...")
-                downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download)
+                downloaded_packages = self.download_selection(list_of_packages_to_download)
                 return_string = str()
                 for package in downloaded_packages:
                     return_string += package + " "
@@ -287,14 +287,14 @@ class GPlaycli(object):
             print("Everything is up to date !")
             sys.exit(ERRORS.OK)
 
-    def download_selection(self, playstore_api, list_of_packages_to_download):
+    def download_selection(self, list_of_packages_to_download):
         success_downloads = list()
         failed_downloads = list()
         unavail_downloads = list()
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
-        details = playstore_api.bulkDetails([pkg[0] for pkg in list_of_packages_to_download])
+        details = self.playstore_api.bulkDetails([pkg[0] for pkg in list_of_packages_to_download])
         position = 1
         for detail, item in zip(details, list_of_packages_to_download):
             packagename, filename = item
@@ -307,12 +307,11 @@ class GPlaycli(object):
                 os.mkdir(download_folder_path)
 
             # Get the version code and the offer type from the app details
-            # m = playstore_api.details(packagename)
             vc = detail['versionCode']
 
             # Download
             try:
-                data_dict = playstore_api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
+                data_dict = self.playstore_api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
                 logger.error("Error while downloading %s : %s" % (packagename,
@@ -416,7 +415,7 @@ class GPlaycli(object):
         return all_results
 
     def download_packages(self, list_of_packages_to_download):
-        self.download_selection(self.playstore_api, [(pkg, None) for pkg in list_of_packages_to_download])
+        self.download_selection([(pkg, None) for pkg in list_of_packages_to_download])
 
     def write_logfiles(self, success, failed, unavail):
         for result, logfile in [(success, self.success_logfile),
