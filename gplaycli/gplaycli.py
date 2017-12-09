@@ -309,12 +309,9 @@ class GPlaycli(object):
             if not os.path.isdir(download_folder):
                 os.mkdir(download_folder)
 
-            # Get the version code and the offer type from the app details
-            vc = detail['versionCode']
-
             # Download
             try:
-                data_dict = self.api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
+                data_dict = self.api.download(packagename, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
                 logger.error("Error while downloading %s : %s" % (packagename,
