@@ -232,10 +232,10 @@ class GPlaycli(object):
                         os.path.splitext(filename)[1] == ".apk"]
         if list_of_apks:
             logger.info("Checking apks ...")
-            self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path,
-                                    self.prepare_download_updates)
+            to_update = self.analyse_local_apks(list_of_apks, self.playstore_api, download_folder_path)
+            self.prepare_download_updates(to_update)
 
-    def analyse_local_apks(self, list_of_apks, playstore_api, download_folder_path, return_function):
+    def analyse_local_apks(self, list_of_apks, playstore_api, download_folder_path):
         list_apks_to_update = []
         package_bunch = []
         version_codes = []
@@ -259,7 +259,7 @@ class GPlaycli(object):
                 # Add to the download list
                 list_apks_to_update.append([packagename, filename, int(apk_version_code), int(store_version_code)])
 
-        return_function(list_apks_to_update)
+        return list_apks_to_update
 
     def prepare_download_updates(self, list_apks_to_update):
         if list_apks_to_update:
@@ -278,8 +278,7 @@ class GPlaycli(object):
 
             if self.yes or return_value == 'y':
                 logger.info("Downloading ...")
-                downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download,
-                                                              self.after_download)
+                downloaded_packages = self.download_selection(self.playstore_api, list_of_packages_to_download)
                 return_string = str()
                 for package in downloaded_packages:
                     return_string += package + " "
@@ -288,7 +287,7 @@ class GPlaycli(object):
             print("Everything is up to date !")
             sys.exit(ERRORS.OK)
 
-    def download_selection(self, playstore_api, list_of_packages_to_download, return_function):
+    def download_selection(self, playstore_api, list_of_packages_to_download):
         success_downloads = list()
         failed_downloads = list()
         unavail_downloads = list()
@@ -351,7 +350,7 @@ class GPlaycli(object):
         if self.logging_enable:
             self.write_logfiles(success_items, failed_items, unavail_items)
 
-        return_function(failed_downloads + unavail_downloads)
+        self.after_download(failed_downloads + unavail_downloads)
         return to_download_items - failed_items
 
     def after_download(self, failed_downloads):
@@ -421,8 +420,7 @@ class GPlaycli(object):
         return all_results
 
     def download_packages(self, list_of_packages_to_download):
-        self.download_selection(self.playstore_api, [(pkg, None) for pkg in list_of_packages_to_download],
-                                self.after_download)
+        self.download_selection(self.playstore_api, [(pkg, None) for pkg in list_of_packages_to_download])
 
     def write_logfiles(self, success, failed, unavail):
         for result, logfile in [(success, self.success_logfile),
