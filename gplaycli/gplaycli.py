@@ -263,13 +263,13 @@ class GPlaycli(object):
 
     def prepare_download_updates(self, list_apks_to_update):
         if list_apks_to_update:
-            list_of_packages_to_download = []
+            pkg_todownload = []
 
             # Ask confirmation before downloading
             message = "The following applications will be updated :"
             for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
                 message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
-                list_of_packages_to_download.append([packagename, filename])
+                pkg_todownload.append([packagename, filename])
             message += "\n"
             print(message)
             if not self.yes:
@@ -278,7 +278,7 @@ class GPlaycli(object):
 
             if self.yes or return_value == 'y':
                 logger.info("Downloading ...")
-                downloaded_packages = self.download_packages(list_of_packages_to_download)
+                downloaded_packages = self.download_packages(pkg_todownload)
                 return_string = str()
                 for package in downloaded_packages:
                     return_string += package + " "
@@ -287,24 +287,24 @@ class GPlaycli(object):
             print("Everything is up to date !")
             sys.exit(ERRORS.OK)
 
-    def download_packages(self, list_of_packages_to_download):
+    def download_packages(self, pkg_todownload):
         success_downloads = list()
         failed_downloads = list()
         unavail_downloads = list()
 
         # case where no filenames have been provided
-        for index, pkg in enumerate(list_of_packages_to_download):
+        for index, pkg in enumerate(pkg_todownload):
             if type(pkg) is str:
-                list_of_packages_to_download[index] = (pkg, None)
+                pkg_todownload[index] = (pkg, None)
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
-        details = self.playstore_api.bulkDetails([pkg[0] for pkg in list_of_packages_to_download])
+        details = self.playstore_api.bulkDetails([pkg[0] for pkg in pkg_todownload])
         position = 1
-        for detail, item in zip(details, list_of_packages_to_download):
+        for detail, item in zip(details, pkg_todownload):
             packagename, filename = item
 
-            logger.info("%s / %s %s", position, len(list_of_packages_to_download), packagename)
+            logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
 
             # Check for download folder
             download_folder_path = self.config["download_folder_path"]
@@ -349,7 +349,7 @@ class GPlaycli(object):
         success_items = set(success_downloads)
         failed_items = set([item[0] for item, error in failed_downloads])
         unavail_items = set([item[0] for item, error in unavail_downloads])
-        to_download_items = set([item[0] for item in list_of_packages_to_download])
+        to_download_items = set([item[0] for item in pkg_todownload])
 
         if self.logging_enable:
             self.write_logfiles(success_items, failed_items, unavail_items)
