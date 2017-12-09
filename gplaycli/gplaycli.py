@@ -74,7 +74,7 @@ class GPlaycli(object):
                     raise OSError("No configuration file found at %s" % cred_paths_list)
             credentials = tmp_list[0]
 
-        default_values = dict()
+        default_values = {}
         self.configparser = configparser.ConfigParser(default_values)
         self.configparser.read(credentials)
         self.config = {key: value for key, value in self.configparser.items("Credentials")}
