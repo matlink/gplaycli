@@ -80,7 +80,7 @@ class GPlaycli(object):
         self.config = {key: value for key, value in self.configparser.items("Credentials")}
 
         self.tokencachefile = os.path.expanduser(self.configparser.get("Cache", "token"))
-        self.playstore_api = None
+        self.api = None
         self.token_passed = False
 
         # default settings, ie for API calls
@@ -186,7 +186,7 @@ class GPlaycli(object):
         self.config["download_folder"] = folder
 
     def connect_to_googleplay_api(self):
-        self.playstore_api = GooglePlayAPI(device_codename=self.device_codename)
+        self.api = GooglePlayAPI(device_codename=self.device_codename)
         error = None
         email = None
         password = None
@@ -211,14 +211,14 @@ class GPlaycli(object):
             authSubToken = self.token
             gsfId = int(self.gsfid, 16)
         try:
-            self.playstore_api.login(email=email,
+            self.api.login(email=email,
                                      password=password,
                                      authSubToken=authSubToken,
                                      gsfId=gsfId)
         except (ValueError, IndexError, LoginError, DecodeError) as ve:  # invalid token or expired
             logger.info("Token has expired or is invalid. Retrieving a new one...")
             self.retrieve_token(force_new=True)
-            self.playstore_api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
+            self.api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
         success = True
         return success, error
 
@@ -249,7 +249,7 @@ class GPlaycli(object):
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
-        details = self.playstore_api.bulkDetails(package_bunch)
+        details = self.api.bulkDetails(package_bunch)
         for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
             store_version_code = detail['versionCode']
 
@@ -297,7 +297,7 @@ class GPlaycli(object):
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
-        details = self.playstore_api.bulkDetails([pkg[0] for pkg in pkg_todownload])
+        details = self.api.bulkDetails([pkg[0] for pkg in pkg_todownload])
         position = 1
         for detail, item in zip(details, pkg_todownload):
             packagename, filename = item
@@ -314,7 +314,7 @@ class GPlaycli(object):
 
             # Download
             try:
-                data_dict = self.playstore_api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
+                data_dict = self.api.download(packagename, vc, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
                 logger.error("Error while downloading %s : %s" % (packagename,
@@ -373,7 +373,7 @@ class GPlaycli(object):
 
     def search(self, search_string, nb_results, free_only=True, include_headers=True):
         try:
-            results = self.playstore_api.search(search_string, nb_result=nb_results)
+            results = self.api.search(search_string, nb_result=nb_results)
         except IndexError:
             results = []
         if not results:
