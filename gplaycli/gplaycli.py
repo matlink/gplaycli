@@ -350,10 +350,10 @@ class GPlaycli(object):
         if self.logging_enable:
             self.write_logfiles(success_items, failed_items, unavail_items)
 
-        self.after_download(failed_downloads + unavail_downloads)
+        self.print_failed(failed_downloads + unavail_downloads)
         return to_download_items - failed_items
 
-    def after_download(self, failed_downloads):
+    def print_failed(self, failed_downloads):
         # Info message
         if not failed_downloads:
             message = "Download complete"
