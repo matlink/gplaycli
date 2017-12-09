@@ -288,9 +288,9 @@ class GPlaycli(object):
             sys.exit(ERRORS.OK)
 
     def download_packages(self, pkg_todownload):
-        success_downloads = list()
-        failed_downloads = list()
-        unavail_downloads = list()
+        success_downloads = []
+        failed_downloads = []
+        unavail_downloads = []
 
         # case where no filenames have been provided
         for index, pkg in enumerate(pkg_todownload):
@@ -377,11 +377,11 @@ class GPlaycli(object):
         try:
             results = self.playstore_api.search(search_string, nb_result=nb_results)
         except IndexError:
-            results = list()
+            results = []
         if not results:
             print("No result")
             return
-        all_results = list()
+        all_results = []
         if include_headers:
             # Name of the columns
             col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
@@ -409,7 +409,7 @@ class GPlaycli(object):
 
         if self.verbose:
             # Print a nice table
-            col_width = list()
+            col_width = []
             for column_indice in range(len(all_results[0])):
                 col_length = max([len("%s" % row[column_indice]) for row in all_results])
                 col_width.append(col_length + 2)
