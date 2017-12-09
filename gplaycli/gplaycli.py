@@ -278,7 +278,7 @@ class GPlaycli(object):
 
             if self.yes or return_value == 'y':
                 logger.info("Downloading ...")
-                downloaded_packages = self.download_selection(list_of_packages_to_download)
+                downloaded_packages = self.download_packages(list_of_packages_to_download)
                 return_string = str()
                 for package in downloaded_packages:
                     return_string += package + " "
@@ -287,10 +287,15 @@ class GPlaycli(object):
             print("Everything is up to date !")
             sys.exit(ERRORS.OK)
 
-    def download_selection(self, list_of_packages_to_download):
+    def download_packages(self, list_of_packages_to_download):
         success_downloads = list()
         failed_downloads = list()
         unavail_downloads = list()
+
+        # case where no filenames have been provided
+        for index, pkg in enumerate(list_of_packages_to_download):
+            if type(pkg) is str:
+                list_of_packages_to_download[index] = (pkg, None)
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
@@ -413,9 +418,6 @@ class GPlaycli(object):
                 print("".join(str("%s" % item).strip().ljust(col_width[indice]) for indice, item in
                               enumerate(result)))
         return all_results
-
-    def download_packages(self, list_of_packages_to_download):
-        self.download_selection([(pkg, None) for pkg in list_of_packages_to_download])
 
     def write_logfiles(self, success, failed, unavail):
         for result, logfile in [(success, self.success_logfile),
