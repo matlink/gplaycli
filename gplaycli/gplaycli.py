@@ -279,9 +279,7 @@ class GPlaycli(object):
             if self.yes or return_value == 'y':
                 logger.info("Downloading ...")
                 downloaded_packages = self.download_packages(pkg_todownload)
-                return_string = ""
-                for package in downloaded_packages:
-                    return_string += package + " "
+                return_string = ' '.join(downloaded_packages)
                 print("Updated: " + return_string[:-1])
         else:
             print("Everything is up to date !")
