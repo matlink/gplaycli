@@ -24,6 +24,7 @@ import requests
 import shutil
 import stat
 import configparser
+import warnings
 
 from enum import IntEnum
 from gpapi.googleplay import GooglePlayAPI
@@ -211,10 +212,15 @@ class GPlaycli(object):
             authSubToken = self.token
             gsfId = int(self.gsfid, 16)
         try:
-            self.playstore_api.login(email=email,
-                                     password=password,
-                                     authSubToken=authSubToken,
-                                     gsfId=gsfId)
+            with warnings.catch_warnings():
+                warnings.simplefilter('error')
+                try:
+                    self.playstore_api.login(email=email,
+                                             password=password,
+                                             authSubToken=authSubToken,
+                                             gsfId=gsfId)
+                except SystemError:
+                    raise LoginError("Token has expired, leading to invalid response size")
         except (ValueError, IndexError, LoginError, DecodeError) as ve:  # invalid token or expired
             logger.info("Token has expired or is invalid. Retrieving a new one...")
             self.refresh_token()
