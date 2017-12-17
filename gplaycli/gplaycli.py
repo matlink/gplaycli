@@ -430,7 +430,7 @@ class GPlaycli(object):
         return all_results
 
     def download_packages(self, list_of_packages_to_download):
-        self.download_selection(self.playstore_api, [(pkg.strip('\r\n '), None) for pkg in list_of_packages_to_download],
+        self.download_selection(self.playstore_api, [(pkg.strip('\r\n '), None) for pkg in list_of_packages_to_download if pkg],
                                 self.after_download)
 
     def write_logfiles(self, success, failed, unavail):
