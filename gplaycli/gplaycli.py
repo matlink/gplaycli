@@ -29,6 +29,7 @@ import warnings
 from enum import IntEnum
 from gpapi.googleplay import GooglePlayAPI
 from gpapi.googleplay import LoginError
+from gpapi.googleplay import RequestError
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 from pyaxmlparser import APK
@@ -304,7 +305,13 @@ class GPlaycli(object):
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
-        details = playstore_api.bulkDetails([pkg[0] for pkg in list_of_packages_to_download])
+        details = list()
+        for pkg in list_of_packages_to_download:
+            try:
+                detail = playstore_api.bulkDetails(pkg[0])
+                details.append(detail)
+            except RequestError as re:
+                failed_downloads.append((pkg, re))
         if any([d is None for d in details]):
             logger.info("Token has expired while downloading. Retrieving a new one.")
             self.refresh_token()
