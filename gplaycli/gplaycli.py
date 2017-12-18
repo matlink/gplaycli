@@ -308,7 +308,7 @@ class GPlaycli(object):
         details = list()
         for pkg in list_of_packages_to_download:
             try:
-                detail = playstore_api.bulkDetails(pkg[0])
+                detail = playstore_api.details(pkg[0])
                 details.append(detail)
             except RequestError as re:
                 failed_downloads.append((pkg, re))
