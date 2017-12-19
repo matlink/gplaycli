@@ -212,19 +212,19 @@ class GPlaycli(object):
                 logger.info("Using auto retrieved token to connect to API")
             authSubToken = self.token
             gsfId = int(self.gsfid, 16)
-        try:
-            with warnings.catch_warnings():
-                warnings.simplefilter('error')
-                try:
-                    self.playstore_api.login(email=email,
-                                             password=password,
-                                             authSubToken=authSubToken,
-                                             gsfId=gsfId)
-                except SystemError:
-                    raise LoginError("Token has expired, leading to invalid response size")
-        except (ValueError, IndexError, LoginError, DecodeError) as ve:  # invalid token or expired
-            logger.info("Token has expired or is invalid. Retrieving a new one...")
-            self.refresh_token()
+        with warnings.catch_warnings():
+            warnings.simplefilter('error')
+            try:
+                self.playstore_api.login(email=email,
+                                         password=password,
+                                         authSubToken=authSubToken,
+                                         gsfId=gsfId)
+            except LoginError as le:
+                logger.error("Bad authentication, login or password incorrect (%s)" % le)
+                return False, ERRORS.CANNOT_LOGIN_GPLAY
+            except (ValueError, IndexError, LoginError, DecodeError, SystemError) as ve:  # invalid token or expired
+                logger.info("Token has expired or is invalid. Retrieving a new one...")
+                self.refresh_token()
         success = True
         return success, error
 
