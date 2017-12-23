@@ -348,12 +348,14 @@ class GPlaycli(object):
                 additional_data = data_dict['additionalData']
 
                 try:
-                    open(filepath, "wb").write(data)
+                    with open(filepath, "wb") as f:
+                        f.write(data)
                     if additional_data:
                         for obb_file in additional_data:
                             obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_dict["docId"])
                             obb_filename = os.path.join(download_folder_path, obb_filename)
-                            open(obb_filename, "wb").write(obb_file["data"])
+                            with open(obb_filename, "wb") as f:
+                                f.write(obb_file["data"])
                 except IOError as exc:
                     logger.error("Error while writing %s : %s" % (packagename, exc))
                     failed_downloads.append((item, exc))
@@ -489,7 +491,8 @@ def install_cronjob(automatic=False):
 
 
 def load_from_file(filename):
-    return [package.strip('\r\n') for package in open(filename).readlines()]
+    with open(filename) as f:
+        return [package.strip('\r\n') for package in f]
 
 
 def main():
