@@ -24,10 +24,12 @@ import requests
 import shutil
 import stat
 import configparser
+import warnings
 
 from enum import IntEnum
 from gpapi.googleplay import GooglePlayAPI
 from gpapi.googleplay import LoginError
+from gpapi.googleplay import RequestError
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 from pyaxmlparser import APK
@@ -210,14 +212,19 @@ class GPlaycli(object):
                 logger.info("Using auto retrieved token to connect to API")
             authSubToken = self.token
             gsfId = int(self.gsfid, 16)
-        try:
-            self.api.login(email=email,
-                                     password=password,
-                                     authSubToken=authSubToken,
-                                     gsfId=gsfId)
-        except (ValueError, IndexError, LoginError, DecodeError) as ve:  # invalid token or expired
-            logger.info("Token has expired or is invalid. Retrieving a new one...")
-            self.refresh_token()
+        with warnings.catch_warnings():
+            warnings.simplefilter('error')
+            try:
+                self.api.login(email=email,
+                                         password=password,
+                                         authSubToken=authSubToken,
+                                         gsfId=gsfId)
+            except LoginError as le:
+                logger.error("Bad authentication, login or password incorrect (%s)" % le)
+                return False, ERRORS.CANNOT_LOGIN_GPLAY
+            except (ValueError, IndexError, LoginError, DecodeError, SystemError) as ve:  # invalid token or expired
+                logger.info("Token has expired or is invalid. Retrieving a new one...")
+                self.refresh_token()
         success = True
         return success, error
 
@@ -302,7 +309,13 @@ class GPlaycli(object):
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
-        details = self.api.bulkDetails([pkg[0] for pkg in pkg_todownload])
+        details = list()
+        for pkg in pkg_todownload:
+            try:
+                detail = self.api.details(pkg[0])
+                details.append(detail)
+            except RequestError as re:
+                failed_downloads.append((pkg, re))
         if any([d is None for d in details]):
             logger.info("Token has expired while downloading. Retrieving a new one.")
             self.refresh_token()
@@ -339,12 +352,14 @@ class GPlaycli(object):
                 additional_data = data_dict['additionalData']
 
                 try:
-                    open(filepath, "wb").write(data)
+                    with open(filepath, "wb") as f:
+                        f.write(data)
                     if additional_data:
                         for obb_file in additional_data:
                             obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_dict["docId"])
                             obb_filename = os.path.join(download_folder, obb_filename)
-                            open(obb_filename, "wb").write(obb_file["data"])
+                            with open(obb_filename, "wb") as f:
+                                f.write(obb_file["data"])
                 except IOError as exc:
                     logger.error("Error while writing %s : %s" % (packagename, exc))
                     failed_downloads.append((item, exc))
