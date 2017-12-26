@@ -20,13 +20,13 @@ import sys
 import os
 import logging
 import argparse
-import requests
-import shutil
-import stat
 import configparser
 import warnings
 
 from enum import IntEnum
+
+import requests
+
 from gpapi.googleplay import GooglePlayAPI
 from gpapi.googleplay import LoginError
 from gpapi.googleplay import RequestError
