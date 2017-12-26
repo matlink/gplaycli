@@ -35,6 +35,7 @@ from pkg_resources import get_distribution, DistributionNotFound
 from pyaxmlparser import APK
 
 from . import util
+from . import hooks
 
 try:
     import keyring
@@ -151,17 +152,6 @@ class GPlaycli:
 
     ########## Public methods ##########
 
-    def connected(function):
-        """
-        Decorator that checks the api status
-        before doing any request
-        """
-        def check_connection(self, *args, **kwargs):
-            if self.api is None:
-                self.connect()
-            function(self, *args, **kwargs)
-        return check_connection
-
     def retrieve_token(self, force_new=False):
         """
         Return a token. If a cached token exists,
@@ -189,7 +179,7 @@ class GPlaycli:
         self.write_cached_token(token, gsfid)
         return token, gsfid
 
-    @connected
+    @hooks.connected
     def download_packages(self, pkg_todownload):
         """
         Download apks from the pkg_todownload list
@@ -285,7 +275,7 @@ class GPlaycli:
         self.print_failed(failed_downloads + unavail_downloads)
         return to_download_items - failed_items
 
-    @connected
+    @hooks.connected
     def search(self, search_string, nb_results, free_only=True, include_headers=True):
         """
         Search the given string search_string on the Play Store.
@@ -464,7 +454,7 @@ class GPlaycli:
             to_update = self.analyse_local_apks(list_of_apks, download_folder)
             self.prepare_download_updates(to_update)
 
-    @connected
+    @hooks.connected
     def analyse_local_apks(self, list_of_apks, download_folder):
         """
         Analyse apks in the list list_of_apks
