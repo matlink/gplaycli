@@ -166,10 +166,10 @@ class GPlaycli:
         logger.info("Retrieving token ...")
         response = requests.get(self.token_url)
         if response.text == 'Auth error':
-            print('Token dispenser auth error, probably too many connections')
+            logger.error('Token dispenser auth error, probably too many connections')
             sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
         elif response.text == "Server error":
-            print('Token dispenser server error')
+            logger.error('Token dispenser server error')
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
         token, gsfid = response.text.split(" ")
         logger.info("Token: %s", token)
@@ -290,7 +290,7 @@ class GPlaycli:
         except IndexError:
             results = []
         if not results:
-            print("No result")
+            logger.info("No result")
             return
         all_results = []
         if include_headers:
@@ -366,7 +366,7 @@ class GPlaycli:
             elif self.config["keyring_service"] and HAVE_KEYRING is True:
                 password = keyring.get_password(self.config["keyring_service"], email)
             elif self.config["keyring_service"] and HAVE_KEYRING is False:
-                print("You asked for keyring service but keyring package is not installed")
+                logger.error("You asked for keyring service but keyring package is not installed")
                 sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
         else:
             if self.token_passed:
