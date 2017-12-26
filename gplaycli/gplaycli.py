@@ -243,7 +243,7 @@ class GPlaycli:
 
         # case where no filenames have been provided
         for index, pkg in enumerate(pkg_todownload):
-            if type(pkg) is str:
+            if isinstance(pkg, str):
                 pkg_todownload[index] = [pkg, None]
             # remove whitespaces before and after package name
             pkg_todownload[index][0] = pkg_todownload[index][0].strip('\r\n ')
@@ -255,8 +255,8 @@ class GPlaycli:
             try:
                 detail = self.api.details(pkg[0])
                 details.append(detail)
-            except RequestError as re:
-                failed_downloads.append((pkg, re))
+            except RequestError as request_error:
+                failed_downloads.append((pkg, request_error))
         if any([d is None for d in details]):
             logger.info("Token has expired while downloading. Retrieving a new one.")
             self.refresh_token()
@@ -293,14 +293,14 @@ class GPlaycli:
                 additional_data = data_dict['additionalData']
 
                 try:
-                    with open(filepath, "wb") as f:
-                        f.write(data)
+                    with open(filepath, "wb") as fbuffer:
+                        fbuffer.write(data)
                     if additional_data:
                         for obb_file in additional_data:
                             obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_dict["docId"])
                             obb_filename = os.path.join(download_folder, obb_filename)
-                            with open(obb_filename, "wb") as f:
-                                f.write(obb_file["data"])
+                            with open(obb_filename, "wb") as fbuffer:
+                                fbuffer.write(obb_file["data"])
                 except IOError as exc:
                     logger.error("Error while writing %s : %s", packagename, exc)
                     failed_downloads.append((item, exc))
