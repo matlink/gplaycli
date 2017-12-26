@@ -425,20 +425,12 @@ class GPlaycli:
         self.retrieve_token(force_new=True)
         self.api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
 
-    def list_folder_apks(self, folder):
-        """
-        List apks in the given folder
-        """
-        list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
-        return list_of_apks
-
     def prepare_analyse_apks(self):
         """
         Gather apks to further check for update
         """
         download_folder = self.config["download_folder"]
-        list_of_apks = [filename for filename in os.listdir(download_folder) if
-                        os.path.splitext(filename)[1] == ".apk"]
+        list_of_apks = util.list_folder_apks(download_folder)
         if list_of_apks:
             logger.info("Checking apks ...")
             to_update = self.analyse_local_apks(list_of_apks, download_folder)
@@ -593,7 +585,7 @@ def main():
         sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
-        print(cli.list_folder_apks(args.list))
+        print(util.list_folder_apks(args.list))
 
     if args.update_folder:
         cli.prepare_analyse_apks()
