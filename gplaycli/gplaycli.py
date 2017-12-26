@@ -151,6 +151,17 @@ class GPlaycli:
 
     ########## Public methods ##########
 
+    def connected(function):
+        """
+        Decorator that checks the api status
+        before doing any request
+        """
+        def check_connection(self, *args, **kwargs):
+            if self.api is None:
+                self.connect()
+            function(self, *args, **kwargs)
+        return check_connection
+
     def retrieve_token(self, force_new=False):
         """
         Return a token. If a cached token exists,
@@ -341,17 +352,6 @@ class GPlaycli:
 
     ########## Internal methods ##########
 
-    def connected(function):
-        """
-        Decorator that checks the api status
-        before doing any request
-        """
-        def check_connection(self, *args, **kwargs):
-            if self.api is None:
-                self.connect()
-            function(self, *args, **kwargs)
-        return check_connection
-
     def connect(self):
         """
         Connect GplayCli to the Google Play API.
@@ -464,6 +464,7 @@ class GPlaycli:
             to_update = self.analyse_local_apks(list_of_apks, download_folder)
             self.prepare_download_updates(to_update)
 
+    @connected
     def analyse_local_apks(self, list_of_apks, download_folder):
         """
         Analyse apks in the list list_of_apks
