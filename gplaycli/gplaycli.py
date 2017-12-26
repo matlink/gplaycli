@@ -405,8 +405,9 @@ class GPlaycli:
                 os.mkdir(cachedir)
             with open(self.tokencachefile, 'w') as tcf:
                 tcf.write("%s %s" % (token, gsfid))
-        except IOError as e:
-            err_str = "Failed to write token to cache file: %s %s" % (self.tokencachefile, e.strerror)
+        except IOError as io_error:
+            err_str = "Failed to write token to cache file: %s %s" % (
+                self.tokencachefile, io_error.strerror)
             logger.error(err_str)
             raise IOError(err_str)
 
@@ -448,10 +449,10 @@ class GPlaycli:
         for position, filename in enumerate(list_of_apks):
             filepath = os.path.join(download_folder, filename)
             logger.info("Analyzing %s", filepath)
-            a = APK(filepath)
-            packagename = a.package
+            apk = APK(filepath)
+            packagename = apk.package
             package_bunch.append(packagename)
-            version_codes.append(a.version_code)
+            version_codes.append(apk.version_code)
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
