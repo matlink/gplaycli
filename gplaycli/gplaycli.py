@@ -211,14 +211,14 @@ class GPlaycli:
             logger.info("Using cached token.")
             return token, gsfid
         logger.info("Retrieving token ...")
-        r = requests.get(self.token_url)
-        if r.text == 'Auth error':
+        response = requests.get(self.token_url)
+        if response.text == 'Auth error':
             print('Token dispenser auth error, probably too many connections')
             sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
-        elif r.text == "Server error":
+        elif response.text == "Server error":
             print('Token dispenser server error')
             sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
-        token, gsfid = r.text.split(" ")
+        token, gsfid = response.text.split(" ")
         logger.info("Token: %s", token)
         logger.info("GSFId: %s", gsfid)
         self.token = token
