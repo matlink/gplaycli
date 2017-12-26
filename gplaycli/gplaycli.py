@@ -145,74 +145,7 @@ class GPlaycli:
                 self.failed_logfile = "apps_failed.log"
                 self.unavail_logfile = "apps_not_available.log"
 
-    def get_cached_token(self):
-        """
-        Retrieve a cached token and gsfid if exist.
-        Otherwise return None.
-        """
-        try:
-            with open(self.tokencachefile, 'r') as tcf:
-                token, gsfid = tcf.readline().split()
-                if not token:
-                    token = None
-                    gsfid = None
-        except (IOError, ValueError):  # cache file does not exists or is corrupted
-            token = None
-            gsfid = None
-            logger.error('cache file does not exists or is corrupted')
-        return token, gsfid
-
-    def write_cached_token(self, token, gsfid):
-        """
-        Write the given token and gsfid
-        to the self.tokencachefile file.
-        Path and file are created if missing.
-        """
-        try:
-            # creates cachedir if not exists
-            cachedir = os.path.dirname(self.tokencachefile)
-            if not os.path.exists(cachedir):
-                os.mkdir(cachedir)
-            with open(self.tokencachefile, 'w') as tcf:
-                tcf.write("%s %s" % (token, gsfid))
-        except IOError as e:
-            err_str = "Failed to write token to cache file: %s %s" % (self.tokencachefile, e.strerror)
-            logger.error(err_str)
-            raise IOError(err_str)
-
-    def retrieve_token(self, force_new=False):
-        """
-        Return a token. If a cached token exists,
-        it will be used. Else, or if force_new=True,
-        a new token is fetched from the token-dispenser
-        server located at self.token_url.
-        """
-        token, gsfid = self.get_cached_token()
-        if token is not None and not force_new:
-            logger.info("Using cached token.")
-            return token, gsfid
-        logger.info("Retrieving token ...")
-        r = requests.get(self.token_url)
-        if r.text == 'Auth error':
-            print('Token dispenser auth error, probably too many connections')
-            sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
-        elif r.text == "Server error":
-            print('Token dispenser server error')
-            sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
-        token, gsfid = r.text.split(" ")
-        logger.info("Token: %s", token)
-        logger.info("GSFId: %s", gsfid)
-        self.token = token
-        self.gsfid = gsfid
-        self.write_cached_token(token, gsfid)
-        return token, gsfid
-
-    def set_download_folder(self, folder):
-        """
-        Set the download folder for apk
-        to folder.
-        """
-        self.config["download_folder"] = folder
+    ########## Public methods ##########
 
     def connect_to_googleplay_api(self):
         """
@@ -263,90 +196,32 @@ class GPlaycli:
         success = True
         return success, error
 
-    def refresh_token(self):
+    def retrieve_token(self, force_new=False):
         """
-        Get a new token from token-dispenser instance
-        and re-connect to the play-store.
+        Return a token. If a cached token exists,
+        it will be used. Else, or if force_new=True,
+        a new token is fetched from the token-dispenser
+        server located at self.token_url.
         """
-        self.retrieve_token(force_new=True)
-        self.api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
-
-    def list_folder_apks(self, folder):
-        """
-        List apks in the given folder
-        """
-        list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
-        return list_of_apks
-
-    def prepare_analyse_apks(self):
-        """
-        Gather apks to further check for update
-        """
-        download_folder = self.config["download_folder"]
-        list_of_apks = [filename for filename in os.listdir(download_folder) if
-                        os.path.splitext(filename)[1] == ".apk"]
-        if list_of_apks:
-            logger.info("Checking apks ...")
-            to_update = self.analyse_local_apks(list_of_apks, download_folder)
-            self.prepare_download_updates(to_update)
-
-    def analyse_local_apks(self, list_of_apks, download_folder):
-        """
-        Analyse apks in the list list_of_apks
-        to check for updates and download updates
-        in the download_folder folder.
-        """
-        list_apks_to_update = []
-        package_bunch = []
-        version_codes = []
-        for position, filename in enumerate(list_of_apks):
-            filepath = os.path.join(download_folder, filename)
-            logger.info("Analyzing %s", filepath)
-            a = APK(filepath)
-            packagename = a.package
-            package_bunch.append(packagename)
-            version_codes.append(a.version_code)
-
-        # BulkDetails requires only one HTTP request
-        # Get APK info from store
-        details = self.api.bulkDetails(package_bunch)
-        for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
-            store_version_code = detail['versionCode']
-
-            # Compare
-            if apk_version_code != "" and int(apk_version_code) < int(store_version_code) and int(
-                    store_version_code) != 0:
-                # Add to the download list
-                list_apks_to_update.append([packagename, filename, int(apk_version_code), int(store_version_code)])
-
-        return list_apks_to_update
-
-    def prepare_download_updates(self, list_apks_to_update):
-        """
-        Ask confirmation before updating apks
-        """
-        if list_apks_to_update:
-            pkg_todownload = []
-
-            # Ask confirmation before downloading
-            message = "The following applications will be updated :"
-            for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
-                message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
-                pkg_todownload.append([packagename, filename])
-            message += "\n"
-            print(message)
-            if not self.yes:
-                print("\nDo you agree?")
-                return_value = input('y/n ?')
-
-            if self.yes or return_value == 'y':
-                logger.info("Downloading ...")
-                downloaded_packages = self.download_packages(pkg_todownload)
-                return_string = ' '.join(downloaded_packages)
-                print("Updated: " + return_string[:-1])
-        else:
-            print("Everything is up to date !")
-            sys.exit(ERRORS.OK)
+        token, gsfid = self.get_cached_token()
+        if token is not None and not force_new:
+            logger.info("Using cached token.")
+            return token, gsfid
+        logger.info("Retrieving token ...")
+        r = requests.get(self.token_url)
+        if r.text == 'Auth error':
+            print('Token dispenser auth error, probably too many connections')
+            sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
+        elif r.text == "Server error":
+            print('Token dispenser server error')
+            sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
+        token, gsfid = r.text.split(" ")
+        logger.info("Token: %s", token)
+        logger.info("GSFId: %s", gsfid)
+        self.token = token
+        self.gsfid = gsfid
+        self.write_cached_token(token, gsfid)
+        return token, gsfid
 
     def download_packages(self, pkg_todownload):
         """
@@ -439,24 +314,6 @@ class GPlaycli:
         self.print_failed(failed_downloads + unavail_downloads)
         return to_download_items - failed_items
 
-    def print_failed(self, failed_downloads):
-        """
-        Print/log failed downloads from failed_downloads
-        """
-        # Info message
-        if not failed_downloads:
-            logger.info("Download complete")
-        else:
-            message = "A few packages could not be downloaded :"
-            for pkg, exception in failed_downloads:
-                package_name, filename = pkg
-                if filename is not None:
-                    message += "\n%s : %s" % (filename, package_name)
-                else:
-                    message += "\n%s" % package_name
-                message += "\n%s\n" % exception
-            logger.error(message)
-
     def search(self, search_string, nb_results, free_only=True, include_headers=True):
         """
         Search the given string search_string on the Play Store.
@@ -511,6 +368,155 @@ class GPlaycli:
                               enumerate(result)))
         return all_results
 
+    ########## End public methods ##########
+
+    ########## Internal methods ##########
+
+    def get_cached_token(self):
+        """
+        Retrieve a cached token and gsfid if exist.
+        Otherwise return None.
+        """
+        try:
+            with open(self.tokencachefile, 'r') as tcf:
+                token, gsfid = tcf.readline().split()
+                if not token:
+                    token = None
+                    gsfid = None
+        except (IOError, ValueError):  # cache file does not exists or is corrupted
+            token = None
+            gsfid = None
+            logger.error('cache file does not exists or is corrupted')
+        return token, gsfid
+
+    def write_cached_token(self, token, gsfid):
+        """
+        Write the given token and gsfid
+        to the self.tokencachefile file.
+        Path and file are created if missing.
+        """
+        try:
+            # creates cachedir if not exists
+            cachedir = os.path.dirname(self.tokencachefile)
+            if not os.path.exists(cachedir):
+                os.mkdir(cachedir)
+            with open(self.tokencachefile, 'w') as tcf:
+                tcf.write("%s %s" % (token, gsfid))
+        except IOError as e:
+            err_str = "Failed to write token to cache file: %s %s" % (self.tokencachefile, e.strerror)
+            logger.error(err_str)
+            raise IOError(err_str)
+
+    def set_download_folder(self, folder):
+        """
+        Set the download folder for apk
+        to folder.
+        """
+        self.config["download_folder"] = folder
+
+    def refresh_token(self):
+        """
+        Get a new token from token-dispenser instance
+        and re-connect to the play-store.
+        """
+        self.retrieve_token(force_new=True)
+        self.api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
+
+    def list_folder_apks(self, folder):
+        """
+        List apks in the given folder
+        """
+        list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
+        return list_of_apks
+
+    def prepare_analyse_apks(self):
+        """
+        Gather apks to further check for update
+        """
+        download_folder = self.config["download_folder"]
+        list_of_apks = [filename for filename in os.listdir(download_folder) if
+                        os.path.splitext(filename)[1] == ".apk"]
+        if list_of_apks:
+            logger.info("Checking apks ...")
+            to_update = self.analyse_local_apks(list_of_apks, download_folder)
+            self.prepare_download_updates(to_update)
+
+    def analyse_local_apks(self, list_of_apks, download_folder):
+        """
+        Analyse apks in the list list_of_apks
+        to check for updates and download updates
+        in the download_folder folder.
+        """
+        list_apks_to_update = []
+        package_bunch = []
+        version_codes = []
+        for position, filename in enumerate(list_of_apks):
+            filepath = os.path.join(download_folder, filename)
+            logger.info("Analyzing %s", filepath)
+            a = APK(filepath)
+            packagename = a.package
+            package_bunch.append(packagename)
+            version_codes.append(a.version_code)
+
+        # BulkDetails requires only one HTTP request
+        # Get APK info from store
+        details = self.api.bulkDetails(package_bunch)
+        for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
+            store_version_code = detail['versionCode']
+
+            # Compare
+            if apk_version_code != "" and int(apk_version_code) < int(store_version_code) and int(
+                    store_version_code) != 0:
+                # Add to the download list
+                list_apks_to_update.append([packagename, filename, int(apk_version_code), int(store_version_code)])
+
+        return list_apks_to_update
+
+    def prepare_download_updates(self, list_apks_to_update):
+        """
+        Ask confirmation before updating apks
+        """
+        if list_apks_to_update:
+            pkg_todownload = []
+
+            # Ask confirmation before downloading
+            message = "The following applications will be updated :"
+            for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
+                message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
+                pkg_todownload.append([packagename, filename])
+            message += "\n"
+            print(message)
+            if not self.yes:
+                print("\nDo you agree?")
+                return_value = input('y/n ?')
+
+            if self.yes or return_value == 'y':
+                logger.info("Downloading ...")
+                downloaded_packages = self.download_packages(pkg_todownload)
+                return_string = ' '.join(downloaded_packages)
+                print("Updated: " + return_string[:-1])
+        else:
+            print("Everything is up to date !")
+            sys.exit(ERRORS.OK)
+
+    def print_failed(self, failed_downloads):
+        """
+        Print/log failed downloads from failed_downloads
+        """
+        # Info message
+        if not failed_downloads:
+            logger.info("Download complete")
+        else:
+            message = "A few packages could not be downloaded :"
+            for pkg, exception in failed_downloads:
+                package_name, filename = pkg
+                if filename is not None:
+                    message += "\n%s : %s" % (filename, package_name)
+                else:
+                    message += "\n%s" % package_name
+                message += "\n%s\n" % exception
+            logger.error(message)
+
     def write_logfiles(self, success, failed, unavail):
         """
         Write success failed and unavail list to
@@ -524,6 +530,8 @@ class GPlaycli:
                 with open(logfile, 'w') as _buffer:
                     for package in result:
                         print(package, file=_buffer)
+
+    ########## End internal methods ##########
 
 
 def main():
