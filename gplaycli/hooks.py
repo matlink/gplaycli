@@ -4,7 +4,7 @@ def connected(function):
     before doing any request
     """
     def check_connection(self, *args, **kwargs):
-        if self.api is None:
+        if self.api is None or self.api.authSubToken is None:
             self.connect()
         function(self, *args, **kwargs)
     return check_connection
