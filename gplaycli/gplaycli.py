@@ -228,6 +228,7 @@ class GPlaycli:
         self.write_cached_token(token, gsfid)
         return token, gsfid
 
+    @connected
     def download_packages(self, pkg_todownload):
         """
         Download apks from the pkg_todownload list
@@ -323,6 +324,7 @@ class GPlaycli:
         self.print_failed(failed_downloads + unavail_downloads)
         return to_download_items - failed_items
 
+    @connected
     def search(self, search_string, nb_results, free_only=True, include_headers=True):
         """
         Search the given string search_string on the Play Store.
@@ -388,6 +390,17 @@ class GPlaycli:
     ########## End public methods ##########
 
     ########## Internal methods ##########
+
+    def connected(function):
+        """
+        Decorator that checks the api status
+        before doing any request
+        """
+        def check_connection(self, *args, **kwargs):
+            if self.api is None:
+                self.connect()
+            function(self, *args, **kwargs)
+        return check_connection
 
     def get_cached_token(self):
         """
@@ -631,10 +644,6 @@ def main():
         return
 
     cli = GPlaycli(args, args.config)
-    success, error = cli.connect()
-    if not success:
-        logger.error("Cannot login to GooglePlay ( %s )", error)
-        sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
         print(util.list_folder_apks(args.list))
