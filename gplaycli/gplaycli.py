@@ -193,7 +193,7 @@ class GPlaycli:
             except LoginError as login_error:
                 logger.error("Bad authentication, login or password incorrect (%s)", login_error)
                 return False, ERRORS.CANNOT_LOGIN_GPLAY
-            except (ValueError, IndexError, LoginError, DecodeError, SystemError) as ve:  # invalid token or expired
+            except (ValueError, IndexError, LoginError, DecodeError, SystemError):  # invalid token or expired
                 logger.info("Token has expired or is invalid. Retrieving a new one...")
                 self.refresh_token()
         success = True
