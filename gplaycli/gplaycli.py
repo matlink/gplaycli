@@ -60,6 +60,14 @@ class ERRORS(IntEnum):
 
 
 class GPlaycli:
+    """
+    Object which handles Google Play connection
+    search and download.
+    GPlaycli can be used as an API with parameters
+    token_enable, token_url, config and with methods
+    retrieve_token(), connect_to_googleplay_api(),
+    download_packages(), search().
+    """
     def __init__(self, args=None, credentials=None):
         # no config file given, look for one
         if credentials is None:
@@ -138,6 +146,10 @@ class GPlaycli:
                 self.unavail_logfile = "apps_not_available.log"
 
     def get_cached_token(self):
+        """
+        Retrieve a cached token and gsfid if exist.
+        Otherwise return None.
+        """
         try:
             with open(self.tokencachefile, 'r') as tcf:
                 token, gsfid = tcf.readline().split()
@@ -151,6 +163,11 @@ class GPlaycli:
         return token, gsfid
 
     def write_cached_token(self, token, gsfid):
+        """
+        Write the given token and gsfid
+        to the self.tokencachefile file.
+        Path and file are created if missing.
+        """
         try:
             # creates cachedir if not exists
             cachedir = os.path.dirname(self.tokencachefile)
@@ -164,6 +181,12 @@ class GPlaycli:
             raise IOError(err_str)
 
     def retrieve_token(self, force_new=False):
+        """
+        Return a token. If a cached token exists,
+        it will be used. Else, or if force_new=True,
+        a new token is fetched from the token-dispenser
+        server located at self.token_url.
+        """
         token, gsfid = self.get_cached_token()
         if token is not None and not force_new:
             logger.info("Using cached token.")
@@ -185,9 +208,21 @@ class GPlaycli:
         return token, gsfid
 
     def set_download_folder(self, folder):
+        """
+        Set the download folder for apk
+        to folder.
+        """
         self.config["download_folder"] = folder
 
     def connect_to_googleplay_api(self):
+        """
+        Connect GplayCli to the Google Play API.
+        If self.token_enable=True, the token from
+        self.retrieve_token is used. Else, classical
+        credentials are used. They might be stored
+        into the keyring if the keyring package
+        is installed.
+        """
         self.api = GooglePlayAPI(device_codename=self.device_codename)
         error = None
         email = None
@@ -229,14 +264,24 @@ class GPlaycli:
         return success, error
 
     def refresh_token(self):
+        """
+        Get a new token from token-dispenser instance
+        and re-connect to the play-store.
+        """
         self.retrieve_token(force_new=True)
         self.api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
 
     def list_folder_apks(self, folder):
+        """
+        List apks in the given folder
+        """
         list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
         return list_of_apks
 
     def prepare_analyse_apks(self):
+        """
+        Gather apks to further check for update
+        """
         download_folder = self.config["download_folder"]
         list_of_apks = [filename for filename in os.listdir(download_folder) if
                         os.path.splitext(filename)[1] == ".apk"]
@@ -246,6 +291,11 @@ class GPlaycli:
             self.prepare_download_updates(to_update)
 
     def analyse_local_apks(self, list_of_apks, download_folder):
+        """
+        Analyse apks in the list list_of_apks
+        to check for updates and download updates
+        in the download_folder folder.
+        """
         list_apks_to_update = []
         package_bunch = []
         version_codes = []
@@ -272,6 +322,9 @@ class GPlaycli:
         return list_apks_to_update
 
     def prepare_download_updates(self, list_apks_to_update):
+        """
+        Ask confirmation before updating apks
+        """
         if list_apks_to_update:
             pkg_todownload = []
 
@@ -296,6 +349,16 @@ class GPlaycli:
             sys.exit(ERRORS.OK)
 
     def download_packages(self, pkg_todownload):
+        """
+        Download apks from the pkg_todownload list
+
+        pkg_todownload -- list either of app names or
+        of tuple of app names and filepath to write them
+
+        Example: ['org.mozilla.focus','org.mozilla.firefox'] or
+                 [('org.mozilla.focus', 'org.mozilla.focus.apk'),
+                  ('org.mozilla.firefox', 'download/org.mozilla.firefox.apk')]
+        """
         success_downloads = []
         failed_downloads = []
         unavail_downloads = []
@@ -377,6 +440,9 @@ class GPlaycli:
         return to_download_items - failed_items
 
     def print_failed(self, failed_downloads):
+        """
+        Print/log failed downloads from failed_downloads
+        """
         # Info message
         if not failed_downloads:
             logger.info("Download complete")
@@ -392,6 +458,14 @@ class GPlaycli:
             logger.error(message)
 
     def search(self, search_string, nb_results, free_only=True, include_headers=True):
+        """
+        Search the given string search_string on the Play Store.
+
+        search_string   -- the string to search on the Play Store
+        nb_results      -- the number of results to print
+        free_only       -- True if only costless apps should be searched for
+        include_headers -- True if the result table should show column names
+        """
         try:
             results = self.api.search(search_string, nb_result=nb_results)
         except IndexError:
@@ -438,6 +512,10 @@ class GPlaycli:
         return all_results
 
     def write_logfiles(self, success, failed, unavail):
+        """
+        Write success failed and unavail list to
+        logfiles
+        """
         for result, logfile in [(success, self.success_logfile),
                                 (failed, self.failed_logfile),
                                 (unavail, self.unavail_logfile)
