@@ -446,7 +446,7 @@ class GPlaycli:
         list_apks_to_update = []
         package_bunch = []
         version_codes = []
-        for position, filename in enumerate(list_of_apks):
+        for filename in list_of_apks:
             filepath = os.path.join(download_folder, filename)
             logger.info("Analyzing %s", filepath)
             apk = APK(filepath)
