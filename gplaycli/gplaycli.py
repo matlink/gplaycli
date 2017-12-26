@@ -55,7 +55,7 @@ class ERRORS(IntEnum):
     """
     Contains constant errors for Gplaycli
     """
-    OK = 0
+    SUCCESS = 0
     TOKEN_DISPENSER_AUTH_ERROR = 5
     TOKEN_DISPENSER_SERVER_ERROR = 6
     KEYRING_NOT_INSTALLED = 10
@@ -190,8 +190,8 @@ class GPlaycli:
                                password=password,
                                authSubToken=authsub_token,
                                gsfId=gsfid)
-            except LoginError as le:
-                logger.error("Bad authentication, login or password incorrect (%s)" % le)
+            except LoginError as login_error:
+                logger.error("Bad authentication, login or password incorrect (%s)", login_error)
                 return False, ERRORS.CANNOT_LOGIN_GPLAY
             except (ValueError, IndexError, LoginError, DecodeError, SystemError) as ve:  # invalid token or expired
                 logger.info("Token has expired or is invalid. Retrieving a new one...")
@@ -277,12 +277,12 @@ class GPlaycli:
                 data_dict = self.api.download(packagename, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
-                logger.error("Error while downloading %s : %s" % (packagename,
-                                                                  "this package does not exist, "
-                                                                  "try to search it via --search before"))
+                logger.error("Error while downloading %s : this package does not exist, "
+                             "try to search it via --search before",
+                             packagename)
                 unavail_downloads.append((item, exc))
             except Exception as exc:
-                logger.error("Error while downloading %s : %s" % (packagename, exc))
+                logger.error("Error while downloading %s : %s", packagename, exc)
                 failed_downloads.append((item, exc))
             else:
                 if filename is None:
@@ -302,7 +302,7 @@ class GPlaycli:
                             with open(obb_filename, "wb") as f:
                                 f.write(obb_file["data"])
                 except IOError as exc:
-                    logger.error("Error while writing %s : %s" % (packagename, exc))
+                    logger.error("Error while writing %s : %s", packagename, exc)
                     failed_downloads.append((item, exc))
             position += 1
 
@@ -500,7 +500,7 @@ class GPlaycli:
                 print("Updated: " + return_string[:-1])
         else:
             print("Everything is up to date !")
-            sys.exit(ERRORS.OK)
+            sys.exit(ERRORS.SUCCESS)
 
     def print_failed(self, failed_downloads):
         """
@@ -589,7 +589,7 @@ def main():
     cli = GPlaycli(args, args.config)
     success, error = cli.connect_to_googleplay_api()
     if not success:
-        logger.error("Cannot login to GooglePlay ( %s )" % error)
+        logger.error("Cannot login to GooglePlay ( %s )", error)
         sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
 
     if args.list:
