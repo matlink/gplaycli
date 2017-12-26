@@ -151,56 +151,6 @@ class GPlaycli:
 
     ########## Public methods ##########
 
-    def connect(self):
-        """
-        Connect GplayCli to the Google Play API.
-        If self.token_enable=True, the token from
-        self.retrieve_token is used. Else, classical
-        credentials are used. They might be stored
-        into the keyring if the keyring package
-        is installed.
-        """
-        self.api = GooglePlayAPI(device_codename=self.device_codename)
-        error = None
-        email = None
-        password = None
-        authsub_token = None
-        gsfid = None
-        if self.token_enable is False:
-            logger.info("Using credentials to connect to API")
-            email = self.config["gmail_address"]
-            if self.config["gmail_password"]:
-                logger.info("Using plaintext password")
-                password = self.config["gmail_password"]
-            elif self.config["keyring_service"] and HAVE_KEYRING is True:
-                password = keyring.get_password(self.config["keyring_service"], email)
-            elif self.config["keyring_service"] and HAVE_KEYRING is False:
-                print("You asked for keyring service but keyring package is not installed")
-                sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
-        else:
-            if self.token_passed:
-                logger.info("Using passed token to connect to API")
-            else:
-                logger.info("Using auto retrieved token to connect to API")
-            authsub_token = self.token
-            gsfid = int(self.gsfid, 16)
-        with warnings.catch_warnings():
-            warnings.simplefilter('error')
-            try:
-                self.api.login(email=email,
-                               password=password,
-                               authSubToken=authsub_token,
-                               gsfId=gsfid)
-            except LoginError as login_error:
-                logger.error("Bad authentication, login or password incorrect (%s)", login_error)
-                return False, ERRORS.CANNOT_LOGIN_GPLAY
-            # invalid token or expired
-            except (ValueError, IndexError, LoginError, DecodeError, SystemError):
-                logger.info("Token has expired or is invalid. Retrieving a new one...")
-                self.refresh_token()
-        success = True
-        return success, error
-
     def retrieve_token(self, force_new=False):
         """
         Return a token. If a cached token exists,
@@ -401,6 +351,56 @@ class GPlaycli:
                 self.connect()
             function(self, *args, **kwargs)
         return check_connection
+
+    def connect(self):
+        """
+        Connect GplayCli to the Google Play API.
+        If self.token_enable=True, the token from
+        self.retrieve_token is used. Else, classical
+        credentials are used. They might be stored
+        into the keyring if the keyring package
+        is installed.
+        """
+        self.api = GooglePlayAPI(device_codename=self.device_codename)
+        error = None
+        email = None
+        password = None
+        authsub_token = None
+        gsfid = None
+        if self.token_enable is False:
+            logger.info("Using credentials to connect to API")
+            email = self.config["gmail_address"]
+            if self.config["gmail_password"]:
+                logger.info("Using plaintext password")
+                password = self.config["gmail_password"]
+            elif self.config["keyring_service"] and HAVE_KEYRING is True:
+                password = keyring.get_password(self.config["keyring_service"], email)
+            elif self.config["keyring_service"] and HAVE_KEYRING is False:
+                print("You asked for keyring service but keyring package is not installed")
+                sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
+        else:
+            if self.token_passed:
+                logger.info("Using passed token to connect to API")
+            else:
+                logger.info("Using auto retrieved token to connect to API")
+            authsub_token = self.token
+            gsfid = int(self.gsfid, 16)
+        with warnings.catch_warnings():
+            warnings.simplefilter('error')
+            try:
+                self.api.login(email=email,
+                               password=password,
+                               authSubToken=authsub_token,
+                               gsfId=gsfid)
+            except LoginError as login_error:
+                logger.error("Bad authentication, login or password incorrect (%s)", login_error)
+                return False, ERRORS.CANNOT_LOGIN_GPLAY
+            # invalid token or expired
+            except (ValueError, IndexError, LoginError, DecodeError, SystemError):
+                logger.info("Token has expired or is invalid. Retrieving a new one...")
+                self.refresh_token()
+        success = True
+        return success, error
 
     def get_cached_token(self):
         """
