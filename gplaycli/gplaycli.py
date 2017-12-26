@@ -552,6 +552,10 @@ class GPlaycli:
 
 
 def main():
+    """
+    Main function.
+    Parse command line arguments
+    """
     parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader"
                                                  "and manager for command line")
     parser.add_argument('-V', '--version', action='store_true', dest='version',
