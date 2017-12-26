@@ -347,17 +347,17 @@ class GPlaycli:
                     and result['offer'][0]['checkoutFlowRequired'] # not free to download
                ):
                 continue
-            l = [result['title'],
-                 result['author'],
-                 util.sizeof_fmt(result['installationSize']),
-                 result['numDownloads'],
-                 result['uploadDate'],
-                 result['docId'],
-                 result['versionCode'],
-                 "%.2f" % result["aggregateRating"]["starRating"]
-                ]
+            detail = [result['title'],
+                      result['author'],
+                      util.sizeof_fmt(result['installationSize']),
+                      result['numDownloads'],
+                      result['uploadDate'],
+                      result['docId'],
+                      result['versionCode'],
+                      "%.2f" % result["aggregateRating"]["starRating"]
+                     ]
             if len(all_results) < int(nb_results) + 1:
-                all_results.append(l)
+                all_results.append(detail)
 
         if self.verbose:
             # Print a nice table
