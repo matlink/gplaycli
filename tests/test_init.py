@@ -24,7 +24,7 @@ def test_connection_credentials():
     gpc.token_enable = False
     gpc.config['gmail_address']  = os.environ['GMAIL_ADDR']
     gpc.config['gmail_password'] = os.environ['GMAIL_PWD']
-    success, error = gpc.connect_to_googleplay_api()
+    success, error = gpc.connect()
     assert error is None
     assert success == True
 
@@ -32,7 +32,7 @@ def test_connection_token():
     gpc.token_enable = True
     gpc.token_url = token_url
     gpc.token, gpc.gsfid = gpc.retrieve_token(force_new=True)
-    success, error = gpc.connect_to_googleplay_api()
+    success, error = gpc.connect()
     assert error is None
     assert success == True
 
