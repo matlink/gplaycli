@@ -72,9 +72,9 @@ class GPlaycli:
     download_packages(), search().
     """
 
-    def __init__(self, args=None, credentials=None):
+    def __init__(self, args=None, config_file=None):
         # no config file given, look for one
-        if credentials is None:
+        if config_file is None:
             # default local user configs
             cred_paths_list = [
                 'gplaycli.conf',
@@ -86,11 +86,11 @@ class GPlaycli:
                 tmp_list.pop(0)
                 if not tmp_list:
                     raise OSError("No configuration file found at %s" % cred_paths_list)
-            credentials = tmp_list[0]
+            config_file = tmp_list[0]
 
         default_values = {}
         self.configparser = configparser.ConfigParser(default_values)
-        self.configparser.read(credentials)
+        self.configparser.read(config_file)
         self.config = {key: value for key, value in self.configparser.items("Credentials")}
 
         self.tokencachefile = os.path.expanduser(self.configparser.get("Cache", "token"))
@@ -118,7 +118,7 @@ class GPlaycli:
                 logger.addHandler(handler)
                 logger.propagate = False
             logger.info('GPlayCli version %s', __version__)
-            logger.info('Configuration file is %s', credentials)
+            logger.info('Configuration file is %s', config_file)
             self.progress_bar = args.progress_bar
             self.set_download_folder(args.update_folder)
             self.logging_enable = args.logging_enable
