@@ -68,7 +68,7 @@ class GPlaycli:
     search and download.
     GPlaycli can be used as an API with parameters
     token_enable, token_url, config and with methods
-    retrieve_token(), connect_to_googleplay_api(),
+    retrieve_token(), connect(),
     download_packages(), search().
     """
 
@@ -151,7 +151,7 @@ class GPlaycli:
 
     ########## Public methods ##########
 
-    def connect_to_googleplay_api(self):
+    def connect(self):
         """
         Connect GplayCli to the Google Play API.
         If self.token_enable=True, the token from
@@ -631,7 +631,7 @@ def main():
         return
 
     cli = GPlaycli(args, args.config)
-    success, error = cli.connect_to_googleplay_api()
+    success, error = cli.connect()
     if not success:
         logger.error("Cannot login to GooglePlay ( %s )", error)
         sys.exit(ERRORS.CANNOT_LOGIN_GPLAY)
