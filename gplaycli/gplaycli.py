@@ -52,6 +52,9 @@ logger = logging.getLogger(__name__)  # default level is WARNING
 
 
 class ERRORS(IntEnum):
+    """
+    Contains constant errors for Gplaycli
+    """
     OK = 0
     TOKEN_DISPENSER_AUTH_ERROR = 5
     TOKEN_DISPENSER_SERVER_ERROR = 6
@@ -160,8 +163,8 @@ class GPlaycli:
         error = None
         email = None
         password = None
-        authSubToken = None
-        gsfId = None
+        authsub_token = None
+        gsfid = None
         if self.token_enable is False:
             logger.info("Using credentials to connect to API")
             email = self.config["gmail_address"]
@@ -178,15 +181,15 @@ class GPlaycli:
                 logger.info("Using passed token to connect to API")
             else:
                 logger.info("Using auto retrieved token to connect to API")
-            authSubToken = self.token
-            gsfId = int(self.gsfid, 16)
+            authsub_token = self.token
+            gsfid = int(self.gsfid, 16)
         with warnings.catch_warnings():
             warnings.simplefilter('error')
             try:
                 self.api.login(email=email,
-                                         password=password,
-                                         authSubToken=authSubToken,
-                                         gsfId=gsfId)
+                               password=password,
+                               authSubToken=authsub_token,
+                               gsfId=gsfid)
             except LoginError as le:
                 logger.error("Bad authentication, login or password incorrect (%s)" % le)
                 return False, ERRORS.CANNOT_LOGIN_GPLAY
@@ -340,9 +343,9 @@ class GPlaycli:
             # skip that app if it not free
             # or if it's beta (pre-registration)
             if (len(result['offer']) == 0 # beta apps (pre-registration)
-                or free_only
-                and result['offer'][0]['checkoutFlowRequired'] # not free to download
-                ):
+                    or free_only
+                    and result['offer'][0]['checkoutFlowRequired'] # not free to download
+               ):
                 continue
             l = [result['title'],
                  result['author'],
