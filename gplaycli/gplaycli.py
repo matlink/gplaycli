@@ -71,6 +71,7 @@ class GPlaycli:
     retrieve_token(), connect_to_googleplay_api(),
     download_packages(), search().
     """
+
     def __init__(self, args=None, credentials=None):
         # no config file given, look for one
         if credentials is None:
@@ -349,16 +350,16 @@ class GPlaycli:
                          "AppID",
                          "Version",
                          "Rating"
-                        ]
+                         ]
             all_results.append(col_names)
         # Compute results values
         for result in results:
             # skip that app if it not free
             # or if it's beta (pre-registration)
-            if (len(result['offer']) == 0 # beta apps (pre-registration)
+            if (len(result['offer']) == 0  # beta apps (pre-registration)
                     or free_only
-                    and result['offer'][0]['checkoutFlowRequired'] # not free to download
-               ):
+                    and result['offer'][0]['checkoutFlowRequired']  # not free to download
+                ):
                 continue
             detail = [result['title'],
                       result['author'],
@@ -368,7 +369,7 @@ class GPlaycli:
                       result['docId'],
                       result['versionCode'],
                       "%.2f" % result["aggregateRating"]["starRating"]
-                     ]
+                      ]
             if len(all_results) < int(nb_results) + 1:
                 all_results.append(detail)
 
@@ -542,7 +543,7 @@ class GPlaycli:
         for result, logfile in [(success, self.success_logfile),
                                 (failed, self.failed_logfile),
                                 (unavail, self.unavail_logfile)
-                               ]:
+                                ]:
             if result:
                 with open(logfile, 'w') as _buffer:
                     for package in result:
