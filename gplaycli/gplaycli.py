@@ -59,7 +59,7 @@ class ERRORS(IntEnum):
     CANNOT_LOGIN_GPLAY = 15
 
 
-class GPlaycli(object):
+class GPlaycli:
     def __init__(self, args=None, credentials=None):
         # no config file given, look for one
         if credentials is None:
