@@ -193,7 +193,8 @@ class GPlaycli:
             except LoginError as login_error:
                 logger.error("Bad authentication, login or password incorrect (%s)", login_error)
                 return False, ERRORS.CANNOT_LOGIN_GPLAY
-            except (ValueError, IndexError, LoginError, DecodeError, SystemError):  # invalid token or expired
+            # invalid token or expired
+            except (ValueError, IndexError, LoginError, DecodeError, SystemError):
                 logger.info("Token has expired or is invalid. Retrieving a new one...")
                 self.refresh_token()
         success = True
@@ -274,7 +275,9 @@ class GPlaycli:
 
             # Download
             try:
-                data_dict = self.api.download(packagename, progress_bar=self.progress_bar, expansion_files=self.addfiles_enable)
+                data_dict = self.api.download(packagename,
+                                              progress_bar=self.progress_bar,
+                                              expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
                 logger.error("Error while downloading %s : this package does not exist, "
@@ -297,7 +300,9 @@ class GPlaycli:
                         fbuffer.write(data)
                     if additional_data:
                         for obb_file in additional_data:
-                            obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_dict["docId"])
+                            obb_filename = "%s.%s.%s.obb" % (obb_file["type"],
+                                                             obb_file["versionCode"],
+                                                             data_dict["docId"])
                             obb_filename = os.path.join(download_folder, obb_filename)
                             with open(obb_filename, "wb") as fbuffer:
                                 fbuffer.write(obb_file["data"])
@@ -336,7 +341,15 @@ class GPlaycli:
         all_results = []
         if include_headers:
             # Name of the columns
-            col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
+            col_names = ["Title",
+                         "Creator",
+                         "Size",
+                         "Downloads",
+                         "Last Update",
+                         "AppID",
+                         "Version",
+                         "Rating"
+                        ]
             all_results.append(col_names)
         # Compute results values
         for result in results:
@@ -457,14 +470,20 @@ class GPlaycli:
         # BulkDetails requires only one HTTP request
         # Get APK info from store
         details = self.api.bulkDetails(package_bunch)
-        for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
+        for detail, packagename, filename, apk_version_code in zip(details,
+                                                                   package_bunch,
+                                                                   list_of_apks,
+                                                                   version_codes):
             store_version_code = detail['versionCode']
 
             # Compare
             if apk_version_code != "" and int(apk_version_code) < int(store_version_code) and int(
                     store_version_code) != 0:
                 # Add to the download list
-                list_apks_to_update.append([packagename, filename, int(apk_version_code), int(store_version_code)])
+                list_apks_to_update.append([packagename,
+                                            filename,
+                                            int(apk_version_code),
+                                            int(store_version_code)])
 
         return list_apks_to_update
 
@@ -478,7 +497,9 @@ class GPlaycli:
             # Ask confirmation before downloading
             message = "The following applications will be updated :"
             for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
-                message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
+                message += "\n%s Version : %s -> %s" % (filename,
+                                                        apk_version_code,
+                                                        store_version_code)
                 pkg_todownload.append([packagename, filename])
             message += "\n"
             print(message)
@@ -531,44 +552,69 @@ class GPlaycli:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
-    parser.add_argument('-V', '--version', action='store_true', dest='version', help='Print version number and exit')
-    parser.add_argument('-y', '--yes', action='store_true', dest='yes_to_all', help='Say yes to all prompted questions')
+    parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader"
+                                                 "and manager for command line")
+    parser.add_argument('-V', '--version', action='store_true', dest='version',
+                        help="Print version number and exit")
+    parser.add_argument('-y', '--yes', action='store_true', dest='yes_to_all',
+                        help="Say yes to all prompted questions")
     parser.add_argument('-l', '--list', action='store', dest='list', metavar="FOLDER",
-                        type=str, help="List APKS in the given folder, with details")
+                        type=str,
+                        help="List APKS in the given folder, with details")
     parser.add_argument('-s', '--search', action='store', dest='search_string', metavar="SEARCH",
-                        type=str, help="Search the given string in Google Play Store")
+                        type=str,
+                        help="Search the given string in Google Play Store")
     parser.add_argument('-P', '--paid', action='store_true', dest='paid',
-                        default=False, help='Also search for paid apps')
-    parser.add_argument('-n', '--number', action='store', dest='number_results', metavar="NUMBER",
-                        type=int, help="For the search option, returns the given number of matching applications")
-    parser.add_argument('-d', '--download', action='store', dest='packages_to_download', metavar="AppID", nargs="+",
-                        type=str, help="Download the Apps that map given AppIDs")
+                        default=False,
+                        help="Also search for paid apps")
+    parser.add_argument('-n', '--number', action='store', dest='number_results',
+                        metavar="NUMBER", type=int,
+                        help="For the search option, returns the given "
+                             "number of matching applications")
+    parser.add_argument('-d', '--download', action='store', dest='packages_to_download',
+                        metavar="AppID", nargs="+", type=str,
+                        help="Download the Apps that map given AppIDs")
     parser.add_argument('-a', '--additional-files', action='store_true', dest='addfiles_enable',
-                        default=False, help="Enable the download of additional files")
+                        default=False,
+                        help="Enable the download of additional files")
     parser.add_argument('-F', '--file', action='store', dest='load_from_file', metavar="FILE",
-                        type=str, help="Load packages to download from file, one package per line")
+                        type=str,
+                        help="Load packages to download from file, "
+                             "one package per line")
     parser.add_argument('-u', '--update', action='store', dest='update_folder', metavar="FOLDER",
-                        type=str, help="Update all APKs in a given folder")
-    parser.add_argument('-f', '--folder', action='store', dest='dest_folder', metavar="FOLDER", nargs=1,
-                        type=str, default=".", help="Where to put the downloaded Apks, only for -d command")
-    parser.add_argument('-dc', '--device-codename', action='store', dest='device_codename', metavar="DEVICE_CODENAME",
-                        type=str, default="bacon", help="The device codename to fake", choices=GooglePlayAPI.getDevicesCodenames())
-    parser.add_argument('-ts', '--token-str', action='store', dest='token_str', metavar="TOKEN_STR",
-                        type=str, default=None, help="Supply token string by yourself, need to supply GSF_ID at the same time")
+                        type=str,
+                        help="Update all APKs in a given folder")
+    parser.add_argument('-f', '--folder', action='store', dest='dest_folder',
+                        metavar="FOLDER", nargs=1, type=str, default=".",
+                        help="Where to put the downloaded Apks, only for -d command")
+    parser.add_argument('-dc', '--device-codename', action='store', dest='device_codename',
+                        metavar="DEVICE_CODENAME",
+                        type=str, default="bacon",
+                        help="The device codename to fake",
+                        choices=GooglePlayAPI.getDevicesCodenames())
+    parser.add_argument('-ts', '--token-str', action='store', dest='token_str',
+                        metavar="TOKEN_STR", type=str, default=None,
+                        help="Supply token string by yourself, "
+                             "need to supply GSF_ID at the same time")
     parser.add_argument('-g', '--gsf-id', action='store', dest='gsf_id', metavar="GSF_ID",
-                        type=str, default=None, help="Supply GSF_ID by yourself, need to supply token string at the same time")
+                        type=str, default=None,
+                        help="Supply GSF_ID by yourself, "
+                             "need to supply token string at the same time")
     parser.add_argument('-t', '--token', action='store_true', dest='token_enable', default=None,
-                        help='Instead of classical credentials, use the tokenize version')
-    parser.add_argument('-tu', '--token-url', action='store', dest='token_url', metavar="TOKEN_URL",
-                        type=str, default=None, help="Use the given tokendispenser URL to retrieve a token")
-    parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', help='Be verbose')
-    parser.add_argument('-c', '--config', action='store', dest='config', metavar="CONF_FILE", nargs=1,
-                        type=str, default=None, help="Use a different config file than gplaycli.conf")
+                        help="Instead of classical credentials, use the tokenize version")
+    parser.add_argument('-tu', '--token-url', action='store', dest='token_url',
+                        metavar="TOKEN_URL", type=str, default=None,
+                        help="Use the given tokendispenser URL to retrieve a token")
+    parser.add_argument('-v', '--verbose', action='store_true', dest='verbose',
+                        help="Be verbose")
+    parser.add_argument('-c', '--config', action='store', dest='config', metavar="CONF_FILE",
+                        nargs=1, type=str, default=None,
+                        help="Use a different config file than gplaycli.conf")
     parser.add_argument('-p', '--progress', action='store_true', dest='progress_bar',
-                        help='Prompt a progress bar while downloading packages')
+                        help="Prompt a progress bar while downloading packages")
     parser.add_argument('-L', '--log', action='store_true', dest='logging_enable', default=False,
-                        help='Enable logging of apps status. Downloaded, failed, not available apps will be written in separate logging files')
+                        help="Enable logging of apps status. Downloaded, failed,"
+                             "not available apps will be written in separate logging files")
 
     if len(sys.argv) < 2:
         sys.argv.append("-h")
