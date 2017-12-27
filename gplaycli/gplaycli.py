@@ -70,7 +70,7 @@ class GPlaycli:
     GPlaycli can be used as an API with parameters
     token_enable, token_url, config and with methods
     retrieve_token(), connect(),
-    download_packages(), search().
+    download(), search().
     """
 
     def __init__(self, args=None, config_file=None):
@@ -180,7 +180,7 @@ class GPlaycli:
         return token, gsfid
 
     @hooks.connected
-    def download_packages(self, pkg_todownload):
+    def download(self, pkg_todownload):
         """
         Download apks from the pkg_todownload list
 
@@ -514,7 +514,7 @@ class GPlaycli:
 
             if self.yes or return_value == 'y':
                 logger.info("Downloading ...")
-                downloaded_packages = self.download_packages(pkg_todownload)
+                downloaded_packages = self.download(pkg_todownload)
                 return_string = ' '.join(downloaded_packages)
                 print("Updated: " + return_string[:-1])
         else:
@@ -655,7 +655,7 @@ def main():
     if args.packages_to_download is not None:
         if args.dest_folder is not None:
             cli.set_download_folder(args.dest_folder[0])
-        cli.download_packages(args.packages_to_download)
+        cli.download(args.packages_to_download)
 
 
 if __name__ == '__main__':

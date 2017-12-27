@@ -39,4 +39,4 @@ def test_connection_token():
 def test_download_focus():
     gpc.progress_bar = True
     gpc.config['download_folder'] = os.path.abspath('.')
-    gpc.download_packages(['org.mozilla.focus'])
+    gpc.download(['org.mozilla.focus'])
