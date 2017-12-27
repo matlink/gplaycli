@@ -31,7 +31,7 @@ def test_connection_credentials():
 def test_connection_token():
     gpc.token_enable = True
     gpc.token_url = token_url
-    gpc.token, gpc.gsfid = gpc.retrieve_token(force_new=True)
+    gpc.retrieve_token(force_new=True)
     success, error = gpc.connect()
     assert error is None
     assert success == True
