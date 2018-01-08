@@ -6,5 +6,5 @@ def connected(function):
     def check_connection(self, *args, **kwargs):
         if self.api is None or self.api.authSubToken is None:
             self.connect()
-        function(self, *args, **kwargs)
+        return function(self, *args, **kwargs)
     return check_connection
