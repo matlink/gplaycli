@@ -516,7 +516,7 @@ class GPlaycli:
                 logger.info("Downloading ...")
                 downloaded_packages = self.download(pkg_todownload)
                 return_string = ' '.join(downloaded_packages)
-                print("Updated: " + return_string[:-1])
+                print("Updated: " + return_string)
         else:
             print("Everything is up to date !")
             sys.exit(ERRORS.SUCCESS)
