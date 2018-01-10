@@ -228,9 +228,13 @@ class GPlaycli:
 
             # Download
             try:
-                data_dict = self.api.download(packagename,
-                                              progress_bar=self.progress_bar,
-                                              expansion_files=self.addfiles_enable)
+                if detail['offer'][0]['checkoutFlowRequired']:
+                    method = self.api.delivery
+                else:
+                    method = self.api.download
+                data_dict = method(packagename,
+                                   progress_bar=self.progress_bar,
+                                   expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
                 logger.error("Error while downloading %s : this package does not exist, "
