@@ -251,28 +251,29 @@ class GPlaycli:
                 filepath = os.path.join(download_folder, filename)
 
                 additional_data = data_iter['additionalData']
-
+                total_size = int(data_iter['file']['total_size'])
+                chunk_size = int(data_iter['file']['chunk_size'])
                 try:
                     with open(filepath, "wb") as fbuffer:
-                        bar = progress.Bar(expected_size=(int(1e9)))
-                        index = 1
-                        for chunk in data_iter['data']:
+                        bar = progress.Bar(expected_size=total_size)
+                        for index, chunk in enumerate(data_iter['file']['data']):
                             fbuffer.write(chunk)
-                            bar.show(index * len(chunk))
-                            index += 1
+                            bar.show(index * chunk_size)
+                        bar.done()
                     if additional_data:
                         for obb_file in additional_data:
                             obb_filename = "%s.%s.%s.obb" % (obb_file["type"],
                                                              obb_file["versionCode"],
                                                              data_iter["docId"])
                             obb_filename = os.path.join(download_folder, obb_filename)
+                            obb_total_size = int(obb_file['file']['total_size'])
+                            obb_chunk_size = int(obb_file['file']['chunk_size'])
                             with open(obb_filename, "wb") as fbuffer:
-                                bar = progress.Bar(expected_size=(int(1e9)))
-                                index = 1
-                                for chunk in obb_file["data"]:
+                                bar = progress.Bar(expected_size=obb_total_size)
+                                for index, chunk in enumerate(obb_file["file"]["data"]):
                                     fbuffer.write(chunk)
-                                    bar.show(index * len(chunk))
-                                    index += 1
+                                    bar.show(index * obb_chunk_size)
+                                bar.done()
                 except IOError as exc:
                     logger.error("Error while writing %s : %s", packagename, exc)
                     failed_downloads.append((item, exc))
@@ -365,7 +366,7 @@ class GPlaycli:
         into the keyring if the keyring package
         is installed.
         """
-        self.api = GooglePlayAPI(device_codename=self.device_codename, locale='fr_FR')
+        self.api = GooglePlayAPI(locale='en_GB', timezone='CEST', device_codename=self.device_codename)
         error = None
         email = None
         password = None
