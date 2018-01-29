@@ -99,6 +99,8 @@ class GPlaycli:
         self.tokencachefile = os.path.expanduser(self.configparser.get("Cache", "token"))
         self.api = None
         self.token_passed = False
+        self.locale = self.configparser.get("Locale", "locale", fallback="en_GB")
+        self.timezone = self.configparser.get("Locale", "timezone", fallback="CEST")
 
         # default settings, ie for API calls
         if args is None:
@@ -127,6 +129,10 @@ class GPlaycli:
             self.logging_enable = args.logging_enable
             self.device_codename = args.device_codename
             self.addfiles_enable = args.addfiles_enable
+            if args.locale is not None:
+                self.locale = args.locale
+            if args.timezone is not None:
+                self.timezone = args.timezone
 
             if args.token_enable is None:
                 self.token_enable = self.configparser.getboolean('Credentials', 'token')
@@ -366,7 +372,7 @@ class GPlaycli:
         into the keyring if the keyring package
         is installed.
         """
-        self.api = GooglePlayAPI(locale='en_GB', timezone='CEST', device_codename=self.device_codename)
+        self.api = GooglePlayAPI(locale=self.locale, timezone=self.timezone, device_codename=self.device_codename)
         error = None
         email = None
         password = None
@@ -638,6 +644,12 @@ def main():
     parser.add_argument('-L', '--log', action='store_true', dest='logging_enable', default=False,
                         help="Enable logging of apps status. Downloaded, failed,"
                              "not available apps will be written in separate logging files")
+    parser.add_argument('-lo', '--locale', action='store', dest='locale',
+                        type=str, metavar="LOCALE",
+                        help="The locale to use. Ex: en_GB")
+    parser.add_argument('-tz', '--timezone', action='store', dest='timezone',
+                        type=str, metavar="TIMEZONE",
+                        help="The timezone to use. Ex: CEST")
 
     if len(sys.argv) < 2:
         sys.argv.append("-h")
