@@ -34,6 +34,8 @@ from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 from pyaxmlparser import APK
 
+from clint.textui import progress
+
 from . import util
 from . import hooks
 
@@ -232,8 +234,7 @@ class GPlaycli:
                     method = self.api.delivery
                 else:
                     method = self.api.download
-                data_dict = method(packagename,
-                                   progress_bar=self.progress_bar,
+                data_iter = method(packagename,
                                    expansion_files=self.addfiles_enable)
                 success_downloads.append(packagename)
             except IndexError as exc:
@@ -249,20 +250,29 @@ class GPlaycli:
                     filename = packagename + ".apk"
                 filepath = os.path.join(download_folder, filename)
 
-                data = data_dict['data']
-                additional_data = data_dict['additionalData']
+                additional_data = data_iter['additionalData']
 
                 try:
                     with open(filepath, "wb") as fbuffer:
-                        fbuffer.write(data)
+                        bar = progress.Bar(expected_size=(int(1e9)))
+                        index = 1
+                        for chunk in data_iter['data']:
+                            fbuffer.write(chunk)
+                            bar.show(index * len(chunk))
+                            index += 1
                     if additional_data:
                         for obb_file in additional_data:
                             obb_filename = "%s.%s.%s.obb" % (obb_file["type"],
                                                              obb_file["versionCode"],
-                                                             data_dict["docId"])
+                                                             data_iter["docId"])
                             obb_filename = os.path.join(download_folder, obb_filename)
                             with open(obb_filename, "wb") as fbuffer:
-                                fbuffer.write(obb_file["data"])
+                                bar = progress.Bar(expected_size=(int(1e9)))
+                                index = 1
+                                for chunk in obb_file["data"]:
+                                    fbuffer.write(chunk)
+                                    bar.show(index * len(chunk))
+                                    index += 1
                 except IOError as exc:
                     logger.error("Error while writing %s : %s", packagename, exc)
                     failed_downloads.append((item, exc))
@@ -355,7 +365,7 @@ class GPlaycli:
         into the keyring if the keyring package
         is installed.
         """
-        self.api = GooglePlayAPI(device_codename=self.device_codename)
+        self.api = GooglePlayAPI(device_codename=self.device_codename, locale='fr_FR')
         error = None
         email = None
         password = None
