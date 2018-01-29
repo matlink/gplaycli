@@ -94,7 +94,7 @@ class GPlaycli:
         default_values = {}
         self.configparser = configparser.ConfigParser(default_values)
         self.configparser.read(config_file)
-        self.config = {key: value for key, value in self.configparser.items("Credentials")}
+        self.creds = {key: value for key, value in self.configparser.items("Credentials")}
 
         self.tokencachefile = os.path.expanduser(self.configparser.get("Cache", "token"))
         self.api = None
@@ -380,13 +380,13 @@ class GPlaycli:
         gsfid = None
         if self.token_enable is False:
             logger.info("Using credentials to connect to API")
-            email = self.config["gmail_address"]
-            if self.config["gmail_password"]:
+            email = self.creds["gmail_address"]
+            if self.creds["gmail_password"]:
                 logger.info("Using plaintext password")
-                password = self.config["gmail_password"]
-            elif self.config["keyring_service"] and HAVE_KEYRING is True:
-                password = keyring.get_password(self.config["keyring_service"], email)
-            elif self.config["keyring_service"] and HAVE_KEYRING is False:
+                password = self.creds["gmail_password"]
+            elif self.creds["keyring_service"] and HAVE_KEYRING is True:
+                password = keyring.get_password(self.creds["keyring_service"], email)
+            elif self.creds["keyring_service"] and HAVE_KEYRING is False:
                 logger.error("You asked for keyring service but keyring package is not installed")
                 sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
         else:

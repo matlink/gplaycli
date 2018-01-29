@@ -22,8 +22,8 @@ def test_connection_credentials():
     except KeyError: # You are not travis
         pass
     gpc.token_enable = False
-    gpc.config['gmail_address']  = os.environ['GMAIL_ADDR']
-    gpc.config['gmail_password'] = os.environ['GMAIL_PWD']
+    gpc.creds['gmail_address']  = os.environ['GMAIL_ADDR']
+    gpc.creds['gmail_password'] = os.environ['GMAIL_PWD']
     success, error = gpc.connect()
     assert error is None
     assert success == True
@@ -38,5 +38,5 @@ def test_connection_token():
 
 def test_download_focus():
     gpc.progress_bar = True
-    gpc.config['download_folder'] = os.path.abspath('.')
+    gpc.creds['download_folder'] = os.path.abspath('.')
     gpc.download(['org.mozilla.focus'])
