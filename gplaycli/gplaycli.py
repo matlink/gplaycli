@@ -230,7 +230,7 @@ class GPlaycli:
             logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
 
             # Check for download folder
-            download_folder = self.config["download_folder"]
+            download_folder = self.download_folder
             if not os.path.isdir(download_folder):
                 os.mkdir(download_folder)
 
@@ -454,7 +454,7 @@ class GPlaycli:
         Set the download folder for apk
         to folder.
         """
-        self.config["download_folder"] = folder
+        self.download_folder = folder
 
     def refresh_token(self):
         """
@@ -468,7 +468,7 @@ class GPlaycli:
         """
         Gather apks to further check for update
         """
-        download_folder = self.config["download_folder"]
+        download_folder = self.download_folder
         list_of_apks = util.list_folder_apks(download_folder)
         if list_of_apks:
             logger.info("Checking apks ...")
