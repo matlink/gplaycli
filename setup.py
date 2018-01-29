@@ -32,7 +32,8 @@ setup(name='GPlayCli',
         ],
         install_requires=[
                 'protobuf',
-                'gpapi == 0.3.2',
+                'gpapi == 0.4.1',
                 'pyaxmlparser',
+                'clint',
         ],
 )
