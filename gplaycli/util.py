@@ -14,3 +14,13 @@ def list_folder_apks(folder):
     """
     list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
     return list_of_apks
+
+def vcode(string_vcode):
+    """
+    return integer of version
+    base can be 10 or 16
+    """
+    base = 10
+    if string_vcode.startswith('0x'):
+        base = 16
+    return int(string_vcode, base)
