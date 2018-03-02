@@ -491,7 +491,7 @@ class GPlaycli:
             apk = APK(filepath)
             packagename = apk.package
             package_bunch.append(packagename)
-            version_codes.append(int(apk.version_code))
+            version_codes.append(util.vcode(apk.version_code))
 
         # BulkDetails requires only one HTTP request
         # Get APK info from store
@@ -500,7 +500,7 @@ class GPlaycli:
                                                                    package_bunch,
                                                                    list_of_apks,
                                                                    version_codes):
-            store_version_code = int(detail['versionCode'])
+            store_version_code = detail['versionCode']
 
             # Compare
             if apk_version_code < store_version_code:
