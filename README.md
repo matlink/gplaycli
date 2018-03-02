@@ -57,7 +57,7 @@ Installation
 ============
 
 - Best way to install it is using pip3: `pip3 install gplaycli` or `pip3 install gplaycli --user` if you are non-root
-- Cleanest way is using virtualenv: `virtualenv gplaycli; cd gplaycli; source bin/activate`, then either `pip install gplaycli` or `git clone https://github.com/matlink/gplaycli && pip3 install ./gplaycli/`
+- Cleanest way is using virtualenv: `virtualenv gplaycli; cd gplaycli; source bin/activate`, then either `pip install gplaycli` or `git clone https://github.com/matlink/gplaycli && pip3 install ./gplaycli/`. Make sure `virtualenv` is initialized with Python 3. If it's not, use `virtualenv -p python3`.
 
 Debian installation
 --------------------
