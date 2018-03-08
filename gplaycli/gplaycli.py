@@ -485,6 +485,8 @@ class GPlaycli:
         list_apks_to_update = []
         package_bunch = []
         version_codes = []
+        unavail_items = []
+        UNAVAIL = "This app is not available in the Play Store"
         for filename in list_of_apks:
             filepath = os.path.join(download_folder, filename)
             logger.info("Analyzing %s", filepath)
@@ -500,6 +502,10 @@ class GPlaycli:
                                                                    package_bunch,
                                                                    list_of_apks,
                                                                    version_codes):
+            # this app is not in the play store
+            if not detail:
+                unavail_items.append(((packagename, filename), UNAVAIL))
+                continue
             store_version_code = detail['versionCode']
 
             # Compare
@@ -509,6 +515,10 @@ class GPlaycli:
                                             filename,
                                             apk_version_code,
                                             store_version_code])
+
+        if self.logging_enable:
+            self.write_logfiles(None, None, [item[0][0] for item in unavail_items])
+        self.print_failed(unavail_items)
 
         return list_apks_to_update
 
