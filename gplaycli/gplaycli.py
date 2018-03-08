@@ -232,7 +232,7 @@ class GPlaycli:
             # Check for download folder
             download_folder = self.download_folder
             if not os.path.isdir(download_folder):
-                os.mkdir(download_folder)
+                os.makedirs(download_folder, exist_ok=True)
 
             # Download
             try:
@@ -440,7 +440,7 @@ class GPlaycli:
             # creates cachedir if not exists
             cachedir = os.path.dirname(self.tokencachefile)
             if not os.path.exists(cachedir):
-                os.mkdir(cachedir)
+                os.makedirs(cachedir, exist_ok=True)
             with open(self.tokencachefile, 'w') as tcf:
                 tcf.write("%s %s" % (token, gsfid))
         except IOError as io_error:
