@@ -1,29 +1,31 @@
-language: python
 matrix:
-    include:
-        - os: linux
-          python: 3.5
-          install: pip install .
-        - os: osx
-          language: generic
+  include:
+    - os: linux
+      language: python
+      python: 3.5
+    - os: osx
+      language: generic
+
 before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        brew update;
-        brew upgrade python3;
-        python3 -m venv venv;
-        source venv/bin/activate;
-        pip install --upgrade pip;
-        pip install pytest;
-        git clone https://github.com/Legrandin/pycryptodome;
-        cd pycryptodome;
-        git checkout `git describe --tags`;
-        python setup.py install;
-        cd ..;
-      fi
-install:
-- pip install .
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew update;
+      brew upgrade python3;
+      python3 -m venv venv;
+      source venv/bin/activate;
+      pip install --upgrade pip;
+      pip install pytest;
+      git clone https://github.com/Legrandin/pycryptodome;
+      cd pycryptodome;
+      git checkout `git describe --tags`;
+      python setup.py install;
+      cd ..;
+    fi
+
+install: pip install .
+
 script: make test
+
 env:
   global:
-  - secure: GmiMAlU1OXaMyJBdK4x0zID+6TIaJR8SyVvcCWR7xofa+0/45DW3SfrOG7qHWVBniKwF6BOYKgLbyaNoS94OV58iMk08X9n2ksElv5JUluhVeKUQx3Owh+xy6nzw0949uvcZdXbWf3l4nOrdxE/rbf8NtGzrDcO/UF/9h2PLaP+X5xElsTijy2udbjOH/YNsUzktx11XMVyVPc5d3b43JkN9y8lPq0vPMW4dhAS2eGIsc3MPSMrG84N4oVJ+UQtc84Q6BOBpZMci2BtsLyfu0fFxicV/c1a1URV0S6IQgdS65aPhfODn6NPcrZCJ9VWlB0jW50KUU7y3Q5dRH3BK/bbUo4Cv5iLBL10giGGV7QadkAbBAtZF3ur1JQ6sQ4amNXjwQEpBhbUxEdN71qMI2sH5bMhvLjotoLuv8+roZO+x0VM21PLScYSiIMhuU0Tuahm4zKcNls0BGg13jlMc035cI8FKLwa4BlpxtxjsQebf1/7p7WAONY7tpbRExaFbuCE2JNSxwsFgssF/1tH86BHJbKAGJVbprEOEAxylfzzx6iG01o6/ExZvH+xnn373CHvEw8mMa1ygEst0GXr0EsDu3lfjYxgwuUHqYxQmhDvRYGcNYFPoE789wJpaTnntzskftc0tVKCMTvEzs3aZ4mGdMbXgQKyVy1i7vDxdumY=
-  - secure: tQz3MAaNgzFifN1LzWwZbsDS6DqmAOBtsv6VZGkkLOkoF9wL9CxAsXPG5BMJ2MHlDaq4vjOE8OCT0HMNbALCXDq7SzE08w1HgZ8Fe+RBZdWNYclr5dKOLQaDayhvqXapgobS4eiv+oQ6ugU5CS7SSj2V7FzO4mvUQn/Y2rlsQ7OS8L1Da4bjDPCqu1cxG5jfT/L63O0BNp8vffMahWV3LoPnqxyAo74vMc7jQT5rs4WscT2Ny0rsi1dLM2Tdgha2HGOmdsfHpC8qmEcTIxHOqtaG6R4bOxKgG+ZWslo6oHxG9VzxQobzRXMFwh7JDB3kUOKp7HFDK9FYp7Bu1NIEcKPNyPrAN+Q17arkrGkftpElhAu5HL0idcS8waSygWO7+2nn55eYmIc0qBOEwApWMuBs8fZOr0OUEyt6/woin6yMnxZHqMBZSz1CC/W6korCgO57CISsN4GzQFiOH1iYKFtE5ncb0HmMymdGiDxm2sKsc9OSlkzdhrzuflfchxYFZmV8WdpArWiz1M3MTzHoKSwYqYPDk744SwXJd5RdFEynn6t6NWgzLUkbqSKDNzK7Vo9wgDtAbHygxK1ORRfj/VvZaGubthHoG30LZUaBCD4VJfKb6DCHCwfOQ7cj4ZlUAoI28BYUF+wh0un/WMzASpgl2T/WtcCDUK3gxEADZHc=
+    - secure: GmiMAlU1OXaMyJBdK4x0zID+6TIaJR8SyVvcCWR7xofa+0/45DW3SfrOG7qHWVBniKwF6BOYKgLbyaNoS94OV58iMk08X9n2ksElv5JUluhVeKUQx3Owh+xy6nzw0949uvcZdXbWf3l4nOrdxE/rbf8NtGzrDcO/UF/9h2PLaP+X5xElsTijy2udbjOH/YNsUzktx11XMVyVPc5d3b43JkN9y8lPq0vPMW4dhAS2eGIsc3MPSMrG84N4oVJ+UQtc84Q6BOBpZMci2BtsLyfu0fFxicV/c1a1URV0S6IQgdS65aPhfODn6NPcrZCJ9VWlB0jW50KUU7y3Q5dRH3BK/bbUo4Cv5iLBL10giGGV7QadkAbBAtZF3ur1JQ6sQ4amNXjwQEpBhbUxEdN71qMI2sH5bMhvLjotoLuv8+roZO+x0VM21PLScYSiIMhuU0Tuahm4zKcNls0BGg13jlMc035cI8FKLwa4BlpxtxjsQebf1/7p7WAONY7tpbRExaFbuCE2JNSxwsFgssF/1tH86BHJbKAGJVbprEOEAxylfzzx6iG01o6/ExZvH+xnn373CHvEw8mMa1ygEst0GXr0EsDu3lfjYxgwuUHqYxQmhDvRYGcNYFPoE789wJpaTnntzskftc0tVKCMTvEzs3aZ4mGdMbXgQKyVy1i7vDxdumY=
+    - secure: tQz3MAaNgzFifN1LzWwZbsDS6DqmAOBtsv6VZGkkLOkoF9wL9CxAsXPG5BMJ2MHlDaq4vjOE8OCT0HMNbALCXDq7SzE08w1HgZ8Fe+RBZdWNYclr5dKOLQaDayhvqXapgobS4eiv+oQ6ugU5CS7SSj2V7FzO4mvUQn/Y2rlsQ7OS8L1Da4bjDPCqu1cxG5jfT/L63O0BNp8vffMahWV3LoPnqxyAo74vMc7jQT5rs4WscT2Ny0rsi1dLM2Tdgha2HGOmdsfHpC8qmEcTIxHOqtaG6R4bOxKgG+ZWslo6oHxG9VzxQobzRXMFwh7JDB3kUOKp7HFDK9FYp7Bu1NIEcKPNyPrAN+Q17arkrGkftpElhAu5HL0idcS8waSygWO7+2nn55eYmIc0qBOEwApWMuBs8fZOr0OUEyt6/woin6yMnxZHqMBZSz1CC/W6korCgO57CISsN4GzQFiOH1iYKFtE5ncb0HmMymdGiDxm2sKsc9OSlkzdhrzuflfchxYFZmV8WdpArWiz1M3MTzHoKSwYqYPDk744SwXJd5RdFEynn6t6NWgzLUkbqSKDNzK7Vo9wgDtAbHygxK1ORRfj/VvZaGubthHoG30LZUaBCD4VJfKb6DCHCwfOQ7cj4ZlUAoI28BYUF+wh0un/WMzASpgl2T/WtcCDUK3gxEADZHc=
