@@ -10,7 +10,7 @@ if sys.version_info[0] == 2:
     sys.exit(1)
 
 setup(name='GPlayCli',
-        version='3.20',
+        version='3.21',
         description='GPlayCli, a Google play downloader command line interface',
         author="Matlink",
         author_email="matlink@matlink.fr",
