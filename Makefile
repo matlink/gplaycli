@@ -31,7 +31,8 @@ test:
 	rm -f ~/.cache/gplaycli/token
 	$(PROJECT) -vd $(TESTAPK)
 	[ -f $(TESTAPK).apk ]
-	sed -i "s/^./ /g" ~/.cache/gplaycli/token # alter token
+	sed -i'.bak' "s/^./ /g" ~/.cache/gplaycli/token # alter token
+	mv ~/.cache/gplaycli/token.bak ~/.cache/gplaycli/token
 	$(PROJECT) -vd $(TESTAPK) -f download
 	[ -f download/$(TESTAPK).apk ]
 	$(PROJECT) -vyu tests
