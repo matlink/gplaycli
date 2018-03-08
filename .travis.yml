@@ -1,7 +1,25 @@
 language: python
-python:
-- '3.5'
-before_install: date
+matrix:
+    include:
+        - os: linux
+          python: 3.5
+          install: pip install .
+        - os: osx
+          language: generic
+before_install:
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        brew update;
+        brew upgrade python3;
+        python3 -m venv venv;
+        source venv/bin/activate;
+        pip install --upgrade pip;
+        pip install pytest;
+        git clone https://github.com/Legrandin/pycryptodome;
+        cd pycryptodome;
+        git checkout `git describe --tags`;
+        python setup.py install;
+        cd ..;
+      fi
 install:
 - pip install .
 script: make test
