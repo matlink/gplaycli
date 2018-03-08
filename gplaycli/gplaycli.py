@@ -261,7 +261,7 @@ class GPlaycli:
                 chunk_size = int(data_iter['file']['chunk_size'])
                 try:
                     with open(filepath, "wb") as fbuffer:
-                        bar = progress.Bar(expected_size=total_size)
+                        bar = progress.Bar(expected_size=total_size, hide=not self.progress_bar)
                         for index, chunk in enumerate(data_iter['file']['data']):
                             fbuffer.write(chunk)
                             bar.show(index * chunk_size)
@@ -275,7 +275,7 @@ class GPlaycli:
                             obb_total_size = int(obb_file['file']['total_size'])
                             obb_chunk_size = int(obb_file['file']['chunk_size'])
                             with open(obb_filename, "wb") as fbuffer:
-                                bar = progress.Bar(expected_size=obb_total_size)
+                                bar = progress.Bar(expected_size=obb_total_size, hide=not self.progress_bar)
                                 for index, chunk in enumerate(obb_file["file"]["data"]):
                                     fbuffer.write(chunk)
                                     bar.show(index * obb_chunk_size)
