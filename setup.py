@@ -33,7 +33,7 @@ setup(name='GPlayCli',
 		install_requires=[
 				'protobuf',
 				'gpapi == 0.4.2',
-				'pyaxmlparser',
+				'androguard',
 				'clint',
 		],
 )
