@@ -1,13 +1,14 @@
 version: 1.0.{build}
 environment:
+  PATH: C:\\Python36-x64;C:\\Python36-x64\\Scripts;$(PATH)
   GMAIL_ADDR:
     secure: z7yQ4wbvIiaICqiDGSpNVQ==
   GMAIL_PWD:
     secure: tp/YNU3a3+EzLjwZtBUAfLPON5H21SoBBvcfrVdSAFY=
 install:
-  - "C:\\Python36-x64\\python.exe -m pip install --upgrade pip"
-  - "C:\\Python36-x64\\python.exe -m pip install pytest"
+  - "python -m pip install --upgrade pip"
+  - "python -m pip install pytest"
 build_script:
-- ps: "C:\\Python36-x64\\python.exe -m pip install ."
+- ps: "pip install ."
 test_script:
-- ps: "C:\\Python36-x64\\python.exe -m pytest C:\\projects\\gplaycli\\tests"
+- ps: "python -m pytest --color=no tests"
