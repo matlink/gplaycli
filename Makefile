@@ -28,19 +28,3 @@ clean:
 
 test:
 	$(PYTEST) tests/
-	rm -f ~/.cache/gplaycli/token
-	$(PROJECT) -vd $(TESTAPK)
-	[ -f $(TESTAPK).apk ]
-	sed -i'.bak' "s/^./ /g" ~/.cache/gplaycli/token # alter token
-	mv ~/.cache/gplaycli/token.bak ~/.cache/gplaycli/token
-	$(PROJECT) -vd $(TESTAPK) -f download
-	[ -f download/$(TESTAPK).apk ]
-	$(PROJECT) -vyu tests
-	$(PROJECT) -s fire -n 30 | wc -l
-	$(PROJECT) -s com.yogavpn
-	$(PROJECT) -s com.yogavpn -n 15
-	$(PROJECT) -vd $(TESTAPK) -dc hammerhead
-	$(PROJECT) -d com.mapswithme.maps.pro -a
-	[ -f com.mapswithme.maps.pro.apk ]
-	[ -f main.*.com.mapswithme.maps.pro.obb ]
-	[ -f patch.*.com.mapswithme.maps.pro.obb ]

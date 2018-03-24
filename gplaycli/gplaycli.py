@@ -356,8 +356,15 @@ class GPlaycli:
 				col_width.append(col_length + 2)
 
 			for result in all_results:
-				print("".join(str("%s" % item).strip().ljust(col_width[indice]) for indice, item in
-							  enumerate(result)))
+				for indice, item in enumerate(result):
+					try:
+						print("".join(str("%s" % item)
+								.strip()
+								.ljust(col_width[indice]))
+							, end='')
+					except UnicodeEncodeError as e:
+						raise Exception(item)
+				print()
 		return all_results
 
 	########## End public methods ##########
