@@ -96,7 +96,8 @@ class GPlaycli:
         self.configparser.read(config_file)
         self.creds = {key: value for key, value in self.configparser.items("Credentials")}
 
-        self.tokencachefile = os.path.expanduser(self.configparser.get("Cache", "token"))
+        self.tokencachefile = os.path.expanduser(
+            self.configparser.get("Cache", "token", fallback="token.cache"))
         self.api = None
         self.token_passed = False
         self.locale = self.configparser.get("Locale", "locale", fallback="en_GB")
