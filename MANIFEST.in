@@ -1,2 +1,2 @@
-include credentials.conf
+include gplaycli.conf
 include cron/cronjob

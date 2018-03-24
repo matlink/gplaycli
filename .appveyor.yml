@@ -1,0 +1,13 @@
+version: 1.0.{build}
+environment:
+  GMAIL_ADDR:
+    secure: z7yQ4wbvIiaICqiDGSpNVQ==
+  GMAIL_PWD:
+    secure: tp/YNU3a3+EzLjwZtBUAfLPON5H21SoBBvcfrVdSAFY=
+install:
+  - "C:\\Python36-x64\\python.exe -m pip install --upgrade pip"
+  - "C:\\Python36-x64\\python.exe -m pip install pytest"
+build_script:
+- ps: "C:\\Python36-x64\\python.exe -m pip install ."
+test_script:
+- ps: "C:\\Python36-x64\\python.exe -m pytest C:\\projects\\gplaycli\\tests"
