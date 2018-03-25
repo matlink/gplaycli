@@ -34,6 +34,6 @@ setup(name='GPlayCli',
 				'protobuf',
 				'gpapi == 0.4.2',
 				'androguard',
-				'clint',
+				'etaprogress',
 		],
 )
