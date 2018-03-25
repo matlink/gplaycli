@@ -11,4 +11,4 @@ install:
 build_script:
 - ps: "pip install ."
 test_script:
-- ps: "python -m pytest --color=no tests"
+- ps: "python -m pytest --color=no tests\\test_init.py"
