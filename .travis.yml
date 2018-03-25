@@ -2,7 +2,7 @@ matrix:
   include:
     - os: linux
       language: python
-      python: 3.5
+      python: 3.6
     - os: osx
       language: generic
 
@@ -23,7 +23,7 @@ before_install:
 
 install: pip install .
 
-script: make test
+script: python -m pytest tests
 
 env:
   global:
