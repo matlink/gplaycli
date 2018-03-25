@@ -1,4 +1,5 @@
 import os
+import sys
 import hashlib
 import subprocess as sp
 
@@ -7,7 +8,10 @@ UPDATEAPK=os.path.join("tests", "com.duckduckgo.mobile.android_3.0.17.apk")
 TOKENFILE=os.path.expanduser('~/.cache/gplaycli/token')
 
 def call(args):
-	return sp.run(args.split(), stdout=sp.PIPE, stderr=sp.PIPE)
+	proc = sp.run(args.split(), stdout=sp.PIPE, stderr=sp.PIPE)
+	print(proc.stdout.decode(), file=sys.stdout)
+	print(proc.stderr.decode(), file=sys.stderr)
+	return proc
 
 def stdout_lines(args):
 	return (call(args)
