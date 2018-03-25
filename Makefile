@@ -7,10 +7,7 @@ BUILDIR=$(CURDIR)/debian/gplaycli
 PROJECT=gplaycli
 VERSION=$(shell $(PYTHON) setup.py --version)
 GPGID=186BB3CA
-PYTEST=$(shell which py.test)
 TESTAPK=org.mozilla.focus
-
-all: test
 
 source:
 	$(PYTHON) setup.py sdist
@@ -25,6 +22,3 @@ clean:
 	$(PYTHON) setup.py clean
 	rm -rf build/ MANIFEST dist GPlayCli.egg-info debian/{gplaycli,python-module-stampdir} debian/gplaycli.{debhelper.log,postinst.debhelper,prerm.debhelper,substvars} *.tar.gz* deb_dist
 	find . -name '*.pyc' -delete
-
-test:
-	$(PYTEST) tests/
