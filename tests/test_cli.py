@@ -16,12 +16,8 @@ def call(args):
 	print(proc.stderr.decode(ENC, ERR), file=sys.stderr)
 	return proc
 
-def stdout_lines(args):
-	return (call(args)
-			.stdout
-			.decode(ENC, ERR)
-			.splitlines(True)
-			)
+def nblines(comp_proc):
+	return len(comp_proc.stdout.decode(ENC, ERR).splitlines(True))
 
 def download_apk():
 	call("gplaycli -vd %s" % TESTAPK)
@@ -50,16 +46,19 @@ def test_update(apk=UPDATEAPK):
 	assert after != before
 
 def test_search(string='fire', number=30):
-	outlines = stdout_lines("gplaycli -s %s -n %d" % (string, number))
-	assert len(outlines) <= number + 1
+	c = call("gplaycli -s %s -n %d" % (string, number))
+	assert c.returncode == 0
+	assert nblines(c) <= number + 1
 
 def test_search2(string='com.yogavpn'):
-	outlines = stdout_lines("gplaycli -s %s" % string)
-	assert len(outlines) >= 0
+	c = call("gplaycli -s %s" % string)
+	assert c.returncode == 0
+	assert nblines(c) >= 0
 
 def test_search3(string='com.yogavpn', number=15):
-	outlines = stdout_lines("gplaycli -s %s -n %d" % (string, number))
-	assert len(outlines) <= number + 1
+	c = call("gplaycli -s %s -n %d" % (string, number))
+	assert c.returncode == 0
+	assert nblines(c) <= number + 1
 
 def test_another_device(device='hammerhead'):
 	call("gplaycli -vd %s -dc %s" % (TESTAPK, device))
