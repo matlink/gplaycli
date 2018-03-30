@@ -355,13 +355,15 @@ class GPlaycli:
 
 			for result in all_results:
 				for indice, item in enumerate(result):
+					out = str(item)
+					out = out.strip()
+					out = out.ljust(col_width[indice])
+					out = "".join(out)
 					try:
-						print("".join(str("%s" % item)
-								.strip()
-								.ljust(col_width[indice]))
-							, end='')
-					except UnicodeEncodeError as e:
-						raise Exception(item)
+						print(out, end='')
+					except UnicodeEncodeError:
+						out = out.encode('utf-8', errors='replace')
+						print(out, end='')
 				print()
 		return all_results
 
