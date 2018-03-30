@@ -336,7 +336,8 @@ class GPlaycli:
 				continue
 			detail = [result['title'],
 					  result['author'],
-					  util.sizeof_fmt(result['installationSize']),
+					  util.sizeof_fmt(result['installationSize'])
+					  if result['installationSize'] > 0 else 'N/A',
 					  result['numDownloads'],
 					  result['uploadDate'],
 					  result['docId'],
