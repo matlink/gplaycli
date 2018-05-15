@@ -31,7 +31,6 @@ setup(name='GPlayCli',
 			[os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf','cron/cronjob']],
 		],
 		install_requires=[
-				'protobuf',
 				'gpapi == 0.4.2',
 				'androguard',
 		],
