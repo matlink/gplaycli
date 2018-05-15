@@ -9,6 +9,6 @@ install:
   - "python -m pip install --upgrade pip"
   - "python -m pip install pytest"
 build_script:
-- ps: "python -m pip install ."
+- ps: "python -m pip install . --no-warn-script-location"
 test_script:
 - ps: "python -m pytest tests"
