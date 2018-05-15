@@ -1,2 +1,2 @@
 gpapi
-androguard
+pyaxmlparser
