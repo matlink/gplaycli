@@ -1,4 +1,3 @@
 protobuf
 gpapi
 androguard
-clint
