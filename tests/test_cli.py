@@ -7,7 +7,7 @@ ENC = sys.getdefaultencoding()
 ERR = 'replace'
 
 TESTAPK='org.mozilla.focus'
-UPDATEAPK=os.path.join("tests", "com.duckduckgo.mobile.android_3.0.17.apk")
+UPDATEAPK=os.path.join("tests", "org.mozilla.focus.20112247.apk")
 TOKENFILE=os.path.expanduser('~/.cache/gplaycli/token')
 
 def call(args):
