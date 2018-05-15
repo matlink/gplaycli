@@ -32,6 +32,6 @@ setup(name='GPlayCli',
 		],
 		install_requires=[
 				'gpapi == 0.4.2',
-				'androguard',
+				'pyaxmlparser',
 		],
 )

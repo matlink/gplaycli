@@ -32,7 +32,7 @@ from gpapi.googleplay import LoginError
 from gpapi.googleplay import RequestError
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
-from androguard.core.bytecodes.apk import APK
+from pyaxmlparser import APK
 
 from . import util
 from . import hooks
@@ -501,7 +501,7 @@ class GPlaycli:
 			apk = APK(filepath)
 			packagename = apk.package
 			package_bunch.append(packagename)
-			version_codes.append(util.vcode(apk.get_androidversion_code()))
+			version_codes.append(util.vcode(apk.version_code))
 
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
