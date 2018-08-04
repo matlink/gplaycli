@@ -600,7 +600,7 @@ def main():
 	Parse command line arguments
 	"""
 	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader"
-												 "and manager for command line")
+												 " and manager for command line")
 	parser.add_argument('-V', '--version', action='store_true', dest='version',
 						help="Print version number and exit")
 	parser.add_argument('-y', '--yes', action='store_true', dest='yes_to_all',
