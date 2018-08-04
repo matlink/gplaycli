@@ -216,15 +216,19 @@ class GPlaycli:
 			try:
 				detail = self.api.details(pkg[0])
 				details.append(detail)
+
 			except RequestError as request_error:
 				failed_downloads.append((pkg, request_error))
+
 		if any([d is None for d in details]):
-			logger.info("Token has expired while downloading. Retrieving a new one.")
-			self.refresh_token()
-			details = self.api.bulkDetails([pkg[0] for pkg in pkg_todownload])
+			logger.Error("Error while getting details, for APKs, please try again.")
+
 		position = 1
 		for detail, item in zip(details, pkg_todownload):
 			packagename, filename = item
+
+			if filename is None:
+				filename = detail['docId']+ "-v." + detail['versionString'] + ".apk"
 
 			logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
 
@@ -251,9 +255,12 @@ class GPlaycli:
 				logger.error("Error while downloading %s : %s", packagename, exc)
 				failed_downloads.append((item, exc))
 			else:
-				if filename is None:
-					filename = packagename + ".apk"
 				filepath = os.path.join(download_folder, filename)
+
+				#if file exists, continue
+				if os.path.isfile(filepath):
+					logger.info("File %s already exists, skipping.", filename)
+					continue
 
 				additional_data = data_iter['additionalData']
 				total_size = int(data_iter['file']['total_size'])
