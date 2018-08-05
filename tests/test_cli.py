@@ -1,7 +1,9 @@
 import os
 import sys
 import hashlib
+import pytest
 import subprocess as sp
+import re
 
 ENC = sys.getdefaultencoding()
 ERR = 'replace'
@@ -9,6 +11,8 @@ ERR = 'replace'
 TESTAPK='org.mozilla.focus'
 UPDATEAPK=os.path.join("tests", "org.mozilla.focus.20112247.apk")
 TOKENFILE=os.path.expanduser('~/.cache/gplaycli/token')
+
+RE_APPEND_VERSION=re.compile("^"+TESTAPK.replace('.', '\.')+"-v.[A-z0-9.-]+\.apk$")
 
 def call(args):
 	proc = sp.run(args.split(), stdout=sp.PIPE, stderr=sp.PIPE)
@@ -19,8 +23,11 @@ def call(args):
 def nblines(comp_proc):
 	return len(comp_proc.stdout.decode(ENC, ERR).splitlines(True))
 
-def download_apk():
-	call("gplaycli -vd %s" % TESTAPK)
+def download_apk(append_version = False):
+	if append_version:
+		call("gplaycli -av -vd %s" % TESTAPK)
+	else:
+		call("gplaycli -vd %s" % TESTAPK)
 
 def checksum(apk):
 	return hashlib.sha256(open(apk, 'rb').read()).hexdigest()
@@ -30,6 +37,19 @@ def test_download():
 		os.remove(TOKENFILE)
 	download_apk()
 	assert os.path.isfile("%s.apk" % TESTAPK)
+
+def test_download_version():
+	if os.path.isfile(TOKENFILE):
+		os.remove(TOKENFILE)
+	download_apk(True)
+
+	found = False
+	for f in os.listdir():
+		if RE_APPEND_VERSION.match(f): 
+			found = True
+	
+	if not found:
+		pytest.fail("Could not find package with version appended")
 
 def test_alter_token():
 	token = open(TOKENFILE).read()

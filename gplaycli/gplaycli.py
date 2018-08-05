@@ -105,6 +105,7 @@ class GPlaycli:
 		if args is None:
 			self.yes = False
 			self.verbose = False
+			self.append_version = False
 			self.progress_bar = False
 			self.logging_enable = False
 			self.device_codename = 'bacon'
@@ -123,6 +124,7 @@ class GPlaycli:
 				logger.propagate = False
 			logger.info('GPlayCli version %s', __version__)
 			logger.info('Configuration file is %s', config_file)
+			self.append_version = args.append_version
 			self.progress_bar = args.progress_bar
 			self.set_download_folder(args.update_folder)
 			self.logging_enable = args.logging_enable
@@ -221,14 +223,23 @@ class GPlaycli:
 				failed_downloads.append((pkg, request_error))
 
 		if any([d is None for d in details]):
-			logger.Error("Error while getting details, for APKs, please try again.")
+			if self.append_version:
+				logger.Error("Error while getting details, for APKs, please try again.")
+				return
+
+			logger.info("Token has expired while downloading. Retrieving a new one.")
+			self.refresh_token()
+			details = self.api.bulkDetails([pkg[0] for pkg in pkg_todownload])
 
 		position = 1
 		for detail, item in zip(details, pkg_todownload):
 			packagename, filename = item
 
 			if filename is None:
-				filename = detail['docId']+ "-v." + detail['versionString'] + ".apk"
+				if self.append_version:
+					filename = detail['docId']+ "-v." + detail['versionString'] + ".apk"
+				else:
+					filename = detail['docId']+ ".apk"
 
 			logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
 
@@ -258,8 +269,9 @@ class GPlaycli:
 				filepath = os.path.join(download_folder, filename)
 
 				#if file exists, continue
-				if os.path.isfile(filepath):
+				if self.append_version and os.path.isfile(filepath):
 					logger.info("File %s already exists, skipping.", filename)
+					position += 1
 					continue
 
 				additional_data = data_iter['additionalData']
@@ -628,6 +640,8 @@ def main():
 	parser.add_argument('-d', '--download', action='store', dest='packages_to_download',
 						metavar="AppID", nargs="+", type=str,
 						help="Download the Apps that map given AppIDs")
+	parser.add_argument('-av', '--append-version', action='store_true', dest='append_version',
+						help="Append versionstring to APKs when downloading")
 	parser.add_argument('-a', '--additional-files', action='store_true', dest='addfiles_enable',
 						default=False,
 						help="Enable the download of additional files")
