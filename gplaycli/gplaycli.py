@@ -178,6 +178,9 @@ class GPlaycli:
 		elif response.text == "Server error":
 			logger.error('Token dispenser server error')
 			sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
+		elif len(response.text) != 88: # other kinds of errors
+			logger.error('Unknowned error:', response.text)
+			sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
 		token, gsfid = response.text.split(" ")
 		logger.info("Token: %s", token)
 		logger.info("GSFId: %s", gsfid)
