@@ -98,5 +98,6 @@ class progressbar(object):
 			self.stream.write('\n')
 			self.stream.flush()
 
-	def format_time(self, seconds):
+	@staticmethod
+	def format_time(seconds):
 		return time.strftime('%H:%M:%S', time.gmtime(seconds))
