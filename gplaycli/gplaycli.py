@@ -223,14 +223,9 @@ class GPlaycli:
 				failed_downloads.append((pkg, request_error))
 
 		if any([d is None for d in details]):
-			if self.append_version:
-				logger.Error("Error while getting details, for APKs, please try again.")
-				return
-
 			logger.info("Token has expired while downloading. Retrieving a new one.")
 			self.refresh_token()
 			details = self.api.bulkDetails([pkg[0] for pkg in pkg_todownload])
-
 		position = 1
 		for detail, item in zip(details, pkg_todownload):
 			packagename, filename = item

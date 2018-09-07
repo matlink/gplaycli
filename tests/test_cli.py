@@ -41,13 +41,12 @@ def test_download():
 def test_download_version():
 	if os.path.isfile(TOKENFILE):
 		os.remove(TOKENFILE)
-	download_apk(True)
+	download_apk(append_version = True)
 
 	found = False
 	for f in os.listdir():
-		if RE_APPEND_VERSION.match(f): 
+		if RE_APPEND_VERSION.match(f):
 			found = True
-	
 	if not found:
 		pytest.fail("Could not find package with version appended")
 
