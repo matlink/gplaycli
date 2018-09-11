@@ -10,7 +10,7 @@ if sys.version_info[0] == 2:
 	sys.exit(1)
 
 setup(name='GPlayCli',
-		version='3.22',
+		version='3.24',
 		description='GPlayCli, a Google play downloader command line interface',
 		author="Matlink",
 		author_email="matlink@matlink.fr",
@@ -31,9 +31,7 @@ setup(name='GPlayCli',
 			[os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf','cron/cronjob']],
 		],
 		install_requires=[
-				'protobuf',
-				'gpapi == 0.4.2',
-				'androguard',
-				'etaprogress',
+				'gpapi == 0.4.3',
+				'pyaxmlparser',
 		],
 )
