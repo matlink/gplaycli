@@ -32,7 +32,7 @@ from gpapi.googleplay import LoginError
 from gpapi.googleplay import RequestError
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
-from androguard.core.bytecodes.apk import APK
+from pyaxmlparser import APK
 
 from . import util
 from . import hooks
@@ -105,6 +105,7 @@ class GPlaycli:
 		if args is None:
 			self.yes = False
 			self.verbose = False
+			self.append_version = False
 			self.progress_bar = False
 			self.logging_enable = False
 			self.device_codename = 'bacon'
@@ -123,6 +124,7 @@ class GPlaycli:
 				logger.propagate = False
 			logger.info('GPlayCli version %s', __version__)
 			logger.info('Configuration file is %s', config_file)
+			self.append_version = args.append_version
 			self.progress_bar = args.progress_bar
 			self.set_download_folder(args.update_folder)
 			self.logging_enable = args.logging_enable
@@ -178,6 +180,9 @@ class GPlaycli:
 		elif response.text == "Server error":
 			logger.error('Token dispenser server error')
 			sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
+		elif len(response.text) != 88: # other kinds of errors
+			logger.error('Unknowned error: %s', response.text)
+			sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
 		token, gsfid = response.text.split(" ")
 		logger.info("Token: %s", token)
 		logger.info("GSFId: %s", gsfid)
@@ -216,8 +221,10 @@ class GPlaycli:
 			try:
 				detail = self.api.details(pkg[0])
 				details.append(detail)
+
 			except RequestError as request_error:
 				failed_downloads.append((pkg, request_error))
+
 		if any([d is None for d in details]):
 			logger.info("Token has expired while downloading. Retrieving a new one.")
 			self.refresh_token()
@@ -225,6 +232,12 @@ class GPlaycli:
 		position = 1
 		for detail, item in zip(details, pkg_todownload):
 			packagename, filename = item
+
+			if filename is None:
+				if self.append_version:
+					filename = detail['docId']+ "-v." + detail['versionString'] + ".apk"
+				else:
+					filename = detail['docId']+ ".apk"
 
 			logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
 
@@ -251,16 +264,20 @@ class GPlaycli:
 				logger.error("Error while downloading %s : %s", packagename, exc)
 				failed_downloads.append((item, exc))
 			else:
-				if filename is None:
-					filename = packagename + ".apk"
 				filepath = os.path.join(download_folder, filename)
+
+				#if file exists, continue
+				if self.append_version and os.path.isfile(filepath):
+					logger.info("File %s already exists, skipping.", filename)
+					position += 1
+					continue
 
 				additional_data = data_iter['additionalData']
 				total_size = int(data_iter['file']['total_size'])
 				chunk_size = int(data_iter['file']['chunk_size'])
 				try:
 					with open(filepath, "wb") as fbuffer:
-						bar = util.bar(expected_size=total_size, hide=not self.progress_bar)
+						bar = util.progressbar(expected_size=total_size, hide=not self.progress_bar)
 						for index, chunk in enumerate(data_iter['file']['data']):
 							fbuffer.write(chunk)
 							bar.show(index * chunk_size)
@@ -274,7 +291,7 @@ class GPlaycli:
 							obb_total_size = int(obb_file['file']['total_size'])
 							obb_chunk_size = int(obb_file['file']['chunk_size'])
 							with open(obb_filename, "wb") as fbuffer:
-								bar = util.bar(expected_size=obb_total_size, hide=not self.progress_bar)
+								bar = util.progressbar(expected_size=obb_total_size, hide=not self.progress_bar)
 								for index, chunk in enumerate(obb_file["file"]["data"]):
 									fbuffer.write(chunk)
 									bar.show(index * obb_chunk_size)
@@ -502,7 +519,7 @@ class GPlaycli:
 			apk = APK(filepath)
 			packagename = apk.package
 			package_bunch.append(packagename)
-			version_codes.append(util.vcode(apk.get_androidversion_code()))
+			version_codes.append(util.vcode(apk.version_code))
 
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
@@ -560,7 +577,8 @@ class GPlaycli:
 			print("Everything is up to date !")
 			sys.exit(ERRORS.SUCCESS)
 
-	def print_failed(self, failed_downloads):
+	@staticmethod
+	def print_failed(failed_downloads):
 		"""
 		Print/log failed downloads from failed_downloads
 		"""
@@ -601,7 +619,7 @@ def main():
 	Parse command line arguments
 	"""
 	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader"
-												 "and manager for command line")
+												 " and manager for command line")
 	parser.add_argument('-V', '--version', action='store_true', dest='version',
 						help="Print version number and exit")
 	parser.add_argument('-y', '--yes', action='store_true', dest='yes_to_all',
@@ -622,6 +640,8 @@ def main():
 	parser.add_argument('-d', '--download', action='store', dest='packages_to_download',
 						metavar="AppID", nargs="+", type=str,
 						help="Download the Apps that map given AppIDs")
+	parser.add_argument('-av', '--append-version', action='store_true', dest='append_version',
+						help="Append versionstring to APKs when downloading")
 	parser.add_argument('-a', '--additional-files', action='store_true', dest='addfiles_enable',
 						default=False,
 						help="Enable the download of additional files")
