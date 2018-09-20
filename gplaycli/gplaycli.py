@@ -22,6 +22,7 @@ import logging
 import argparse
 import configparser
 import warnings
+import json
 
 from enum import IntEnum
 
@@ -129,6 +130,7 @@ class GPlaycli:
 			self.set_download_folder(args.update_folder)
 			self.logging_enable = args.logging_enable
 			self.device_codename = args.device_codename
+			logger.info('Device is %s', self.device_codename)
 			self.addfiles_enable = args.addfiles_enable
 			if args.locale is not None:
 				self.locale = args.locale
@@ -168,12 +170,16 @@ class GPlaycli:
 		a new token is fetched from the token-dispenser
 		server located at self.token_url.
 		"""
-		token, gsfid = self.get_cached_token()
-		if token is not None and not force_new:
+		token, gsfid, device = self.get_cached_token()
+		if (token is not None
+				and not force_new
+				and device == self.device_codename):
 			logger.info("Using cached token.")
 			return token, gsfid
 		logger.info("Retrieving token ...")
-		response = requests.get(self.token_url)
+		url = '/'.join([self.token_url, self.device_codename])
+		logger.info("Token URL is %s", url)
+		response = requests.get(url)
 		if response.text == 'Auth error':
 			logger.error('Token dispenser auth error, probably too many connections')
 			sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
@@ -188,7 +194,7 @@ class GPlaycli:
 		logger.info("GSFId: %s", gsfid)
 		self.token = token
 		self.gsfid = gsfid
-		self.write_cached_token(token, gsfid)
+		self.write_cached_token(token, gsfid, self.device_codename)
 		return token, gsfid
 
 	@hooks.connected
@@ -441,24 +447,24 @@ class GPlaycli:
 
 	def get_cached_token(self):
 		"""
-		Retrieve a cached token and gsfid if exist.
+		Retrieve a cached token,  gsfid and device if exist.
 		Otherwise return None.
 		"""
 		try:
-			with open(self.tokencachefile, 'r') as tcf:
-				token, gsfid = tcf.readline().split()
-				if not token:
-					token = None
-					gsfid = None
+			cache_dic = json.loads(open(self.tokencachefile).read())
+			token = cache_dic['token']
+			gsfid = cache_dic['gsfid']
+			device = cache_dic['device']
 		except (IOError, ValueError):  # cache file does not exists or is corrupted
 			token = None
 			gsfid = None
+			device = None
 			logger.error('cache file does not exists or is corrupted')
-		return token, gsfid
+		return token, gsfid, device
 
-	def write_cached_token(self, token, gsfid):
+	def write_cached_token(self, token, gsfid, device):
 		"""
-		Write the given token and gsfid
+		Write the given token, gsfid and device
 		to the self.tokencachefile file.
 		Path and file are created if missing.
 		"""
@@ -468,7 +474,9 @@ class GPlaycli:
 			if not os.path.exists(cachedir):
 				os.makedirs(cachedir, exist_ok=True)
 			with open(self.tokencachefile, 'w') as tcf:
-				tcf.write("%s %s" % (token, gsfid))
+				tcf.write(json.dumps({'token' : token,
+									  'gsfid' : gsfid,
+									  'device' : device}))
 		except IOError as io_error:
 			err_str = "Failed to write token to cache file: %s %s" % (
 				self.tokencachefile, io_error.strerror)

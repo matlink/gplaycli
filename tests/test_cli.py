@@ -4,6 +4,7 @@ import hashlib
 import pytest
 import subprocess as sp
 import re
+import json
 
 ENC = sys.getdefaultencoding()
 ERR = 'replace'
@@ -51,10 +52,10 @@ def test_download_version():
 		pytest.fail("Could not find package with version appended")
 
 def test_alter_token():
-	token = open(TOKENFILE).read()
-	token = ' ' + token[1:]
+	cache_dict = json.loads(open(TOKENFILE).read())
+	cache_dict['token'] = ' ' + cache_dict['token'][1:]
 	with open(TOKENFILE, 'w') as outfile:
-		print(token, file=outfile)
+		print(json.dumps(cache_dict), file=outfile)
 	download_apk()
 	assert os.path.isfile("%s.apk" % TESTAPK)
 
