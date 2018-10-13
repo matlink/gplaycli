@@ -23,6 +23,7 @@ import argparse
 import configparser
 import warnings
 import json
+import time
 
 from enum import IntEnum
 
@@ -171,6 +172,7 @@ class GPlaycli:
 		server located at self.token_url.
 		"""
 		token, gsfid, device = self.get_cached_token()
+		self.retrieve_time = time.time()
 		if (token is not None
 				and not force_new
 				and device == self.device_codename):
@@ -431,6 +433,11 @@ class GPlaycli:
 		with warnings.catch_warnings():
 			warnings.simplefilter('error')
 			try:
+				if self.token_enable:
+					now = time.time()
+					if now - self.retrieve_time < 5:
+						# Need to wait a bit before loging in with this token
+						time.sleep(5)
 				self.api.login(email=email,
 							   password=password,
 							   authSubToken=authsub_token,
