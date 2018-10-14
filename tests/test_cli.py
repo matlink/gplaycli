@@ -84,9 +84,9 @@ def test_another_device(device='hammerhead'):
 	call("gplaycli -vd %s -dc %s" % (TESTAPK, device))
 	assert os.path.isfile("%s.apk" % TESTAPK)
 
-def test_download_additional_files(apk='com.codigames.dungeon', device='angler'):
+def test_download_additional_files(apk='com.mapswithme.maps.pro', device='angler'):
 	call("gplaycli -d %s -a -dc %s" % (apk, device))
 	assert os.path.isfile("%s.apk" % apk)
 	files = [f for f in os.listdir() if os.path.isfile(f)]
 	assert any([f.endswith('%s.obb' % apk) and f.startswith('main') for f in files])
-	# assert any([f.endswith('%s.obb' % apk) and f.startswith('patch') for f in files])
+	assert any([f.endswith('%s.obb' % apk) and f.startswith('patch') for f in files])
