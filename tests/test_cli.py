@@ -13,7 +13,7 @@ TESTAPK='org.mozilla.focus'
 UPDATEAPK=os.path.join("tests", "org.mozilla.focus.20112247.apk")
 TOKENFILE=os.path.expanduser('~/.cache/gplaycli/token')
 
-RE_APPEND_VERSION=re.compile("^"+TESTAPK.replace('.', '\.')+"-v.[A-z0-9.-]+\.apk$")
+RE_APPEND_VERSION=re.compile("^"+TESTAPK.replace('.', r'\.')+r"-v.[A-z0-9.-]+\.apk$")
 
 def call(args):
 	proc = sp.run(args.split(), stdout=sp.PIPE, stderr=sp.PIPE)
