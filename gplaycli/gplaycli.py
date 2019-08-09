@@ -433,7 +433,7 @@ class GPlaycli:
 		with warnings.catch_warnings():
 			warnings.simplefilter('error')
 			try:
-				if self.token_enable:
+				if self.token_enable and not self.token_passed:
 					now = time.time()
 					if now - self.retrieve_time < 5:
 						# Need to wait a bit before loging in with this token
