@@ -433,15 +433,11 @@ class GPlaycli:
 		with warnings.catch_warnings():
 			warnings.simplefilter('error')
 			try:
-				if self.token_enable:
-					# This condition is necessary if user wants to passed token and gsfid from outside. 
-					# In this case, function retrieve_token was never executed and self.retrieve_time was never defined.
-					# If this condition is not here, there will be an error.
-					if not self.token_passed:
-						now = time.time()
-						if now - self.retrieve_time < 5:
-							# Need to wait a bit before loging in with this token
-							time.sleep(5)
+				if self.token_enable and not self.token_passed:
+					now = time.time()
+					if now - self.retrieve_time < 5:
+						# Need to wait a bit before loging in with this token
+						time.sleep(5)
 				self.api.login(email=email,
 							   password=password,
 							   authSubToken=authsub_token,
