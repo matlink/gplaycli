@@ -240,12 +240,11 @@ class GPlaycli:
 		position = 1
 		for detail, item in zip(details, pkg_todownload):
 			packagename, filename = item
-
-			if filename is None:
-				if self.append_version:
-					filename = detail['docId']+ "-v." + detail['versionString'] + ".apk"
-				else:
-					filename = detail['docId']+ ".apk"
+			
+			if self.append_version:
+				filename = detail['docId']+ "-v." + detail['versionString'] + ".apk"
+			elif filename is None:
+				filename = detail['docId']+ ".apk"
 
 			logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
 
