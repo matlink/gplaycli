@@ -155,13 +155,13 @@ class GPlaycli:
 		if self.token_enable is not None:
 			if args.token_url is not None:
 				self.token_url = args.token_url
-			if (args.token_str is None) and (args.gsf_id is None):
-				self.token, self.gsfid = self.retrieve_token()
-			elif (args.token_str is not None) and (args.gsf_id is not None):
+			if (args.token_str is not None) and (args.gsfid is not None):
 				self.token = args.token_str
-				self.gsfid = args.gsf_id
+				self.gsfid = args.gsfid
 				self.token_passed = True
-			else:  # Either args.token_str or args.gsf_id is None
+			elif args.token_str is None and args.gsfid is None:
+				pass
+			else:
 				raise TypeError("Token string and GSFID have to be passed at the same time.")
 
 		if self.logging_enable:
@@ -178,33 +178,32 @@ class GPlaycli:
 		a new token is fetched from the token-dispenser
 		server located at self.token_url.
 		"""
-		token, gsfid, device = self.get_cached_token()
-		self.retrieve_time = time.time()
-		if (token is not None
-				and not force_new
-				and device == self.device_codename):
+		self.token, self.gsfid, self.device = self.get_cached_token()
+		if (self.token is not None and not force_new and self.device == self.device_codename):
 			logger.info("Using cached token.")
-			return token, gsfid
+			return
+
 		logger.info("Retrieving token ...")
 		url = '/'.join([self.token_url, self.device_codename])
 		logger.info("Token URL is %s", url)
 		response = requests.get(url)
+
 		if response.text == 'Auth error':
 			logger.error('Token dispenser auth error, probably too many connections')
 			sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
+
 		elif response.text == "Server error":
 			logger.error('Token dispenser server error')
 			sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
+
 		elif len(response.text) != 88: # other kinds of errors
-			logger.error('Unknowned error: %s', response.text)
+			logger.error('Unknown error: %s', response.text)
 			sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
-		token, gsfid = response.text.split(" ")
-		logger.info("Token: %s", token)
-		logger.info("GSFId: %s", gsfid)
-		self.token = token
-		self.gsfid = gsfid
-		self.write_cached_token(token, gsfid, self.device_codename)
-		return token, gsfid
+
+		self.token, self.gsfid = response.text.split(" ")
+		logger.info("Token: %s", self.token)
+		logger.info("GSFId: %s", self.gsfid)
+		self.write_cached_token(self.token, self.gsfid, self.device_codename)
 
 	@hooks.connected
 	def download(self, pkg_todownload):
@@ -414,50 +413,42 @@ class GPlaycli:
 		is installed.
 		"""
 		self.api = GooglePlayAPI(locale=self.locale, timezone=self.timezone, device_codename=self.device_codename)
-		error = None
-		email = None
-		password = None
-		authsub_token = None
-		gsfid = None
-		if self.token_enable is False:
-			logger.info("Using credentials to connect to API")
-			email = self.gmail_address
-			if self.gmail_password:
-				logger.info("Using plaintext password")
-				password = self.gmail_password
-			elif self.keyring_service and HAVE_KEYRING:
-				password = keyring.get_password(self.keyring_service, email)
-			elif self.keyring_service and not HAVE_KEYRING:
-				logger.error("You asked for keyring service but keyring package is not installed")
-				sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
+		if self.token_enable:
+			self.retrieve_token()
+			return self.connect_token()
 		else:
-			if self.token_passed:
-				logger.info("Using passed token to connect to API")
-			else:
-				logger.info("Using auto retrieved token to connect to API")
-			authsub_token = self.token
-			gsfid = int(self.gsfid, 16)
-		with warnings.catch_warnings():
-			warnings.simplefilter('error')
-			try:
-				if self.token_enable and not self.token_passed:
-					now = time.time()
-					if now - self.retrieve_time < 5:
-						# Need to wait a bit before loging in with this token
-						time.sleep(5)
-				self.api.login(email=email,
-							   password=password,
-							   authSubToken=authsub_token,
-							   gsfId=gsfid)
-			except LoginError as login_error:
-				logger.error("Bad authentication, login or password incorrect (%s)", login_error)
-				return False, ERRORS.CANNOT_LOGIN_GPLAY
-			# invalid token or expired
-			except (ValueError, IndexError, LoginError, DecodeError, SystemError, RequestError):
-				logger.info("Token has expired or is invalid. Retrieving a new one...")
-				self.refresh_token()
-		success = True
-		return success, error
+			return self.connect_credentials()
+
+	def connect_token(self):
+		if self.token_passed:
+			logger.info("Using passed token to connect to API")
+		else:
+			logger.info("Using auto retrieved token to connect to API")
+		try:
+			self.api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
+		except (ValueError, IndexError, LoginError, DecodeError, SystemError, RequestError):
+			logger.info("Token has expired or is invalid. Retrieving a new one...")
+			self.retrieve_token(force_new=True)
+			self.connect()
+		return True, None
+
+	def connect_credentials(self):
+		logger.info("Using credentials to connect to API")
+		if self.gmail_password:
+			logger.info("Using plaintext password")
+			password = self.gmail_password
+		elif self.keyring_service and HAVE_KEYRING:
+			password = keyring.get_password(self.keyring_service, self.gmail_address)
+		elif self.keyring_service and not HAVE_KEYRING:
+			logger.error("You asked for keyring service but keyring package is not installed")
+			return False, ERRORS.KEYRING_NOT_INSTALLED
+		try:
+			self.api.login(email=self.gmail_address, password=password)
+		except LoginError as e:
+			logger.error("Bad authentication, login or password incorrect (%s)", login_error)
+			return False, ERRORS.CANNOT_LOGIN_GPLAY
+		return True, None
+
 
 	def get_cached_token(self):
 		"""
@@ -499,14 +490,6 @@ class GPlaycli:
 		to folder.
 		"""
 		self.download_folder = folder
-
-	def refresh_token(self):
-		"""
-		Get a new token from token-dispenser instance
-		and re-connect to the play-store.
-		"""
-		self.retrieve_token(force_new=True)
-		self.api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
 
 	def prepare_analyse_apks(self):
 		"""
@@ -682,7 +665,7 @@ def main():
 						metavar="TOKEN_STR", type=str, default=None,
 						help="Supply token string by yourself, "
 							 "need to supply GSF_ID at the same time")
-	parser.add_argument('-g', '--gsf-id', action='store', dest='gsf_id', metavar="GSF_ID",
+	parser.add_argument('-g', '--gsf-id', action='store', dest='gsfid', metavar="GSF_ID",
 						type=str, default=None,
 						help="Supply GSF_ID by yourself, "
 							 "need to supply token string at the same time")
