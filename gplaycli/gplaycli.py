@@ -88,79 +88,86 @@ class GPlaycli:
 			while not os.path.isfile(tmp_list[0]):
 				tmp_list.pop(0)
 				if not tmp_list:
+					break
 					raise OSError("No configuration file found at %s" % cred_paths_list)
-			config_file = tmp_list[0]
+			if tmp_list:
+				config_file = tmp_list[0]
+
+		self.api 			= None
+		self.token_passed 	= False
+
 
 		default_values = {}
-		self.configparser = configparser.ConfigParser(default_values)
-		self.configparser.read(config_file)
-		self.creds = {key: value for key, value in self.configparser.items("Credentials")}
+		config = configparser.ConfigParser(default_values)
+		if config_file:			config.read(config_file)
+		self.gmail_address      = config.get('Credentials', 'gmail_address', fallback=None)
+		self.gmail_password		= config.get('Credentials', 'gmail_password', fallback=None)
+		self.token_enable 		= config.getboolean('Credentials', 'token', fallback=True)
+		self.token_url 			= config.get('Credentials', 'token_url', fallback='https://matlink.fr/token/email/gsfid')
+		self.keyring_service    = config.get('Credentials', 'keyring_service', fallback=None)
 
-		self.tokencachefile = os.path.expanduser(
-			self.configparser.get("Cache", "token", fallback="token.cache"))
-		self.api = None
-		self.token_passed = False
-		self.locale = self.configparser.get("Locale", "locale", fallback="en_GB")
-		self.timezone = self.configparser.get("Locale", "timezone", fallback="CEST")
+		self.tokencachefile 	= os.path.expanduser(config.get("Cache", "token", fallback="token.cache"))
+		self.yes 				= config.getboolean('Misc', 'accept_all', fallback=False)
+		self.verbose 			= config.getboolean('Misc', 'verbose', fallback=False)
+		self.append_version 	= config.getboolean('Misc', 'append_version', fallback=False)
+		self.progress_bar 		= config.getboolean('Misc', 'progress_bar', fallback=False)
+		self.logging_enable 	= config.getboolean('Misc', 'enable_logging', fallback=False)
+		self.addfiles_enable 	= config.getboolean('Misc', 'enable_addfiles', fallback=False)
+		self.device_codename 	= config.get('Device', 'codename', fallback='bacon')
+		self.locale 			= config.get("Locale", "locale", fallback="en_GB")
+		self.timezone 			= config.get("Locale", "timezone", fallback="CEST")
 
-		# default settings, ie for API calls
-		if args is None:
-			self.yes = False
-			self.verbose = False
-			self.append_version = False
-			self.progress_bar = False
-			self.logging_enable = False
-			self.device_codename = 'bacon'
-			self.addfiles_enable = False
+		if not args: return
 
-		# if args are passed
-		else:
+		# if args are passed, override defaults
+		if args.yes_to_all is not None:
 			self.yes = args.yes_to_all
+		if args.verbose is not None:
 			self.verbose = args.verbose
-			if self.verbose:
-				logger.setLevel(logging.INFO)
-				handler = logging.StreamHandler()
-				formatter = logging.Formatter("[%(levelname)s] %(message)s")
-				handler.setFormatter(formatter)
-				logger.addHandler(handler)
-				logger.propagate = False
-			logger.info('GPlayCli version %s', __version__)
-			logger.info('Configuration file is %s', config_file)
+		if self.verbose:
+			logger.setLevel(logging.INFO)
+			handler = logging.StreamHandler()
+			formatter = logging.Formatter("[%(levelname)s] %(message)s")
+			handler.setFormatter(formatter)
+			logger.addHandler(handler)
+			logger.propagate = False
+		logger.info('GPlayCli version %s', __version__)
+		logger.info('Configuration file is %s', config_file)
+		if args.append_version is not None:
 			self.append_version = args.append_version
+		if args.progress_bar is not None:
 			self.progress_bar = args.progress_bar
+		if args.update_folder is not None:
 			self.set_download_folder(args.update_folder)
+		if args.logging_enable is not None:
 			self.logging_enable = args.logging_enable
+		if args.device_codename is not None:
 			self.device_codename = args.device_codename
-			logger.info('Device is %s', self.device_codename)
+		logger.info('Device is %s', self.device_codename)
+		if args.addfiles_enable is not None:
 			self.addfiles_enable = args.addfiles_enable
-			if args.locale is not None:
-				self.locale = args.locale
-			if args.timezone is not None:
-				self.timezone = args.timezone
+		if args.locale is not None:
+			self.locale = args.locale
+		if args.timezone is not None:
+			self.timezone = args.timezone
+		if args.token_enable is not None:
+			self.token_enable = args.token_enable
+		if self.token_enable is not None:
+			if args.token_url is not None:
+				self.token_url = args.token_url
+			if (args.token_str is None) and (args.gsf_id is None):
+				self.token, self.gsfid = self.retrieve_token()
+			elif (args.token_str is not None) and (args.gsf_id is not None):
+				self.token = args.token_str
+				self.gsfid = args.gsf_id
+				self.token_passed = True
+			else:  # Either args.token_str or args.gsf_id is None
+				raise TypeError("Token string and GSFID have to be passed at the same time.")
 
-			if args.token_enable is None:
-				self.token_enable = self.configparser.getboolean('Credentials', 'token')
-			else:
-				self.token_enable = args.token_enable
-			if self.token_enable:
-				if args.token_url is None:
-					self.token_url = self.configparser.get('Credentials', 'token_url')
-				else:
-					self.token_url = args.token_url
-
-				if (args.token_str is None) and (args.gsf_id is None):
-					self.token, self.gsfid = self.retrieve_token()
-				elif (args.token_str is not None) and (args.gsf_id is not None):
-					self.token = args.token_str
-					self.gsfid = args.gsf_id
-					self.token_passed = True
-				else:  # Either args.token_str or args.gsf_id is None
-					raise TypeError("Token string and GSFID have to be passed at the same time.")
-
-			if self.logging_enable:
-				self.success_logfile = "apps_downloaded.log"
-				self.failed_logfile = "apps_failed.log"
-				self.unavail_logfile = "apps_not_available.log"
+		if self.logging_enable:
+			self.success_logfile = "apps_downloaded.log"
+			self.failed_logfile = "apps_failed.log"
+			self.unavail_logfile = "apps_not_available.log"
 
 	########## Public methods ##########
 
@@ -414,13 +421,13 @@ class GPlaycli:
 		gsfid = None
 		if self.token_enable is False:
 			logger.info("Using credentials to connect to API")
-			email = self.creds["gmail_address"]
-			if self.creds["gmail_password"]:
+			email = self.gmail_address
+			if self.gmail_password:
 				logger.info("Using plaintext password")
-				password = self.creds["gmail_password"]
-			elif self.creds["keyring_service"] and HAVE_KEYRING is True:
-				password = keyring.get_password(self.creds["keyring_service"], email)
-			elif self.creds["keyring_service"] and HAVE_KEYRING is False:
+				password = self.gmail_password
+			elif self.keyring_service and HAVE_KEYRING:
+				password = keyring.get_password(self.keyring_service, email)
+			elif self.keyring_service and not HAVE_KEYRING:
 				logger.error("You asked for keyring service but keyring package is not installed")
 				sys.exit(ERRORS.KEYRING_NOT_INSTALLED)
 		else:
@@ -446,7 +453,7 @@ class GPlaycli:
 				logger.error("Bad authentication, login or password incorrect (%s)", login_error)
 				return False, ERRORS.CANNOT_LOGIN_GPLAY
 			# invalid token or expired
-			except (ValueError, IndexError, LoginError, DecodeError, SystemError):
+			except (ValueError, IndexError, LoginError, DecodeError, SystemError, RequestError):
 				logger.info("Token has expired or is invalid. Retrieving a new one...")
 				self.refresh_token()
 		success = True
@@ -475,20 +482,16 @@ class GPlaycli:
 		to the self.tokencachefile file.
 		Path and file are created if missing.
 		"""
-		try:
-			# creates cachedir if not exists
-			cachedir = os.path.dirname(self.tokencachefile)
-			if not os.path.exists(cachedir):
-				os.makedirs(cachedir, exist_ok=True)
-			with open(self.tokencachefile, 'w') as tcf:
-				tcf.write(json.dumps({'token' : token,
-									  'gsfid' : gsfid,
-									  'device' : device}))
-		except IOError as io_error:
-			err_str = "Failed to write token to cache file: %s %s" % (
-				self.tokencachefile, io_error.strerror)
-			logger.error(err_str)
-			raise IOError(err_str)
+		cachedir = os.path.dirname(self.tokencachefile)
+		if not cachedir:
+			cachedir = os.getcwd()
+		# creates cachedir if not exists
+		if not os.path.exists(cachedir):
+			os.makedirs(cachedir, exist_ok=True)
+		with open(self.tokencachefile, 'w') as tcf:
+			tcf.write(json.dumps({'token' : token,
+								  'gsfid' : gsfid,
+								  'device' : device}))
 
 	def set_download_folder(self, folder):
 		"""
@@ -672,7 +675,7 @@ def main():
 						help="Where to put the downloaded Apks, only for -d command")
 	parser.add_argument('-dc', '--device-codename', action='store', dest='device_codename',
 						metavar="DEVICE_CODENAME",
-						type=str, default="bacon",
+						type=str, default=None,
 						help="The device codename to fake",
 						choices=GooglePlayAPI.getDevicesCodenames())
 	parser.add_argument('-ts', '--token-str', action='store', dest='token_str',
@@ -698,10 +701,10 @@ def main():
 	parser.add_argument('-L', '--log', action='store_true', dest='logging_enable', default=False,
 						help="Enable logging of apps status. Downloaded, failed,"
 							 "not available apps will be written in separate logging files")
-	parser.add_argument('-lo', '--locale', action='store', dest='locale',
+	parser.add_argument('-lo', '--locale', action='store', dest='locale', default=None,
 						type=str, metavar="LOCALE",
 						help="The locale to use. Ex: en_GB")
-	parser.add_argument('-tz', '--timezone', action='store', dest='timezone',
+	parser.add_argument('-tz', '--timezone', action='store', dest='timezone', default=None,
 						type=str, metavar="TIMEZONE",
 						help="The timezone to use. Ex: CEST")
 

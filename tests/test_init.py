@@ -22,8 +22,8 @@ def test_connection_credentials():
 	except KeyError: # You are not travis
 		pass
 	gpc.token_enable = False
-	gpc.creds['gmail_address']  = os.environ['GMAIL_ADDR']
-	gpc.creds['gmail_password'] = os.environ['GMAIL_PWD']
+	gpc.gmail_address  = os.environ['GMAIL_ADDR']
+	gpc.gmail_password = os.environ['GMAIL_PWD']
 	success, error = gpc.connect()
 	assert error is None
 	assert success == True
