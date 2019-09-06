@@ -1,37 +1,16 @@
-matrix:
-  include:
-    - os: linux
-      language: python
-      python: 3.7
-    - os: osx
-      language: generic
+dist: xenial
+language: python
+python: 3.7
 
 services:
   - docker
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      brew update;
-      brew upgrade python3;
-      python3 -m venv venv;
-      source venv/bin/activate;
-      pip install --upgrade pip;
-      pip install pytest;
-      git clone https://github.com/Legrandin/pycryptodome;
-      cd pycryptodome;
-      git checkout `git describe --tags`;
-      python setup.py install;
-      cd ..;
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      docker run -d -p 8080:8080 --name token_dispenser matlink/token-dispenser;
-      docker exec token_dispenser bash -c
-          "echo $GMAIL_ADDR $GMAIL_PWD > passwords/passwords.txt";
-      docker restart token_dispenser;
-      sed -i 's,^token_url=.*$,token_url=http://localhost:8080/email/gsfid,g' gplaycli.conf;
-      sed -i 's,^token_url =.*$,token_url="http://localhost:8080/email/gsfid",g'
-          tests/test_init.py;
-    fi
+  - docker run -d -p 8080:8080 --name token_dispenser matlink/token-dispenser;
+  - docker exec token_dispenser bash -c "echo $GMAIL_ADDR $GMAIL_PWD > passwords/passwords.txt";
+  - docker restart token_dispenser;
+  - sed -i 's,^token_url=.*$,token_url=http://localhost:8080/email/gsfid,g' gplaycli.conf;
+  - sed -i 's,^token_url =.*$,token_url="http://localhost:8080/email/gsfid",g' tests/test_init.py;
 
 install: pip install .
 
