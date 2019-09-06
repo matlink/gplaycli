@@ -84,22 +84,21 @@ class GPlaycli:
 				os.path.expanduser("~") + '/.config/gplaycli/gplaycli.conf',
 				'/etc/gplaycli/gplaycli.conf'
 			]
-			tmp_list = list(cred_paths_list)
-			while not os.path.isfile(tmp_list[0]):
-				tmp_list.pop(0)
-				if not tmp_list:
+			config_file = None
+			for filepath in cred_paths_list:
+				if os.path.isfile(filepath):
+					config_file = filepath
 					break
-					raise OSError("No configuration file found at %s" % cred_paths_list)
-			if tmp_list:
-				config_file = tmp_list[0]
+			if config_file is None:
+				logger.warn("No configuration file found at %s, using default values" % cred_paths_list)
 
 		self.api 			= None
 		self.token_passed 	= False
 
 
-		default_values = {}
-		config = configparser.ConfigParser(default_values)
-		if config_file:			config.read(config_file)
+		config = configparser.ConfigParser()
+		if config_file:
+			config.read(config_file)
 		self.gmail_address      = config.get('Credentials', 'gmail_address', fallback=None)
 		self.gmail_password		= config.get('Credentials', 'gmail_password', fallback=None)
 		self.token_enable 		= config.getboolean('Credentials', 'token', fallback=True)
