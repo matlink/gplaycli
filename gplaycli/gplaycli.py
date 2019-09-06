@@ -146,10 +146,7 @@ class GPlaycli:
 		logger.info('Device is %s', self.device_codename)
 		if args.addfiles_enable is not None:
 			self.addfiles_enable = args.addfiles_enable
-		if args.locale is not None:
-			self.locale = args.locale
-		if args.timezone is not None:
-			self.timezone = args.timezone
+
 		if args.token_enable is not None:
 			self.token_enable = args.token_enable
 		if self.token_enable is not None:
@@ -684,12 +681,6 @@ def main():
 	parser.add_argument('-L', '--log', action='store_true', dest='logging_enable', default=False,
 						help="Enable logging of apps status. Downloaded, failed,"
 							 "not available apps will be written in separate logging files")
-	parser.add_argument('-lo', '--locale', action='store', dest='locale', default=None,
-						type=str, metavar="LOCALE",
-						help="The locale to use. Ex: en_GB")
-	parser.add_argument('-tz', '--timezone', action='store', dest='timezone', default=None,
-						type=str, metavar="TIMEZONE",
-						help="The timezone to use. Ex: CEST")
 
 	if len(sys.argv) < 2:
 		sys.argv.append("-h")
