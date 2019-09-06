@@ -51,7 +51,11 @@ try:
 except DistributionNotFound:
 	__version__ = 'unknown: gplaycli not installed (version in setup.py)'
 
-logger = logging.getLogger(__name__)  # default level is WARNING
+logger  = logging.getLogger(__name__)  # default level is WARNING
+handler = logging.StreamHandler()
+handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
+logger.addHandler(handler)
+logger.propagate = False
 
 
 class ERRORS(IntEnum):
@@ -125,11 +129,6 @@ class GPlaycli:
 			self.verbose = args.verbose
 		if self.verbose:
 			logger.setLevel(logging.INFO)
-			handler = logging.StreamHandler()
-			formatter = logging.Formatter("[%(levelname)s] %(message)s")
-			handler.setFormatter(formatter)
-			logger.addHandler(handler)
-			logger.propagate = False
 		logger.info('GPlayCli version %s', __version__)
 		logger.info('Configuration file is %s', config_file)
 		if args.append_version is not None:
