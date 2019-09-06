@@ -125,23 +125,31 @@ class GPlaycli:
 		# if args are passed, override defaults
 		if args.yes_to_all is not None:
 			self.yes = args.yes_to_all
+
 		if args.verbose is not None:
 			self.verbose = args.verbose
+
 		if self.verbose:
 			logger.setLevel(logging.INFO)
 		logger.info('GPlayCli version %s', __version__)
 		logger.info('Configuration file is %s', config_file)
+
 		if args.append_version is not None:
 			self.append_version = args.append_version
+
 		if args.progress_bar is not None:
 			self.progress_bar = args.progress_bar
+
 		if args.update_folder is not None:
 			self.set_download_folder(args.update_folder)
+
 		if args.logging_enable is not None:
 			self.logging_enable = args.logging_enable
+
 		if args.device_codename is not None:
 			self.device_codename = args.device_codename
 		logger.info('Device is %s', self.device_codename)
+
 		if args.addfiles_enable is not None:
 			self.addfiles_enable = args.addfiles_enable
 
@@ -161,7 +169,7 @@ class GPlaycli:
 
 		if self.logging_enable:
 			self.success_logfile = "apps_downloaded.log"
-			self.failed_logfile = "apps_failed.log"
+			self.failed_logfile  = "apps_failed.log"
 			self.unavail_logfile = "apps_not_available.log"
 
 	########## Public methods ##########
