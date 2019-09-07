@@ -344,15 +344,7 @@ class GPlaycli:
 		all_results = []
 		if include_headers:
 			# Name of the columns
-			col_names = ["Title",
-						 "Creator",
-						 "Size",
-						 "Downloads",
-						 "Last Update",
-						 "AppID",
-						 "Version",
-						 "Rating"
-						 ]
+			col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
 			all_results.append(col_names)
 		# Compute results values
 		for result in results:
@@ -376,25 +368,21 @@ class GPlaycli:
 			if len(all_results) < int(nb_results) + 1:
 				all_results.append(detail)
 
-		if self.verbose:
-			# Print a nice table
-			col_width = []
-			for column_indice in range(len(all_results[0])):
-				col_length = max([len("%s" % row[column_indice]) for row in all_results])
-				col_width.append(col_length + 2)
+		# Print a nice table
+		col_width = []
+		for column_indice in range(len(all_results[0])):
+			col_length = max([len("%s" % row[column_indice]) for row in all_results])
+			col_width.append(col_length + 2)
 
-			for result in all_results:
-				for indice, item in enumerate(result):
-					out = str(item)
-					out = out.strip()
-					out = out.ljust(col_width[indice])
-					out = "".join(out)
-					try:
-						print(out, end='')
-					except UnicodeEncodeError:
-						out = out.encode('utf-8', errors='replace')
-						print(out, end='')
-				print()
+		for result in all_results:
+			for indice, item in enumerate(result):
+				out = "".join(str(item).strip().ljust(col_width[indice]))
+				try:
+					print(out, end='')
+				except UnicodeEncodeError:
+					out = out.encode('utf-8', errors='replace')
+					print(out, end='')
+			print()
 		return all_results
 
 	########## End public methods ##########
