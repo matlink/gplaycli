@@ -449,7 +449,7 @@ class GPlaycli:
 			token = None
 			gsfid = None
 			device = None
-			logger.error('cache file does not exists or is corrupted')
+			logger.error('Cache file does not exists or is corrupted')
 		return token, gsfid, device
 
 	def write_cached_token(self, token, gsfid, device):
@@ -478,7 +478,7 @@ class GPlaycli:
 			return
 		logger.info("Checking apks ...")
 		to_update = self.analyse_local_apks(list_of_apks, self.download_folder)
-		self.prepare_download_updates(to_update)
+		return self.prepare_download_updates(to_update)
 
 	@hooks.connected
 	def analyse_local_apks(self, list_of_apks, download_folder):
@@ -526,18 +526,18 @@ class GPlaycli:
 		"""
 		if not list_apks_to_update:
 			print("Everything is up to date !")
-			sys.exit(SUCCESS)
+			return False
 
 		pkg_todownload = []
 
 		# Ask confirmation before downloading
-		message = "The following applications will be updated :"
+		print("The following applications will be updated :")
 		for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
-			message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
+			print("%s Version : %s -> %s" % (filename, apk_version_code, store_version_code))
 			pkg_todownload.append([packagename, filename])
-		print(message + '\n')
+
 		if not self.yes:
-			print("\nDo you agree?")
+			print("Do you agree?")
 			return_value = input('y/n ?')
 
 		if self.yes or return_value == 'y':
@@ -545,6 +545,7 @@ class GPlaycli:
 			downloaded_packages = self.download(pkg_todownload)
 			return_string = ' '.join(downloaded_packages)
 			print("Updated: %s" % return_string)
+		return True
 
 	@staticmethod
 	def print_failed(failed_downloads):
@@ -555,14 +556,14 @@ class GPlaycli:
 		if not failed_downloads:
 			return
 		else:
-			message = "A few packages could not be downloaded :"
+			message = "A few packages could not be downloaded :\n"
 			for pkg, exception in failed_downloads:
 				package_name, filename = pkg
 				if filename is not None:
-					message += "\n%s : %s" % (filename, package_name)
+					message += "%s : %s\n" % (filename, package_name)
 				else:
-					message += "\n%s" % package_name
-				message += "\n%s\n" % exception
+					message += "%s\n" % package_name
+				message += "%s\n" % exception
 			logger.error(message)
 
 	def write_logfiles(self, success, failed, unavail):
@@ -572,14 +573,12 @@ class GPlaycli:
 		"""
 		if not self.logging_enable:
 			return
-		for result, logfile in [(success, self.success_logfile),
-								(failed, self.failed_logfile),
-								(unavail, self.unavail_logfile)
-								]:
-			if result:
-				with open(logfile, 'w') as _buffer:
-					for package in result:
-						print(package, file=_buffer)
+		for result, logfile in [(success, self.success_logfile), (failed, self.failed_logfile), (unavail, self.unavail_logfile)]:
+			if not result:
+				continue
+			with open(logfile, 'w') as _buffer:
+				for package in result:
+					print(package, file=_buffer)
 
 	########## End internal methods ##########
 
@@ -628,6 +627,7 @@ def main():
 
 	if args.update:
 		cli.prepare_analyse_apks()
+		return
 
 	if args.search:
 		cli.verbose = True
