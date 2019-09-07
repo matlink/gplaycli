@@ -221,15 +221,20 @@ class GPlaycli:
 				  ('org.mozilla.firefox', 'download/org.mozilla.firefox.apk')]
 		"""
 		success_downloads = []
-		failed_downloads = []
+		failed_downloads  = []
 		unavail_downloads = []
 
 		# case where no filenames have been provided
 		for index, pkg in enumerate(pkg_todownload):
 			if isinstance(pkg, str):
-				pkg_todownload[index] = [pkg, None]
+				pkg_todownload[index] = [pkg, '%s%s.apk']
 			# remove whitespaces before and after package name
-			pkg_todownload[index][0] = pkg_todownload[index][0].strip('\r\n ')
+			pkg_todownload[index][0] = pkg_todownload[index][0].strip()
+
+		# Check for download folder
+		download_folder = self.download_folder
+		if not os.path.isdir(download_folder):
+			os.makedirs(download_folder, exist_ok=True)
 
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
@@ -238,7 +243,6 @@ class GPlaycli:
 			try:
 				detail = self.api.details(pkg[0])
 				details.append(detail)
-
 			except RequestError as request_error:
 				failed_downloads.append((pkg, request_error))
 
@@ -246,22 +250,16 @@ class GPlaycli:
 			logger.info("Token has expired while downloading. Retrieving a new one.")
 			self.refresh_token()
 			details = self.api.bulkDetails([pkg[0] for pkg in pkg_todownload])
-		position = 1
-		for detail, item in zip(details, pkg_todownload):
+
+		for position, (detail, item) in enumerate(zip(details, pkg_todownload)):
 			packagename, filename = item
 
-			if filename is None:
-				if self.append_version:
-					filename = detail['docId']+ "-v." + detail['versionString'] + ".apk"
-				else:
-					filename = detail['docId']+ ".apk"
+			if self.append_version:
+				filename %= (detail['docId'], "-v.%s" % detail['versionString'])
+			else:
+				filename %= (detail['docId'], '')
 
-			logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
-
-			# Check for download folder
-			download_folder = self.download_folder
-			if not os.path.isdir(download_folder):
-				os.makedirs(download_folder, exist_ok=True)
+			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
 			# Download
 			try:
@@ -269,57 +267,54 @@ class GPlaycli:
 					method = self.api.delivery
 				else:
 					method = self.api.download
-				data_iter = method(packagename,
-								   expansion_files=self.addfiles_enable)
+				data_iter = method(packagename, expansion_files=self.addfiles_enable)
 				success_downloads.append(packagename)
 			except IndexError as exc:
 				logger.error("Error while downloading %s : this package does not exist, "
 							 "try to search it via --search before",
 							 packagename)
 				unavail_downloads.append((item, exc))
+				continue
 			except Exception as exc:
 				logger.error("Error while downloading %s : %s", packagename, exc)
 				failed_downloads.append((item, exc))
-			else:
-				filepath = os.path.join(download_folder, filename)
+				continue
 
-				#if file exists, continue
-				if self.append_version and os.path.isfile(filepath):
-					logger.info("File %s already exists, skipping.", filename)
-					position += 1
-					continue
+			filepath = os.path.join(download_folder, filename)
 
-				additional_data = data_iter['additionalData']
-				total_size = int(data_iter['file']['total_size'])
-				chunk_size = int(data_iter['file']['chunk_size'])
-				try:
-					with open(filepath, "wb") as fbuffer:
-						bar = util.progressbar(expected_size=total_size, hide=not self.progress_bar)
-						for index, chunk in enumerate(data_iter['file']['data']):
-							fbuffer.write(chunk)
-							bar.show(index * chunk_size)
-						bar.done()
-					if additional_data:
-						for obb_file in additional_data:
-							obb_filename = "%s.%s.%s.obb" % (obb_file["type"],
-															 obb_file["versionCode"],
-															 data_iter["docId"])
-							obb_filename = os.path.join(download_folder, obb_filename)
-							obb_total_size = int(obb_file['file']['total_size'])
-							obb_chunk_size = int(obb_file['file']['chunk_size'])
-							with open(obb_filename, "wb") as fbuffer:
-								bar = util.progressbar(expected_size=obb_total_size, hide=not self.progress_bar)
-								for index, chunk in enumerate(obb_file["file"]["data"]):
-									fbuffer.write(chunk)
-									bar.show(index * obb_chunk_size)
-								bar.done()
-				except IOError as exc:
-					logger.error("Error while writing %s : %s", packagename, exc)
-					failed_downloads.append((item, exc))
-			position += 1
+			#if file exists, continue
+			if self.append_version and os.path.isfile(filepath):
+				logger.info("File %s already exists, skipping.", filename)
+				continue
+
+			additional_data = data_iter['additionalData']
+			total_size = int(data_iter['file']['total_size'])
+			chunk_size = int(data_iter['file']['chunk_size'])
+			try:
+				with open(filepath, "wb") as fbuffer:
+					bar = util.progressbar(expected_size=total_size, hide=not self.progress_bar)
+					for index, chunk in enumerate(data_iter['file']['data']):
+						fbuffer.write(chunk)
+						bar.show(index * chunk_size)
+					bar.done()
+				if additional_data:
+					for obb_file in additional_data:
+						obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_iter["docId"])
+						obb_filename = os.path.join(download_folder, obb_filename)
+						obb_total_size = int(obb_file['file']['total_size'])
+						obb_chunk_size = int(obb_file['file']['chunk_size'])
+						with open(obb_filename, "wb") as fbuffer:
+							bar = util.progressbar(expected_size=obb_total_size, hide=not self.progress_bar)
+							for index, chunk in enumerate(obb_file["file"]["data"]):
+								fbuffer.write(chunk)
+								bar.show(index * obb_chunk_size)
+							bar.done()
+			except IOError as exc:
+				logger.error("Error while writing %s : %s", packagename, exc)
+				failed_downloads.append((item, exc))
 
 		success_items = set(success_downloads)
-		failed_items = set([item[0] for item, error in failed_downloads])
+		failed_items  = set([item[0] for item, error in failed_downloads])
 		unavail_items = set([item[0] for item, error in unavail_downloads])
 		to_download_items = set([item[0] for item in pkg_todownload])
 
