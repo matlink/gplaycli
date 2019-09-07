@@ -16,22 +16,16 @@ You should have received a copy of the GNU Affero General Public License along w
 see <http://www.gnu.org/licenses/>.
 """
 
-import sys
 import os
+import sys
+import json
+import enum
 import logging
 import argparse
-import configparser
-import warnings
-import json
-import time
-
-from enum import IntEnum
-
 import requests
+import configparser
 
-from gpapi.googleplay import GooglePlayAPI
-from gpapi.googleplay import LoginError
-from gpapi.googleplay import RequestError
+from gpapi.googleplay import GooglePlayAPI, LoginError, RequestError
 from google.protobuf.message import DecodeError
 from pkg_resources import get_distribution, DistributionNotFound
 from pyaxmlparser import APK
@@ -58,7 +52,7 @@ logger.addHandler(handler)
 logger.propagate = False
 
 
-class ERRORS(IntEnum):
+class ERRORS(enum.IntEnum):
 	"""
 	Contains constant errors for Gplaycli
 	"""
