@@ -135,7 +135,7 @@ class GPlaycli:
 			self.progress_bar = args.progress
 
 		if args.update is not None:
-			self.set_download_folder(args.update)
+			self.download_folder = args.update
 
 		if args.log is not None:
 			self.logging_enable = args.log
@@ -215,7 +215,7 @@ class GPlaycli:
 				  ('org.mozilla.firefox', 'download/org.mozilla.firefox.apk')]
 		"""
 		success_downloads = []
-		failed_downloads = []
+		failed_downloads  = []
 		unavail_downloads = []
 
 		# case where no filenames have been provided
@@ -223,7 +223,12 @@ class GPlaycli:
 			if isinstance(pkg, str):
 				pkg_todownload[index] = [pkg, None]
 			# remove whitespaces before and after package name
-			pkg_todownload[index][0] = pkg_todownload[index][0].strip('\r\n ')
+			pkg_todownload[index][0] = pkg_todownload[index][0].strip()
+
+		# Check for download folder
+		download_folder = self.download_folder
+		if not os.path.isdir(download_folder):
+			os.makedirs(download_folder, exist_ok=True)
 
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
@@ -232,7 +237,6 @@ class GPlaycli:
 			try:
 				detail = self.api.details(pkg[0])
 				details.append(detail)
-
 			except RequestError as request_error:
 				failed_downloads.append((pkg, request_error))
 
@@ -240,22 +244,17 @@ class GPlaycli:
 			logger.info("Token has expired while downloading. Retrieving a new one.")
 			self.refresh_token()
 			details = self.api.bulkDetails([pkg[0] for pkg in pkg_todownload])
-		position = 1
-		for detail, item in zip(details, pkg_todownload):
+
+		for position, (detail, item) in enumerate(zip(details, pkg_todownload)):
 			packagename, filename = item
 
 			if filename is None:
 				if self.append_version:
-					filename = detail['docId']+ "-v." + detail['versionString'] + ".apk"
+					filename = "%s-v.%s.apk" % (detail['docId'], detail['versionString'])
 				else:
-					filename = detail['docId']+ ".apk"
+					filename = "%s.apk" % detail['docId']
 
-			logger.info("%s / %s %s", position, len(pkg_todownload), packagename)
-
-			# Check for download folder
-			download_folder = self.download_folder
-			if not os.path.isdir(download_folder):
-				os.makedirs(download_folder, exist_ok=True)
+			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
 			# Download
 			try:
@@ -263,63 +262,58 @@ class GPlaycli:
 					method = self.api.delivery
 				else:
 					method = self.api.download
-				data_iter = method(packagename,
-								   expansion_files=self.addfiles_enable)
+				data_iter = method(packagename, expansion_files=self.addfiles_enable)
 				success_downloads.append(packagename)
 			except IndexError as exc:
 				logger.error("Error while downloading %s : this package does not exist, "
 							 "try to search it via --search before",
 							 packagename)
 				unavail_downloads.append((item, exc))
+				continue
 			except Exception as exc:
 				logger.error("Error while downloading %s : %s", packagename, exc)
 				failed_downloads.append((item, exc))
-			else:
-				filepath = os.path.join(download_folder, filename)
+				continue
 
-				#if file exists, continue
-				if self.append_version and os.path.isfile(filepath):
-					logger.info("File %s already exists, skipping.", filename)
-					position += 1
-					continue
+			filepath = os.path.join(download_folder, filename)
 
-				additional_data = data_iter['additionalData']
-				total_size = int(data_iter['file']['total_size'])
-				chunk_size = int(data_iter['file']['chunk_size'])
-				try:
-					with open(filepath, "wb") as fbuffer:
-						bar = util.progressbar(expected_size=total_size, hide=not self.progress_bar)
-						for index, chunk in enumerate(data_iter['file']['data']):
-							fbuffer.write(chunk)
-							bar.show(index * chunk_size)
-						bar.done()
-					if additional_data:
-						for obb_file in additional_data:
-							obb_filename = "%s.%s.%s.obb" % (obb_file["type"],
-															 obb_file["versionCode"],
-															 data_iter["docId"])
-							obb_filename = os.path.join(download_folder, obb_filename)
-							obb_total_size = int(obb_file['file']['total_size'])
-							obb_chunk_size = int(obb_file['file']['chunk_size'])
-							with open(obb_filename, "wb") as fbuffer:
-								bar = util.progressbar(expected_size=obb_total_size, hide=not self.progress_bar)
-								for index, chunk in enumerate(obb_file["file"]["data"]):
-									fbuffer.write(chunk)
-									bar.show(index * obb_chunk_size)
-								bar.done()
-				except IOError as exc:
-					logger.error("Error while writing %s : %s", packagename, exc)
-					failed_downloads.append((item, exc))
-			position += 1
+			#if file exists, continue
+			if self.append_version and os.path.isfile(filepath):
+				logger.info("File %s already exists, skipping.", filename)
+				continue
+
+			additional_data = data_iter['additionalData']
+			total_size = int(data_iter['file']['total_size'])
+			chunk_size = int(data_iter['file']['chunk_size'])
+			try:
+				with open(filepath, "wb") as fbuffer:
+					bar = util.progressbar(expected_size=total_size, hide=not self.progress_bar)
+					for index, chunk in enumerate(data_iter['file']['data']):
+						fbuffer.write(chunk)
+						bar.show(index * chunk_size)
+					bar.done()
+				if additional_data:
+					for obb_file in additional_data:
+						obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_iter["docId"])
+						obb_filename = os.path.join(download_folder, obb_filename)
+						obb_total_size = int(obb_file['file']['total_size'])
+						obb_chunk_size = int(obb_file['file']['chunk_size'])
+						with open(obb_filename, "wb") as fbuffer:
+							bar = util.progressbar(expected_size=obb_total_size, hide=not self.progress_bar)
+							for index, chunk in enumerate(obb_file["file"]["data"]):
+								fbuffer.write(chunk)
+								bar.show(index * obb_chunk_size)
+							bar.done()
+			except IOError as exc:
+				logger.error("Error while writing %s : %s", packagename, exc)
+				failed_downloads.append((item, exc))
 
 		success_items = set(success_downloads)
-		failed_items = set([item[0] for item, error in failed_downloads])
+		failed_items  = set([item[0] for item, error in failed_downloads])
 		unavail_items = set([item[0] for item, error in unavail_downloads])
 		to_download_items = set([item[0] for item in pkg_todownload])
 
-		if self.logging_enable:
-			self.write_logfiles(success_items, failed_items, unavail_items)
-
+		self.write_logfiles(success_items, failed_items, unavail_items)
 		self.print_failed(failed_downloads + unavail_downloads)
 		return to_download_items - failed_items
 
@@ -343,15 +337,7 @@ class GPlaycli:
 		all_results = []
 		if include_headers:
 			# Name of the columns
-			col_names = ["Title",
-						 "Creator",
-						 "Size",
-						 "Downloads",
-						 "Last Update",
-						 "AppID",
-						 "Version",
-						 "Rating"
-						 ]
+			col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
 			all_results.append(col_names)
 		# Compute results values
 		for result in results:
@@ -375,25 +361,21 @@ class GPlaycli:
 			if len(all_results) < int(nb_results) + 1:
 				all_results.append(detail)
 
-		if self.verbose:
-			# Print a nice table
-			col_width = []
-			for column_indice in range(len(all_results[0])):
-				col_length = max([len("%s" % row[column_indice]) for row in all_results])
-				col_width.append(col_length + 2)
+		# Print a nice table
+		col_width = []
+		for column_indice in range(len(all_results[0])):
+			col_length = max([len("%s" % row[column_indice]) for row in all_results])
+			col_width.append(col_length + 2)
 
-			for result in all_results:
-				for indice, item in enumerate(result):
-					out = str(item)
-					out = out.strip()
-					out = out.ljust(col_width[indice])
-					out = "".join(out)
-					try:
-						print(out, end='')
-					except UnicodeEncodeError:
-						out = out.encode('utf-8', errors='replace')
-						print(out, end='')
-				print()
+		for result in all_results:
+			for indice, item in enumerate(result):
+				out = "".join(str(item).strip().ljust(col_width[indice]))
+				try:
+					print(out, end='')
+				except UnicodeEncodeError:
+					out = out.encode('utf-8', errors='replace')
+					print(out, end='')
+			print()
 		return all_results
 
 	########## End public methods ##########
@@ -461,7 +443,7 @@ class GPlaycli:
 			token = None
 			gsfid = None
 			device = None
-			logger.error('cache file does not exists or is corrupted')
+			logger.error('Cache file does not exists or is corrupted')
 		return token, gsfid, device
 
 	def write_cached_token(self, token, gsfid, device):
@@ -481,23 +463,16 @@ class GPlaycli:
 								  'gsfid' : gsfid,
 								  'device' : device}))
 
-	def set_download_folder(self, folder):
-		"""
-		Set the download folder for apk
-		to folder.
-		"""
-		self.download_folder = folder
-
 	def prepare_analyse_apks(self):
 		"""
 		Gather apks to further check for update
 		"""
-		download_folder = self.download_folder
-		list_of_apks = util.list_folder_apks(download_folder)
-		if list_of_apks:
-			logger.info("Checking apks ...")
-			to_update = self.analyse_local_apks(list_of_apks, download_folder)
-			self.prepare_download_updates(to_update)
+		list_of_apks = util.list_folder_apks(self.download_folder)
+		if not list_of_apks:
+			return
+		logger.info("Checking apks ...")
+		to_update = self.analyse_local_apks(list_of_apks, self.download_folder)
+		return self.prepare_download_updates(to_update)
 
 	@hooks.connected
 	def analyse_local_apks(self, list_of_apks, download_folder):
@@ -522,10 +497,7 @@ class GPlaycli:
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
 		details = self.api.bulkDetails(package_bunch)
-		for detail, packagename, filename, apk_version_code in zip(details,
-																   package_bunch,
-																   list_of_apks,
-																   version_codes):
+		for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
 			# this app is not in the play store
 			if not detail:
 				unavail_items.append(((packagename, filename), UNAVAIL))
@@ -535,13 +507,9 @@ class GPlaycli:
 			# Compare
 			if apk_version_code < store_version_code:
 				# Add to the download list
-				list_apks_to_update.append([packagename,
-											filename,
-											apk_version_code,
-											store_version_code])
+				list_apks_to_update.append([packagename, filename, apk_version_code, store_version_code])
 
-		if self.logging_enable:
-			self.write_logfiles(None, None, [item[0][0] for item in unavail_items])
+		self.write_logfiles(None, None, [item[0][0] for item in unavail_items])
 		self.print_failed(unavail_items)
 
 		return list_apks_to_update
@@ -550,30 +518,28 @@ class GPlaycli:
 		"""
 		Ask confirmation before updating apks
 		"""
-		if list_apks_to_update:
-			pkg_todownload = []
-
-			# Ask confirmation before downloading
-			message = "The following applications will be updated :"
-			for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
-				message += "\n%s Version : %s -> %s" % (filename,
-														apk_version_code,
-														store_version_code)
-				pkg_todownload.append([packagename, filename])
-			message += "\n"
-			print(message)
-			if not self.yes:
-				print("\nDo you agree?")
-				return_value = input('y/n ?')
-
-			if self.yes or return_value == 'y':
-				logger.info("Downloading ...")
-				downloaded_packages = self.download(pkg_todownload)
-				return_string = ' '.join(downloaded_packages)
-				print("Updated: " + return_string)
-		else:
+		if not list_apks_to_update:
 			print("Everything is up to date !")
-			sys.exit(ERRORS.SUCCESS)
+			return False
+
+		pkg_todownload = []
+
+		# Ask confirmation before downloading
+		print("The following applications will be updated :")
+		for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
+			print("%s Version : %s -> %s" % (filename, apk_version_code, store_version_code))
+			pkg_todownload.append([packagename, filename])
+
+		if not self.yes:
+			print("Do you agree?")
+			return_value = input('y/n ?')
+
+		if self.yes or return_value == 'y':
+			logger.info("Downloading ...")
+			downloaded_packages = self.download(pkg_todownload)
+			return_string = ' '.join(downloaded_packages)
+			print("Updated: %s" % return_string)
+		return True
 
 	@staticmethod
 	def print_failed(failed_downloads):
@@ -582,16 +548,16 @@ class GPlaycli:
 		"""
 		# Info message
 		if not failed_downloads:
-			logger.info("Download complete")
+			return
 		else:
-			message = "A few packages could not be downloaded :"
+			message = "A few packages could not be downloaded :\n"
 			for pkg, exception in failed_downloads:
 				package_name, filename = pkg
 				if filename is not None:
-					message += "\n%s : %s" % (filename, package_name)
+					message += "%s : %s\n" % (filename, package_name)
 				else:
-					message += "\n%s" % package_name
-				message += "\n%s\n" % exception
+					message += "%s\n" % package_name
+				message += "%s\n" % exception
 			logger.error(message)
 
 	def write_logfiles(self, success, failed, unavail):
@@ -599,14 +565,14 @@ class GPlaycli:
 		Write success failed and unavail list to
 		logfiles
 		"""
-		for result, logfile in [(success, self.success_logfile),
-								(failed, self.failed_logfile),
-								(unavail, self.unavail_logfile)
-								]:
-			if result:
-				with open(logfile, 'w') as _buffer:
-					for package in result:
-						print(package, file=_buffer)
+		if not self.logging_enable:
+			return
+		for result, logfile in [(success, self.success_logfile), (failed, self.failed_logfile), (unavail, self.unavail_logfile)]:
+			if not result:
+				continue
+			with open(logfile, 'w') as _buffer:
+				for package in result:
+					print(package, file=_buffer)
 
 	########## End internal methods ##########
 
@@ -655,6 +621,7 @@ def main():
 
 	if args.update:
 		cli.prepare_analyse_apks()
+		return
 
 	if args.search:
 		cli.verbose = True
@@ -668,7 +635,7 @@ def main():
 
 	if args.download is not None:
 		if args.folder is not None:
-			cli.set_download_folder(args.folder[0])
+			cli.download_folder = args.folder[0]
 		cli.download(args.download)
 
 
