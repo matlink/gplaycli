@@ -227,7 +227,7 @@ class GPlaycli:
 		# case where no filenames have been provided
 		for index, pkg in enumerate(pkg_todownload):
 			if isinstance(pkg, str):
-				pkg_todownload[index] = [pkg, '%s%s.apk']
+				pkg_todownload[index] = [pkg, None]
 			# remove whitespaces before and after package name
 			pkg_todownload[index][0] = pkg_todownload[index][0].strip()
 
@@ -254,10 +254,11 @@ class GPlaycli:
 		for position, (detail, item) in enumerate(zip(details, pkg_todownload)):
 			packagename, filename = item
 
-			if self.append_version:
-				filename %= (detail['docId'], "-v.%s" % detail['versionString'])
-			else:
-				filename %= (detail['docId'], '')
+			if filename is None:
+				if self.append_version:
+					filename %= (detail['docId'], "-v.%s.apk" % detail['versionString'])
+				else:
+					filename %= (detail['docId'], '.apk')
 
 			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
