@@ -141,7 +141,7 @@ class GPlaycli:
 			self.progress_bar = args.progress
 
 		if args.update is not None:
-			self.set_download_folder(args.update)
+			self.download_folder = args.update
 
 		if args.log is not None:
 			self.logging_enable = args.log
@@ -256,9 +256,9 @@ class GPlaycli:
 
 			if filename is None:
 				if self.append_version:
-					filename %= (detail['docId'], "-v.%s.apk" % detail['versionString'])
+					filename = "%s-v.%s.apk" % (detail['docId'], detail['versionString'])
 				else:
-					filename %= (detail['docId'], '.apk')
+					filename = "%s.apk" % detail['docId']
 
 			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
@@ -319,9 +319,7 @@ class GPlaycli:
 		unavail_items = set([item[0] for item, error in unavail_downloads])
 		to_download_items = set([item[0] for item in pkg_todownload])
 
-		if self.logging_enable:
-			self.write_logfiles(success_items, failed_items, unavail_items)
-
+		self.write_logfiles(success_items, failed_items, unavail_items)
 		self.print_failed(failed_downloads + unavail_downloads)
 		return to_download_items - failed_items
 
@@ -471,23 +469,16 @@ class GPlaycli:
 								  'gsfid' : gsfid,
 								  'device' : device}))
 
-	def set_download_folder(self, folder):
-		"""
-		Set the download folder for apk
-		to folder.
-		"""
-		self.download_folder = folder
-
 	def prepare_analyse_apks(self):
 		"""
 		Gather apks to further check for update
 		"""
-		download_folder = self.download_folder
-		list_of_apks = util.list_folder_apks(download_folder)
-		if list_of_apks:
-			logger.info("Checking apks ...")
-			to_update = self.analyse_local_apks(list_of_apks, download_folder)
-			self.prepare_download_updates(to_update)
+		list_of_apks = util.list_folder_apks(self.download_folder)
+		if not list_of_apks:
+			return
+		logger.info("Checking apks ...")
+		to_update = self.analyse_local_apks(list_of_apks, self.download_folder)
+		self.prepare_download_updates(to_update)
 
 	@hooks.connected
 	def analyse_local_apks(self, list_of_apks, download_folder):
@@ -512,10 +503,7 @@ class GPlaycli:
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
 		details = self.api.bulkDetails(package_bunch)
-		for detail, packagename, filename, apk_version_code in zip(details,
-																   package_bunch,
-																   list_of_apks,
-																   version_codes):
+		for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
 			# this app is not in the play store
 			if not detail:
 				unavail_items.append(((packagename, filename), UNAVAIL))
@@ -525,13 +513,9 @@ class GPlaycli:
 			# Compare
 			if apk_version_code < store_version_code:
 				# Add to the download list
-				list_apks_to_update.append([packagename,
-											filename,
-											apk_version_code,
-											store_version_code])
+				list_apks_to_update.append([packagename, filename, apk_version_code, store_version_code])
 
-		if self.logging_enable:
-			self.write_logfiles(None, None, [item[0][0] for item in unavail_items])
+		self.write_logfiles(None, None, [item[0][0] for item in unavail_items])
 		self.print_failed(unavail_items)
 
 		return list_apks_to_update
@@ -540,30 +524,27 @@ class GPlaycli:
 		"""
 		Ask confirmation before updating apks
 		"""
-		if list_apks_to_update:
-			pkg_todownload = []
-
-			# Ask confirmation before downloading
-			message = "The following applications will be updated :"
-			for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
-				message += "\n%s Version : %s -> %s" % (filename,
-														apk_version_code,
-														store_version_code)
-				pkg_todownload.append([packagename, filename])
-			message += "\n"
-			print(message)
-			if not self.yes:
-				print("\nDo you agree?")
-				return_value = input('y/n ?')
-
-			if self.yes or return_value == 'y':
-				logger.info("Downloading ...")
-				downloaded_packages = self.download(pkg_todownload)
-				return_string = ' '.join(downloaded_packages)
-				print("Updated: " + return_string)
-		else:
+		if not list_apks_to_update:
 			print("Everything is up to date !")
-			sys.exit(ERRORS.SUCCESS)
+			sys.exit(SUCCESS)
+
+		pkg_todownload = []
+
+		# Ask confirmation before downloading
+		message = "The following applications will be updated :"
+		for packagename, filename, apk_version_code, store_version_code in list_apks_to_update:
+			message += "\n%s Version : %s -> %s" % (filename, apk_version_code, store_version_code)
+			pkg_todownload.append([packagename, filename])
+		print(message + '\n')
+		if not self.yes:
+			print("\nDo you agree?")
+			return_value = input('y/n ?')
+
+		if self.yes or return_value == 'y':
+			logger.info("Downloading ...")
+			downloaded_packages = self.download(pkg_todownload)
+			return_string = ' '.join(downloaded_packages)
+			print("Updated: %s" % return_string)
 
 	@staticmethod
 	def print_failed(failed_downloads):
@@ -572,7 +553,7 @@ class GPlaycli:
 		"""
 		# Info message
 		if not failed_downloads:
-			logger.info("Download complete")
+			return
 		else:
 			message = "A few packages could not be downloaded :"
 			for pkg, exception in failed_downloads:
@@ -589,6 +570,8 @@ class GPlaycli:
 		Write success failed and unavail list to
 		logfiles
 		"""
+		if not self.logging_enable:
+			return
 		for result, logfile in [(success, self.success_logfile),
 								(failed, self.failed_logfile),
 								(unavail, self.unavail_logfile)
@@ -658,7 +641,7 @@ def main():
 
 	if args.download is not None:
 		if args.folder is not None:
-			cli.set_download_folder(args.folder[0])
+			cli.download_folder = args.folder[0]
 		cli.download(args.download)
 
 
