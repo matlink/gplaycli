@@ -424,7 +424,7 @@ class GPlaycli:
 		try:
 			self.api.login(email=self.gmail_address, password=password)
 		except LoginError as e:
-			logger.error("Bad authentication, login or password incorrect (%s)", login_error)
+			logger.error("Bad authentication, login or password incorrect (%s)", e)
 			return False, ERRORS.CANNOT_LOGIN_GPLAY
 		return True, None
 
