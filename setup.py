@@ -28,7 +28,7 @@ setup(name='gplaycli',
 			'gplaycli': 'gplaycli',
 		},
 		data_files=[
-			[os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf','cron/cronjob']],
+			[os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf']],
 		],
 		install_requires=[
 				'gpapi',
