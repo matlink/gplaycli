@@ -1,13 +1,9 @@
 SHELL := /bin/bash
 PYTHON=$(shell which python3)
-GIT=$(shell which git)
 GPG=$(shell which gpg2)
 TWINE=$(shell which twine)
-BUILDIR=$(CURDIR)/debian/gplaycli
-PROJECT=gplaycli
 VERSION=$(shell $(PYTHON) setup.py --version)
 GPGID=186BB3CA
-TESTAPK=org.mozilla.focus
 
 source:
 	$(PYTHON) setup.py sdist
