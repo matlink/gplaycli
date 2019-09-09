@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 
 jobs:
   include:
@@ -20,5 +20,9 @@ jobs:
         - secure: Br5cN6c+98tv0kc1mmYNT7uKlHLzqoDxoxjjhTRYdFYojS6k2T8ZNFTvBCSyQCuytNV9A1GllTHLkjnV1+LB5uirrvh7ZYlDqw4DNSqVwHdcYi2dR676GoGV/Rq3l4vXiLpy2zFnLX/Cr95wPZZjShme6+pp9i5Pa2DzjlUm4XhXDkZpBX6Bh/aa1eUembCsIxLULSRtm7P/2tjJJ2eKM43QOxcSqxrSeZXYDVet7WZv+EuvhorZUFoc95pwtTlzOur0X2uB/Tysr9MeEvXSdTmt9iRA0ftw2smLds14cOoPqsYNeag8dkqJorkigU+10llGr+P2duBsDLe8odBDJvZWoR+WkE0RcYing9Z4MOHvYxhg1nvpKuADqdsUeO8hfscw/cdHzZYOLfsnkNp5j2DhfMwCHPQ2Zuaa/841u2ameemz7q/eB7XT2CAma5z5qY8nbDm0XmbNF+4TwUO/NRsNT+czSodLH/x/UWo78HZci9206AJfC8OQvBT81MaDKCRHyb708sj/vigS3Vmuq4c3FOYcFKT9Hssjo4xDPfv9NrydufvEZkxv24QK8CVQbc/QZGM14188AVYwYfrF6lOhOD8BKEwVE8ToAqeVtblGk4wyPiBUweT+MQgGXdWTOyXLyA0HVLd/HUw3Q6NyhtOzy1xilgXzr+zNi6cULXU=
 
     - stage: Debian packaging
-      install: sudo apt install -y python3-pyaxmlparser
+      language: bash
+      install:
+        - sudo sed -i 's/bionic/disco/g' /etc/apt/sources.list
+        - sudo apt update
+        - sudo apt install -y python3-{pyaxmlparser,gpapi,setuptools} dpkg-dev debhelper dh-python fakeroot
       script: make deb
