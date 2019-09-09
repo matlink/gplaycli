@@ -1,0 +1,4 @@
+31c31
+< 			[os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf','cron/cronjob']],
+---
+> 			['/etc/gplaycli/', ['gplaycli.conf','cron/cronjob']],

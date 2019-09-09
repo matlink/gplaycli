@@ -9,7 +9,7 @@ if sys.version_info[0] == 2:
 	Or install version 3.8 but don't expect support""")
 	sys.exit(1)
 
-setup(name='GPlayCli',
+setup(name='gplaycli',
 		version='3.26',
 		description='GPlayCli, a Google play downloader command line interface',
 		author="Matlink",
