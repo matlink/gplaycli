@@ -1,22 +1,24 @@
 dist: xenial
-language: python
-python: 3.7
 
-services:
-  - docker
+jobs:
+  include:
+    - stage: Unit tests
+      language: python
+      python: 3.7
+      services:
+        - docker
+      before_install:
+        - docker run -d -p 8080:8080 --name token_dispenser matlink/token-dispenser;
+        - docker exec token_dispenser bash -c "echo $GMAIL_ADDR $GMAIL_PWD > passwords/passwords.txt";
+        - docker restart token_dispenser;
+        - sed -i 's,^token_url=.*$,token_url=http://localhost:8080/email/gsfid,g' gplaycli.conf;
+        - sed -i 's,^token_url =.*$,token_url="http://localhost:8080/email/gsfid",g' tests/test_init.py;
+      install: pip install .
+      script: python -m pytest tests
+      env:
+        - secure: Zdln6Bggs55vMSlm0LD6lIKXmGjxo/Z1yxhu/GC8Tr4ILL9LofX9F1lXvzxl/VjfQn0WtvY8x0JlSoQvuU8S4EZgl1WJsHAA4gD6B7Z/Tys/w3vncP8cXXmt8BXrcjkIAPMzbz++TGd0+Z8PrBosRegfXOzeQ7AkDqYTbyosx9vlpOfBVomwFjsjLKcbbuR0d2P7i5c5snp4R8Ul2f9Zmkt5DbQt8h7ywLzdO8QU2j8cOfKWahwWIeky7g9Dk/BS3lhTIGtZdHADFmSsZFa+vNW6m0I+j0VmODnyXZuMn44iGfsV5Vos34HDmKRh8y1abw0k38anP5vfOGQ+DhLZlVgHCy0RRlojCkdcOD3MRSzLdi4qSjVDzY+e+/PzMWOG80NG8CgQ4JYN4H87MxX7VcQJSEXnX0ZSNZmuX3bx/0+7HwGw2hqJYEaKnOKGOSlSefmAZXdFwAB/l9LbfCXabTxGzbpo5dW3tcDT7vJaZ+XhcLJ7eC29qQ2uHAag/+jPqN+YC1TVsGw3QDwhpmMosedPqHi2qpTg9bD7rM17+7AdzNCQu8n4/+EU+HYDkuOhD73KqzZ9K+cTeoc9PUikNC4haTcstnlMNUworzGjaHR/EOKD8L4dpInXdI5a1vqzkB9+J1BFC307HF8XhEdGrmSkMx78TndNKJXJIUP+PD4=
+        - secure: Br5cN6c+98tv0kc1mmYNT7uKlHLzqoDxoxjjhTRYdFYojS6k2T8ZNFTvBCSyQCuytNV9A1GllTHLkjnV1+LB5uirrvh7ZYlDqw4DNSqVwHdcYi2dR676GoGV/Rq3l4vXiLpy2zFnLX/Cr95wPZZjShme6+pp9i5Pa2DzjlUm4XhXDkZpBX6Bh/aa1eUembCsIxLULSRtm7P/2tjJJ2eKM43QOxcSqxrSeZXYDVet7WZv+EuvhorZUFoc95pwtTlzOur0X2uB/Tysr9MeEvXSdTmt9iRA0ftw2smLds14cOoPqsYNeag8dkqJorkigU+10llGr+P2duBsDLe8odBDJvZWoR+WkE0RcYing9Z4MOHvYxhg1nvpKuADqdsUeO8hfscw/cdHzZYOLfsnkNp5j2DhfMwCHPQ2Zuaa/841u2ameemz7q/eB7XT2CAma5z5qY8nbDm0XmbNF+4TwUO/NRsNT+czSodLH/x/UWo78HZci9206AJfC8OQvBT81MaDKCRHyb708sj/vigS3Vmuq4c3FOYcFKT9Hssjo4xDPfv9NrydufvEZkxv24QK8CVQbc/QZGM14188AVYwYfrF6lOhOD8BKEwVE8ToAqeVtblGk4wyPiBUweT+MQgGXdWTOyXLyA0HVLd/HUw3Q6NyhtOzy1xilgXzr+zNi6cULXU=
 
-before_install:
-  - docker run -d -p 8080:8080 --name token_dispenser matlink/token-dispenser;
-  - docker exec token_dispenser bash -c "echo $GMAIL_ADDR $GMAIL_PWD > passwords/passwords.txt";
-  - docker restart token_dispenser;
-  - sed -i 's,^token_url=.*$,token_url=http://localhost:8080/email/gsfid,g' gplaycli.conf;
-  - sed -i 's,^token_url =.*$,token_url="http://localhost:8080/email/gsfid",g' tests/test_init.py;
-
-install: pip install .
-
-script: python -m pytest tests
-
-env:
-  global:
-  - secure: Zdln6Bggs55vMSlm0LD6lIKXmGjxo/Z1yxhu/GC8Tr4ILL9LofX9F1lXvzxl/VjfQn0WtvY8x0JlSoQvuU8S4EZgl1WJsHAA4gD6B7Z/Tys/w3vncP8cXXmt8BXrcjkIAPMzbz++TGd0+Z8PrBosRegfXOzeQ7AkDqYTbyosx9vlpOfBVomwFjsjLKcbbuR0d2P7i5c5snp4R8Ul2f9Zmkt5DbQt8h7ywLzdO8QU2j8cOfKWahwWIeky7g9Dk/BS3lhTIGtZdHADFmSsZFa+vNW6m0I+j0VmODnyXZuMn44iGfsV5Vos34HDmKRh8y1abw0k38anP5vfOGQ+DhLZlVgHCy0RRlojCkdcOD3MRSzLdi4qSjVDzY+e+/PzMWOG80NG8CgQ4JYN4H87MxX7VcQJSEXnX0ZSNZmuX3bx/0+7HwGw2hqJYEaKnOKGOSlSefmAZXdFwAB/l9LbfCXabTxGzbpo5dW3tcDT7vJaZ+XhcLJ7eC29qQ2uHAag/+jPqN+YC1TVsGw3QDwhpmMosedPqHi2qpTg9bD7rM17+7AdzNCQu8n4/+EU+HYDkuOhD73KqzZ9K+cTeoc9PUikNC4haTcstnlMNUworzGjaHR/EOKD8L4dpInXdI5a1vqzkB9+J1BFC307HF8XhEdGrmSkMx78TndNKJXJIUP+PD4=
-  - secure: Br5cN6c+98tv0kc1mmYNT7uKlHLzqoDxoxjjhTRYdFYojS6k2T8ZNFTvBCSyQCuytNV9A1GllTHLkjnV1+LB5uirrvh7ZYlDqw4DNSqVwHdcYi2dR676GoGV/Rq3l4vXiLpy2zFnLX/Cr95wPZZjShme6+pp9i5Pa2DzjlUm4XhXDkZpBX6Bh/aa1eUembCsIxLULSRtm7P/2tjJJ2eKM43QOxcSqxrSeZXYDVet7WZv+EuvhorZUFoc95pwtTlzOur0X2uB/Tysr9MeEvXSdTmt9iRA0ftw2smLds14cOoPqsYNeag8dkqJorkigU+10llGr+P2duBsDLe8odBDJvZWoR+WkE0RcYing9Z4MOHvYxhg1nvpKuADqdsUeO8hfscw/cdHzZYOLfsnkNp5j2DhfMwCHPQ2Zuaa/841u2ameemz7q/eB7XT2CAma5z5qY8nbDm0XmbNF+4TwUO/NRsNT+czSodLH/x/UWo78HZci9206AJfC8OQvBT81MaDKCRHyb708sj/vigS3Vmuq4c3FOYcFKT9Hssjo4xDPfv9NrydufvEZkxv24QK8CVQbc/QZGM14188AVYwYfrF6lOhOD8BKEwVE8ToAqeVtblGk4wyPiBUweT+MQgGXdWTOyXLyA0HVLd/HUw3Q6NyhtOzy1xilgXzr+zNi6cULXU=
+    - stage: Debian packaging
+      install: sudo apt install -y python3-pyaxmlparser
+      script: make deb
