@@ -1,31 +1,33 @@
 # gplaycli [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=master)](https://travis-ci.org/matlink/gplaycli)
-Google Play Downloader via Command line, based on https://framagit.org/tuxicoman/googleplaydownloader See package Readme for python modules to install.
-
-GPlayCli is a command line tool to search, install, update Android applications from the Google Play Store. The main goal was to be able to run this script with a cronjob, in order to automatically update an F-Droid server instance.
-
+GPlayCli is a command line tool to search, install, update Android applications from the Google Play Store.
 
 	$ gplaycli --help
-	usage: gplaycli [-h] [-V] [-y] [-l FOLDER] [-s SEARCH] [-P] [-n NUMBER]
-	                [-d AppID [AppID ...]] [-F FILE] [-u FOLDER] [-f FOLDER]
-	                [-dc DEVICE_CODENAME] [-t] [-tu TOKEN_URL] [-v] [-c CONF_FILE]
-	                [-p] [-L] [-ic]
+	usage: gplaycli [-h] [-V] [-v] [-s SEARCH] [-d AppID [AppID ...]] [-y]
+	                [-l FOLDER] [-P] [-n NUMBER] [-av] [-a] [-F FILE] [-u FOLDER]
+	                [-f FOLDER] [-dc DEVICE_CODENAME] [-t] [-tu TOKEN_URL]
+	                [-ts TOKEN_STR] [-g GSF_ID] [-c CONF_FILE] [-p] [-L]
 
 	A Google Play Store Apk downloader and manager for command line
 
 	optional arguments:
 	  -h, --help            show this help message and exit
 	  -V, --version         Print version number and exit
+	  -v, --verbose         Be verbose
+	  -s SEARCH, --search SEARCH
+	                        Search the given string in Google Play Store
+	  -d AppID [AppID ...], --download AppID [AppID ...]
+	                        Download the Apps that map given AppIDs
 	  -y, --yes             Say yes to all prompted questions
 	  -l FOLDER, --list FOLDER
 	                        List APKS in the given folder, with details
-	  -s SEARCH, --search SEARCH
-	                        Search the given string in Google Play Store
 	  -P, --paid            Also search for paid apps
 	  -n NUMBER, --number NUMBER
 	                        For the search option, returns the given number of
 	                        matching applications
-	  -d AppID [AppID ...], --download AppID [AppID ...]
-	                        Download the Apps that map given AppIDs
+	  -av, --append-version
+	                        Append versionstring to APKs when downloading
+	  -a, --additional-files
+	                        Enable the download of additional files
 	  -F FILE, --file FILE  Load packages to download from file, one package per
 	                        line
 	  -u FOLDER, --update FOLDER
@@ -38,16 +40,30 @@ GPlayCli is a command line tool to search, install, update Android applications 
 	                        version
 	  -tu TOKEN_URL, --token-url TOKEN_URL
 	                        Use the given tokendispenser URL to retrieve a token
-	  -v, --verbose         Be verbose
+	  -ts TOKEN_STR, --token-str TOKEN_STR
+	                        Supply token string by yourself, need to supply GSF_ID
+	                        at the same time
+	  -g GSF_ID, --gsfid GSF_ID
+	                        Supply GSF_ID by yourself, need to supply token string
+	                        at the same time
 	  -c CONF_FILE, --config CONF_FILE
 	                        Use a different config file than gplaycli.conf
 	  -p, --progress        Prompt a progress bar while downloading packages
-	  -L, --log             Enable logging of apps status. Downloaded, failed, not
-	                        available apps will be written in separate logging
+	  -L, --log             Enable logging of apps status in separate logging
 	                        files
-	  -ic, --install-cronjob
-	                        Install cronjob for regular APKs update. Use --yes to
-	                        automatically install to default locations
+
+Credentials
+===========
+By default, gplaycli fetches a token from a token dispenser server located at https://matlink.fr/token/email/gsfid to login in Google Play. If you want to use another token dispenser server, change its URL in the configuration file (depends on the way you installed it). If you want to use your own Google credentials, put
+	
+	token=False
+
+in the config file and type in your credentials in
+	
+	gmail_address=
+	gmail_password=
+
+variables.
 
 Changelog
 =========
@@ -56,8 +72,10 @@ See https://github.com/matlink/gplaycli/releases for releases and changelogs
 Installation
 ============
 
+Pip
+---
 - Best way to install it is using pip3: `pip3 install gplaycli` or `pip3 install gplaycli --user` if you are non-root
-- Cleanest way is using virtualenv: `virtualenv gplaycli; cd gplaycli; source bin/activate`, then either `pip install gplaycli` or `git clone https://github.com/matlink/gplaycli && pip3 install ./gplaycli/`. Make sure `virtualenv` is initialized with Python 3. If it's not, use `virtualenv -p python3`.
+- Cleanest way is using virtualenv: `virtualenv gplaycli; cd gplaycli; source bin/activate`, then either `pip3 install gplaycli` or `git clone https://github.com/matlink/gplaycli && pip3 install ./gplaycli/`. Make sure `virtualenv` is initialized with Python 3. If it's not, use `virtualenv -p python3`.
 
 Debian installation
 --------------------
@@ -72,16 +90,12 @@ Works on GNU/Linux or Windows with `pip` and Python 3. First of all, ensure thes
 - libssl-dev -> `apt-get install libssl-dev` (for pypi's `cryptography` compilation)
 - python (>=3)
 
-Then, you need to install it with some needed libraries using either `pip3 install gplaycli` or `python3 setup.py install` after cloning it, then it will be available with `gplaycli` command. If you don't want to install it, only install requirements with `pip install -r requirements.txt` and use it as it.
+Then, you need to install it with some needed libraries using either `pip3 install gplaycli` or `python3 setup.py install` after cloning it, then it will be available with `gplaycli` command. If you don't want to install it, only install requirements with `pip3 install -r requirements.txt` and use it as it.
 
-If you want to use your own Google credentials, simply change them in the `credentials.conf` file with your own settings. 
-
-~~If you want to generate androidID, see https://github.com/nviennot/android-checkin/ or https://github.com/Akdeniz/google-play-crawler, otherwise you could either use the given one (default) or use one of your devices ID.~~
-
-Currently looking for a solution (`googleplaydownloader` from Tuxicoman provides a working `jar`).
+If you want to use your own Google credentials, simply change them in the `gplaycli.conf` file with your own settings. 
 
 If you plan to use it with F-Droid-server, remember that fdroidserver needs Java (more precisely the 'jar' command) to work.
 
 Uninstall
 =========
-Use `pip uninstall gplaycli`, and remove conf and cronjob with `rm -rf /etc/gplaycli /etc/cron.daily/gplaycli`. Should be clean, except python dependencies for gplaycli.
+Use `pip uninstall gplaycli`, and remove conf with `rm -rf /etc/gplaycli`. Should be clean, except python dependencies for gplaycli.

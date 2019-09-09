@@ -7,7 +7,6 @@ include /usr/share/dpkg/default.mk
 
 override_dh_auto_install:
 	dh_auto_install
-	chmod 0644 debian/gplaycli/etc/gplaycli/cronjob
 
 override_dh_clean:
 	dh_clean
