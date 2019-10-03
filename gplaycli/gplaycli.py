@@ -24,6 +24,7 @@ import logging
 import argparse
 import requests
 import configparser
+import urllib
 
 from gpapi.googleplay import GooglePlayAPI, LoginError, RequestError
 from google.protobuf.message import DecodeError
@@ -102,6 +103,7 @@ class GPlaycli:
 		self.token_enable 		= config.getboolean('Credentials', 'token', fallback=True)
 		self.token_url 			= config.get('Credentials', 'token_url', fallback='https://matlink.fr/token/email/gsfid')
 		self.keyring_service    = config.get('Credentials', 'keyring_service', fallback=None)
+		self.basic_auth         = config.get('Credentials', 'basic_auth', fallback=None)
 
 		self.tokencachefile 	= os.path.expanduser(config.get("Cache", "token", fallback="token.cache"))
 		self.yes 				= config.getboolean('Misc', 'accept_all', fallback=False)
@@ -166,6 +168,17 @@ class GPlaycli:
 			self.failed_logfile  = "apps_failed.log"
 			self.unavail_logfile = "apps_not_available.log"
 
+		if args.basic_auth:
+			if not self.token_enable or not self.token_url:
+				raise TypeError('Basic auth must be passed with a token URL.')
+			parts = args.basic_auth.split(':')
+			if len(parts) != 2:
+				raise ValueError('Basic auth must match <user>:<pass> format.')
+			self.basic_auth = (
+				urllib.parse.unquote(parts[0]),
+				urllib.parse.unquote(parts[1]),
+			)
+
 	########## Public methods ##########
 
 	def retrieve_token(self, force_new=False):
@@ -183,7 +196,11 @@ class GPlaycli:
 		logger.info("Retrieving token ...")
 		url = '/'.join([self.token_url, self.device_codename])
 		logger.info("Token URL is %s", url)
-		response = requests.get(url)
+		kwargs = {"auth": self.basic_auth} if self.basic_auth else {}
+		response = requests.get(url, **kwargs)
+		if response.status_code == 401:
+			logger.error('Token dispenser replied with 401, insufficient or invalid basic authentication credentials')
+			sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
 
 		if response.text == 'Auth error':
 			logger.error('Token dispenser auth error, probably too many connections')
@@ -604,6 +621,7 @@ def main():
 	parser.add_argument('-c',  '--config',				help="Use a different config file than gplaycli.conf", metavar="CONF_FILE", nargs=1)
 	parser.add_argument('-p',  '--progress',			help="Prompt a progress bar while downloading packages", action='store_true')
 	parser.add_argument('-L',  '--log',					help="Enable logging of apps status in separate logging files", action='store_true', default=False)
+	parser.add_argument('-ba',  '--basic-auth',			help="Specify the user name and password to use for server authentication when retrieving a token from a tokendispenser.", metavar="BASIC_AUTH")
 
 	if len(sys.argv) < 2:
 		sys.argv.append("-h")

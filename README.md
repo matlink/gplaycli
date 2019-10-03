@@ -5,49 +5,60 @@ GPlayCli is a command line tool to search, install, update Android applications 
 
 
 	$ gplaycli --help
-	usage: gplaycli [-h] [-V] [-y] [-l FOLDER] [-s SEARCH] [-P] [-n NUMBER]
-	                [-d AppID [AppID ...]] [-F FILE] [-u FOLDER] [-f FOLDER]
-	                [-dc DEVICE_CODENAME] [-t] [-tu TOKEN_URL] [-v] [-c CONF_FILE]
-	                [-p] [-L] [-ic]
+	usage: gplaycli [-h] [-V] [-v] [-s SEARCH] [-d AppID [AppID ...]] [-y]
+					[-l FOLDER] [-P] [-n NUMBER] [-av] [-a] [-F FILE] [-u FOLDER]
+					[-f FOLDER] [-dc DEVICE_CODENAME] [-t] [-tu TOKEN_URL]
+					[-ts TOKEN_STR] [-g GSF_ID] [-c CONF_FILE] [-p] [-L]
+					[-ba BASIC_AUTH]
 
 	A Google Play Store Apk downloader and manager for command line
 
 	optional arguments:
 	  -h, --help            show this help message and exit
 	  -V, --version         Print version number and exit
+	  -v, --verbose         Be verbose
+	  -s SEARCH, --search SEARCH
+							Search the given string in Google Play Store
+	  -d AppID [AppID ...], --download AppID [AppID ...]
+							Download the Apps that map given AppIDs
 	  -y, --yes             Say yes to all prompted questions
 	  -l FOLDER, --list FOLDER
-	                        List APKS in the given folder, with details
-	  -s SEARCH, --search SEARCH
-	                        Search the given string in Google Play Store
+							List APKS in the given folder, with details
 	  -P, --paid            Also search for paid apps
 	  -n NUMBER, --number NUMBER
-	                        For the search option, returns the given number of
-	                        matching applications
-	  -d AppID [AppID ...], --download AppID [AppID ...]
-	                        Download the Apps that map given AppIDs
+							For the search option, returns the given number of
+							matching applications
+	  -av, --append-version
+							Append versionstring to APKs when downloading
+	  -a, --additional-files
+							Enable the download of additional files
 	  -F FILE, --file FILE  Load packages to download from file, one package per
-	                        line
+							line
 	  -u FOLDER, --update FOLDER
-	                        Update all APKs in a given folder
+							Update all APKs in a given folder
 	  -f FOLDER, --folder FOLDER
-	                        Where to put the downloaded Apks, only for -d command
+							Where to put the downloaded Apks, only for -d command
 	  -dc DEVICE_CODENAME, --device-codename DEVICE_CODENAME
-	                        The device codename to fake
+							The device codename to fake
 	  -t, --token           Instead of classical credentials, use the tokenize
-	                        version
+							version
 	  -tu TOKEN_URL, --token-url TOKEN_URL
-	                        Use the given tokendispenser URL to retrieve a token
-	  -v, --verbose         Be verbose
+							Use the given tokendispenser URL to retrieve a token
+	  -ts TOKEN_STR, --token-str TOKEN_STR
+							Supply token string by yourself, need to supply GSF_ID
+							at the same time
+	  -g GSF_ID, --gsfid GSF_ID
+							Supply GSF_ID by yourself, need to supply token string
+							at the same time
 	  -c CONF_FILE, --config CONF_FILE
-	                        Use a different config file than gplaycli.conf
+							Use a different config file than gplaycli.conf
 	  -p, --progress        Prompt a progress bar while downloading packages
-	  -L, --log             Enable logging of apps status. Downloaded, failed, not
-	                        available apps will be written in separate logging
-	                        files
-	  -ic, --install-cronjob
-	                        Install cronjob for regular APKs update. Use --yes to
-	                        automatically install to default locations
+	  -L, --log             Enable logging of apps status in separate logging
+							files
+	  -ba BASIC_AUTH, --basic-auth BASIC_AUTH
+							Specify the user name and password to use for server
+							authentication.
+
 
 Changelog
 =========
@@ -85,3 +96,4 @@ If you plan to use it with F-Droid-server, remember that fdroidserver needs Java
 Uninstall
 =========
 Use `pip uninstall gplaycli`, and remove conf and cronjob with `rm -rf /etc/gplaycli /etc/cron.daily/gplaycli`. Should be clean, except python dependencies for gplaycli.
+
