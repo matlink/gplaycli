@@ -250,9 +250,9 @@ class GPlaycli:
 
 			if filename is None:
 				if self.append_version:
-					filename = "%s-v.%s.apk" % (detail['docId'], detail['versionString'])
+					filename = "%s-v.%s.apk" % (detail['docid'], detail['versionString'])
 				else:
-					filename = "%s.apk" % detail['docId']
+					filename = "%s.apk" % detail['docid']
 
 			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
@@ -328,7 +328,7 @@ class GPlaycli:
 		include_headers -- True if the result table should show column names
 		"""
 		try:
-			results = self.api.search(search_string, nb_result=nb_results)
+			results = self.api.search(search_string)
 		except IndexError:
 			results = []
 		if not results:
@@ -341,25 +341,27 @@ class GPlaycli:
 			all_results.append(col_names)
 		# Compute results values
 		for result in results:
-			# skip that app if it not free
-			# or if it's beta (pre-registration)
-			if (len(result['offer']) == 0  # beta apps (pre-registration)
-					or free_only
-					and result['offer'][0]['checkoutFlowRequired']  # not free to download
-				):
-				continue
-			detail = [result['title'],
-					  result['author'],
-					  util.sizeof_fmt(result['installationSize'])
-					  if result['installationSize'] > 0 else 'N/A',
-					  result['numDownloads'],
-					  result['uploadDate'],
-					  result['docId'],
-					  result['versionCode'],
-					  "%.2f" % result["aggregateRating"]["starRating"]
-					  ]
-			if len(all_results) < int(nb_results) + 1:
-				all_results.append(detail)
+			for apps in result['child']:
+				for app in apps['child']:
+					# skip that app if it not free
+					# or if it's beta (pre-registration)
+					if (len(app['offer']) == 0  # beta apps (pre-registration)
+							or free_only
+							and app['offer'][0]['checkoutFlowRequired']  # not free to download
+						):
+						continue
+					app_details = app['details']['appDetails']
+					detail = [app['title'],
+							  app['creator'],
+							  app_details['installationSize'],
+							  app_details['numDownloads'],
+							  app_details['uploadDate'],
+							  app['docid'],
+							  app_details['versionCode'],
+							  "%.3f" % app['aggregateRating']['starRating']
+							  ]
+					if len(all_results) < int(nb_results) + 1:
+						all_results.append(detail)
 
 		# Print a nice table
 		col_width = []

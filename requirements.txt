@@ -1,2 +1,2 @@
-gpapi
+gpapi>=0.4.4
 pyaxmlparser
