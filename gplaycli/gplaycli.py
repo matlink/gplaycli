@@ -78,7 +78,7 @@ class GPlaycli:
 		if config_file is None:
 			# default local user configs
 			cred_paths_list = [
-				'gplaycli.conf',
+				f'{os.getcwd()}.conf',
 				os.path.expanduser("~") + '/.config/gplaycli/gplaycli.conf',
 				'/etc/gplaycli/gplaycli.conf'
 			]
@@ -252,7 +252,7 @@ class GPlaycli:
 				if self.append_version:
 					filename = "%s-v.%s.apk" % (detail['docId'], detail['versionString'])
 				else:
-					filename = "%s.apk" % detail['docId']
+					filename = "%s.apk" % detail['docid']
 
 			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
