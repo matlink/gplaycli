@@ -250,9 +250,9 @@ class GPlaycli:
 
 			if filename is None:
 				if self.append_version:
-					filename = "%s-v.%s.apk" % (detail['docId'], detail['versionString'])
+					filename = "%s-v.%s.apk" % (detail['docid'], detail['versionString'])
 				else:
-					filename = "%s.apk" % detail['docId']
+					filename = "%s.apk" % detail['docid']
 
 			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
