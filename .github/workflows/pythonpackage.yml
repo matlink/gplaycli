@@ -25,6 +25,7 @@ jobs:
         GMAIL_ADDR: ${{ secrets.GMAIL_ADDR }}
         GMAIL_PWD: ${{ secrets.GMAIL_PWD }}
       run: |
+        cat gplaycli.conf
         sed -i 's/token=.*/token=False/g' gplaycli.conf
         sed -i "s/gmail_address=.*/gmail_address=$GMAIL_ADDR/g" gplaycli.conf
         sed -i "s/gmail_password=.*/gmail_password=$GMAIL_PWD/g" gplaycli.conf
