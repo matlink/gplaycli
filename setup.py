@@ -31,7 +31,7 @@ setup(name='gplaycli',
 			[os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf']],
 		],
 		install_requires=[
-				'gpapi',
+				'gpapi>=0.4.4',
 				'pyaxmlparser',
 		],
 )
