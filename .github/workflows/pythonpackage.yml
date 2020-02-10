@@ -26,8 +26,9 @@ jobs:
         GMAIL_PWD: ${{ secrets.GMAIL_PWD }}
       run: |
         cat gplaycli.conf
-        python -c "print('token=False', file=open('gplaycli.conf'))"
-        python -c "print(\"gmail_address=$GMAIL_ADDR\", file=open('gplaycli.conf'))"
-        python -c "print(\"gmail_password=$GMAIL_PWD\", file=open('gplaycli.conf'))"
+        python -c "print('[Credentials]', file=open('gplaycli.conf', 'a'))"
+        python -c "print('token=False', file=open('gplaycli.conf', 'a'))"
+        python -c "print(\"gmail_address=$GMAIL_ADDR\", file=open('gplaycli.conf', 'a'))"
+        python -c "print(\"gmail_password=$GMAIL_PWD\", file=open('gplaycli.conf', 'a'))"
         cat gplaycli.conf
         python -m pytest tests
