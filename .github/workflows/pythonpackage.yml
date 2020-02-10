@@ -25,7 +25,5 @@ jobs:
         GMAIL_ADDR: ${{ secrets.GMAIL_ADDR }}
         GMAIL_PWD: ${{ secrets.GMAIL_PWD }}
       run: |
-        cat gplaycli.conf
-        python -c "print(open('gplaycli.conf').read().replace('gmail_address=', \"gmail_address=$GMAIL_ADDR\").replace('gmail_password=', \"gmail_password=$GMAIL_PWD\"), file=open('gplaycli.conf', 'w'))"
-        cat gplaycli.conf
+        python tests/config-edit.py
         python -m pytest tests
