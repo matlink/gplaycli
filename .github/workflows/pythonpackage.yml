@@ -25,5 +25,5 @@ jobs:
         GMAIL_ADDR: ${{ secrets.GMAIL_ADDR }}
         GMAIL_PWD: ${{ secrets.GMAIL_PWD }}
       run: |
-        python tests/config-edit.py
+        python tests/config-edit.py gplaycli.conf
         python -m pytest tests
