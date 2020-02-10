@@ -2,13 +2,6 @@ from setuptools import setup
 import os
 import sys
 
-if sys.version_info[0] == 2:
-	sys.stderr.write("""
-	Python2 support has been removed since version 3.9
-	Please install GPlayCli with Python3
-	Or install version 3.8 but don't expect support""")
-	sys.exit(1)
-
 setup(name='gplaycli',
 		version='3.26',
 		description='GPlayCli, a Google play downloader command line interface',
