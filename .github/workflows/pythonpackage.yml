@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.8]
 
     steps:
     - uses: actions/checkout@v2
@@ -17,11 +17,16 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
+      env: # Or as an environment variable
+        GMAIL_ADDR: ${{ secrets.GMAIL_ADDR }}
+        GMAIL_PWD: ${{ secrets.GMAIL_PWD }}
       run: |
         python3 -m pip install --upgrade pip
+        python3 -m pip install pytest
         python3 -m pip install .
         sed -i 's/token=.*/token=False/g' gplaycli.conf
+        sed -i "s/gmail_address=.*/gmail_address=$GMAIL_ADDR/g" gplaycli.conf
+        sed -i "s/gmail_password=.*/gmail_password=$GMAIL_PWD/g" gplaycli.conf
     - name: Test with pytest
       run: |
-        python3 -m pip install pytest
         python3 -m pytest tests
