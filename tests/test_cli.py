@@ -51,13 +51,13 @@ def test_download_version():
 	if not found:
 		pytest.fail("Could not find package with version appended")
 
-def test_alter_token():
-	cache_dict = json.loads(open(TOKENFILE).read())
-	cache_dict['token'] = ' ' + cache_dict['token'][1:]
-	with open(TOKENFILE, 'w') as outfile:
-		print(json.dumps(cache_dict), file=outfile)
-	download_apk()
-	assert os.path.isfile("%s.apk" % TESTAPK)
+#def test_alter_token():
+#	cache_dict = json.loads(open(TOKENFILE).read())
+#	cache_dict['token'] = ' ' + cache_dict['token'][1:]
+#	with open(TOKENFILE, 'w') as outfile:
+#		print(json.dumps(cache_dict), file=outfile)
+#	download_apk()
+#	assert os.path.isfile("%s.apk" % TESTAPK)
 
 def test_update(apk=UPDATEAPK):
 	before = checksum(apk)

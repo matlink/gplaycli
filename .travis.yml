@@ -5,14 +5,10 @@ jobs:
     - stage: Unit tests
       language: python
       python: 3.7
-      services:
-        - docker
       before_install:
-        - docker run -d -p 8080:8080 --name token_dispenser matlink/token-dispenser;
-        - docker exec token_dispenser bash -c "echo $GMAIL_ADDR $GMAIL_PWD > passwords/passwords.txt";
-        - docker restart token_dispenser;
-        - sed -i 's,^token_url=.*$,token_url=http://localhost:8080/email/gsfid,g' gplaycli.conf;
-        - sed -i 's,^token_url =.*$,token_url="http://localhost:8080/email/gsfid",g' tests/test_init.py;
+        - sed -i 's/gmail_address=.*/gmail_address=$GMAIL_ADDR/g' gplaycli.conf
+        - sed -i 's/gmail_password=.*/gmail_password=$GMAIL_PWD/g' gplaycli.conf
+        - sed -i 's/token=.*/token=False/g' gplaycli.conf
       install: pip install .
       script: python -m pytest tests
       env:

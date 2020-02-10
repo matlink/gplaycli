@@ -28,13 +28,13 @@ def test_connection_credentials():
 	assert error is None
 	assert success == True
 
-def test_connection_token():
-	gpc.token_enable = True
-	gpc.token_url = token_url
-	gpc.retrieve_token(force_new=True)
-	success, error = gpc.connect()
-	assert error is None
-	assert success == True
+#def test_connection_token():
+#	gpc.token_enable = True
+#	gpc.token_url = token_url
+#	gpc.retrieve_token(force_new=True)
+#	success, error = gpc.connect()
+#	assert error is None
+#	assert success == True
 
 def test_download_focus():
 	gpc.progress_bar = True
