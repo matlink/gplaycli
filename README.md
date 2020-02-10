@@ -1,11 +1,9 @@
-# gplaycli [![Build Status](https://travis-ci.org/matlink/gplaycli.svg?branch=master)](https://travis-ci.org/matlink/gplaycli)
+# gplaycli [![Python package](https://github.com/matlink/gplaycli/workflows/Python%20package/badge.svg)](https://github.com/matlink/gplaycli/actions)
 GPlayCli is a command line tool to search, install, update Android applications from the Google Play Store.
 
-	$ gplaycli --help
-	usage: gplaycli [-h] [-V] [-v] [-s SEARCH] [-d AppID [AppID ...]] [-y]
-	                [-l FOLDER] [-P] [-n NUMBER] [-av] [-a] [-F FILE] [-u FOLDER]
-	                [-f FOLDER] [-dc DEVICE_CODENAME] [-t] [-tu TOKEN_URL]
-	                [-ts TOKEN_STR] [-g GSF_ID] [-c CONF_FILE] [-p] [-L]
+	$ usage: gplaycli [-h] [-V] [-v] [-s SEARCH] [-d AppID [AppID ...]] [-y] [-l FOLDER] [-P] [-av] [-a] [-F FILE]
+                [-u FOLDER] [-f FOLDER] [-dc DEVICE_CODENAME] [-t] [-tu TOKEN_URL] [-ts TOKEN_STR] [-g GSF_ID]
+                [-c CONF_FILE] [-p] [-L]
 
 	A Google Play Store Apk downloader and manager for command line
 
@@ -21,39 +19,34 @@ GPlayCli is a command line tool to search, install, update Android applications 
 	  -l FOLDER, --list FOLDER
 	                        List APKS in the given folder, with details
 	  -P, --paid            Also search for paid apps
-	  -n NUMBER, --number NUMBER
-	                        For the search option, returns the given number of
-	                        matching applications
 	  -av, --append-version
 	                        Append versionstring to APKs when downloading
 	  -a, --additional-files
 	                        Enable the download of additional files
-	  -F FILE, --file FILE  Load packages to download from file, one package per
-	                        line
+	  -F FILE, --file FILE  Load packages to download from file, one package per line
 	  -u FOLDER, --update FOLDER
 	                        Update all APKs in a given folder
 	  -f FOLDER, --folder FOLDER
 	                        Where to put the downloaded Apks, only for -d command
 	  -dc DEVICE_CODENAME, --device-codename DEVICE_CODENAME
 	                        The device codename to fake
-	  -t, --token           Instead of classical credentials, use the tokenize
-	                        version
+	  -t, --token           Instead of classical credentials, use the tokenize version
 	  -tu TOKEN_URL, --token-url TOKEN_URL
 	                        Use the given tokendispenser URL to retrieve a token
 	  -ts TOKEN_STR, --token-str TOKEN_STR
-	                        Supply token string by yourself, need to supply GSF_ID
-	                        at the same time
+	                        Supply token string by yourself, need to supply GSF_ID at the same time
 	  -g GSF_ID, --gsfid GSF_ID
-	                        Supply GSF_ID by yourself, need to supply token string
-	                        at the same time
+	                        Supply GSF_ID by yourself, need to supply token string at the same time
 	  -c CONF_FILE, --config CONF_FILE
 	                        Use a different config file than gplaycli.conf
 	  -p, --progress        Prompt a progress bar while downloading packages
-	  -L, --log             Enable logging of apps status in separate logging
-	                        files
+	  -L, --log             Enable logging of apps status in separate logging files
 
 Credentials
 ===========
+## Warning
+Token authentication is currently out of order since the default token dispenser instance has probably been blacklisted from Google servers.
+
 By default, gplaycli fetches a token from a token dispenser server located at https://matlink.fr/token/email/gsfid to login in Google Play. If you want to use another token dispenser server, change its URL in the configuration file (depends on the way you installed it). If you want to use your own Google credentials, put
 	
 	token=False
