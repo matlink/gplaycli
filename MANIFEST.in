@@ -1,2 +1,0 @@
-include gplaycli.conf
-include cron/cronjob

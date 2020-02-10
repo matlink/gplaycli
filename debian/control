@@ -1,0 +1,25 @@
+Source: gplaycli
+Section: utils
+Priority: optional
+Maintainer: Matlink <matlink@matlink.fr>
+Uploaders: Andres Salomon <dilinger@debian.org>
+Build-Depends: debhelper (>= 9.0~),
+               dh-python,
+               python3,
+               python3-setuptools,
+               python3-pyaxmlparser,
+               python3-gpapi (>= 0.4.3)
+Standards-Version: 4.1.0
+Homepage: https://github.com/matlink/gplaycli
+
+Package: gplaycli
+Architecture: all
+Depends: ${python3:Depends},
+         ${misc:Depends},
+         python3-crypto
+Recommends: fdroidserver, dummydroid
+Description: Google Play downloader command line interface
+ GPlayCli is a command line tool to search, install, update Android
+ applications from the Google Play Store.  The main goal was to be
+ able to run this script with a cronjob, in order to automatically
+ update an F-Droid server instance.

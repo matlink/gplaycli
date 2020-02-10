@@ -51,13 +51,13 @@ def test_download_version():
 	if not found:
 		pytest.fail("Could not find package with version appended")
 
-def test_alter_token():
-	cache_dict = json.loads(open(TOKENFILE).read())
-	cache_dict['token'] = ' ' + cache_dict['token'][1:]
-	with open(TOKENFILE, 'w') as outfile:
-		print(json.dumps(cache_dict), file=outfile)
-	download_apk()
-	assert os.path.isfile("%s.apk" % TESTAPK)
+#def test_alter_token():
+#	cache_dict = json.loads(open(TOKENFILE).read())
+#	cache_dict['token'] = ' ' + cache_dict['token'][1:]
+#	with open(TOKENFILE, 'w') as outfile:
+#		print(json.dumps(cache_dict), file=outfile)
+#	download_apk()
+#	assert os.path.isfile("%s.apk" % TESTAPK)
 
 def test_update(apk=UPDATEAPK):
 	before = checksum(apk)
@@ -65,20 +65,18 @@ def test_update(apk=UPDATEAPK):
 	after = checksum(apk)
 	assert after != before
 
-def test_search(string='fire', number=30):
-	c = call("gplaycli -s %s -n %d" % (string, number))
+def test_search(string='fire'):
+	c = call("gplaycli -s %s" % (string))
 	assert c.returncode == 0
-	assert nblines(c) <= number + 1
 
 def test_search2(string='com.yogavpn'):
 	c = call("gplaycli -s %s" % string)
 	assert c.returncode == 0
 	assert nblines(c) >= 0
 
-def test_search3(string='com.yogavpn', number=15):
-	c = call("gplaycli -s %s -n %d" % (string, number))
+def test_search3(string='com.yogavpn'):
+	c = call("gplaycli -s %s" % (string))
 	assert c.returncode == 0
-	assert nblines(c) <= number + 1
 
 def test_another_device(device='hammerhead'):
 	call("gplaycli -vd %s -dc %s" % (TESTAPK, device))

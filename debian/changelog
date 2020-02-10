@@ -1,0 +1,63 @@
+gplaycli (3.26-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Matlink <matlink@matlink.fr>  Mon, 09 Sep 2019 10:00:00 +0000
+
+gplaycli (3.25+ds-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Andres Salomon <dilinger@debian.org>  Wed, 17 Oct 2018 21:42:29 +0000
+
+gplaycli (3.24+ds-1) unstable; urgency=low
+
+  * New upstream release.
+  * Upload to unstable now that protobuf has been updated (closes: #903718).
+  * Add build-dep versioning to python3-gpapi.
+
+ -- Andres Salomon <dilinger@queued.net>  Sat, 13 Oct 2018 18:34:21 +0000
+
+gplaycli (3.23+ds-1) experimental; urgency=low
+
+  * New upstream release.
+  * Replace androguard dependency with python3-pyaxmlparser.
+  * Clean up a bunch of lintian warnings.
+  * Remove the apk from the copyright file, and repack the
+    orig.tar.gz without any extra apks.
+  * Add python3-crypto dependency.
+
+ -- Andres Salomon <dilinger@debian.org>  Fri, 06 Jul 2018 07:44:46 +0000
+
+gplaycli (3.22-1) experimental; urgency=low
+
+  * New upstream release.
+  * Refresh debian/patches.
+  * Transition package to Python 3 (closes: #895792).
+  * Switch packaging away from quilt (and refresh single patch).
+  * Update debian/copyright for duckduckgo apk distributed in
+    the source package, and for the removal of gpapi from this package.
+
+ -- Andres Salomon <dilinger@debian.org>  Fri, 27 Apr 2018 21:49:14 -0700
+
+gplaycli (0.2.10-1) unstable; urgency=medium
+
+  * New upstream release (closes: #871828)
+  * Add myself as a co-maintainer.
+  * Drop part of fix-config-install patch; keeping only the setup.py bit.
+  * Clean up *egg-info after build.
+  * Handle renaming of config file via maintscript.
+
+ -- Andres Salomon <dilinger@debian.org>  Wed, 30 Aug 2017 22:31:26 +0000
+
+gplaycli (0.2.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Matlink <matlink@matlink.fr>  Tue, 20 Dec 2016 15:40:55 +0100
+
+gplaycli (0.1.2+git15~g20f65ca-1) unstable; urgency=low
+
+  * Initial release. (Closes: #810722)
+
+ -- Matlink (Matlink - Sysadmin matlink.fr) <matlink@matlink.fr>  Mon, 24 Aug 2015 21:38:29 +0200
