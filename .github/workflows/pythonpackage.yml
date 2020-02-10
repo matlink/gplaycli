@@ -4,12 +4,11 @@ on: [push]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python-version: [3.8]
-
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -18,15 +17,13 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install pytest
-        python3 -m pip install .
+        python -m pip install --upgrade pip
+        python -m pip install pytest
+        python -m pip install .
     - name: Test with pytest
       env:
         GMAIL_ADDR: ${{ secrets.GMAIL_ADDR }}
         GMAIL_PWD: ${{ secrets.GMAIL_PWD }}
       run: |
-        sed -i 's/token=.*/token=False/g' gplaycli.conf
-        sed -i "s/gmail_address=.*/gmail_address=$GMAIL_ADDR/g" gplaycli.conf
-        sed -i "s/gmail_password=.*/gmail_password=$GMAIL_PWD/g" gplaycli.conf
-        python3 -m pytest tests
+        python tests/config-edit.py gplaycli.conf
+        python -m pytest tests
