@@ -250,7 +250,7 @@ class GPlaycli:
 
 			if filename is None:
 				if self.append_version:
-					filename = "%s-v.%s.apk" % (detail['docid'], detail['versionString'])
+					filename = "%s-v.%s.apk" % (detail['docid'], detail['details']['appDetails']['versionString'])
 				else:
 					filename = "%s.apk" % detail['docid']
 
@@ -355,7 +355,7 @@ class GPlaycli:
 					  result['numDownloads'],
 					  result['uploadDate'],
 					  result['docid'],
-					  result['versionCode'],
+					  result['details']['versionCode'],
 					  "%.2f" % result["aggregateRating"]["starRating"]
 					  ]
 			if len(all_results) < int(nb_results) + 1:
@@ -502,7 +502,7 @@ class GPlaycli:
 			if not detail:
 				unavail_items.append(((packagename, filename), UNAVAIL))
 				continue
-			store_version_code = detail['versionCode']
+			store_version_code = detail['details']['appDetails']['versionCode']
 
 			# Compare
 			if apk_version_code < store_version_code:
