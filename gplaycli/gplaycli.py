@@ -318,17 +318,16 @@ class GPlaycli:
 		return to_download_items - failed_items
 
 	@hooks.connected
-	def search(self, search_string, nb_results, free_only=True, include_headers=True):
+	def search(self, search_string, free_only=True, include_headers=True):
 		"""
 		Search the given string search_string on the Play Store.
 
 		search_string   -- the string to search on the Play Store
-		nb_results      -- the number of results to print
 		free_only       -- True if only costless apps should be searched for
 		include_headers -- True if the result table should show column names
 		"""
 		try:
-			results = self.api.search(search_string, nb_result=nb_results)
+			results = self.api.search(search_string)
 		except IndexError:
 			results = []
 		if not results:
@@ -340,26 +339,28 @@ class GPlaycli:
 			col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
 			all_results.append(col_names)
 		# Compute results values
-		for result in results:
-			# skip that app if it not free
-			# or if it's beta (pre-registration)
-			if (len(result['offer']) == 0  # beta apps (pre-registration)
-					or free_only
-					and result['offer'][0]['checkoutFlowRequired']  # not free to download
-				):
-				continue
-			detail = [result['title'],
-					  result['author'],
-					  util.sizeof_fmt(result['installationSize'])
-					  if result['installationSize'] > 0 else 'N/A',
-					  result['numDownloads'],
-					  result['uploadDate'],
-					  result['docid'],
-					  result['details']['versionCode'],
-					  "%.2f" % result["aggregateRating"]["starRating"]
-					  ]
-			if len(all_results) < int(nb_results) + 1:
-				all_results.append(detail)
+		for doc in results:
+			for cluster in doc["child"]:
+				for app in cluster["child"]:
+					# skip that app if it not free
+					# or if it's beta (pre-registration)
+					if ('offer' not in app  # beta apps (pre-registration)
+							or free_only
+							and app['offer'][0]['checkoutFlowRequired']  # not free to download
+						):
+						continue
+					details = app['details']['appDetails']
+					detail = [app['title'],
+							  app['creator'],
+							  util.sizeof_fmt(int(details['installationSize']))
+							  if int(details['installationSize']) > 0 else 'N/A',
+							  details['numDownloads'],
+							  details['uploadDate'],
+							  app['docid'],
+							  details['versionCode'],
+							  "%.2f" % app["aggregateRating"]["starRating"]
+							  ]
+					all_results.append(detail)
 
 		# Print a nice table
 		col_width = []
@@ -590,7 +591,6 @@ def main():
 	parser.add_argument('-y',  '--yes',					help="Say yes to all prompted questions", action='store_true')
 	parser.add_argument('-l',  '--list',				help="List APKS in the given folder, with details", metavar="FOLDER")
 	parser.add_argument('-P',  '--paid',				help="Also search for paid apps", action='store_true', default=False)
-	parser.add_argument('-n',  '--number',				help="For the search option, returns the given number of matching applications", metavar="NUMBER", type=int)
 	parser.add_argument('-av', '--append-version',		help="Append versionstring to APKs when downloading", action='store_true')
 	parser.add_argument('-a',  '--additional-files',	help="Enable the download of additional files", action='store_true', default=False)
 	parser.add_argument('-F',  '--file',				help="Load packages to download from file, one package per line", metavar="FILE")
@@ -625,10 +625,7 @@ def main():
 
 	if args.search:
 		cli.verbose = True
-		nb_results = 10
-		if args.number:
-			nb_results = args.number
-		cli.search(args.search, nb_results, not args.paid)
+		cli.search(args.search, not args.paid)
 
 	if args.file:
 		args.download = util.load_from_file(args.file)
