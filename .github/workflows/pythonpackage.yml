@@ -17,9 +17,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install pytest
-        python3 -m pip install .
+        python -m pip install --upgrade pip
+        python -m pip install pytest
+        python -m pip install .
     - name: Test with pytest
       env:
         GMAIL_ADDR: ${{ secrets.GMAIL_ADDR }}
@@ -28,4 +28,4 @@ jobs:
         sed -i 's/token=.*/token=False/g' gplaycli.conf
         sed -i "s/gmail_address=.*/gmail_address=$GMAIL_ADDR/g" gplaycli.conf
         sed -i "s/gmail_password=.*/gmail_password=$GMAIL_PWD/g" gplaycli.conf
-        python3 -m pytest tests
+        python -m pytest tests
