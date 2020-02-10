@@ -294,7 +294,7 @@ class GPlaycli:
 					bar.done()
 				if additional_data:
 					for obb_file in additional_data:
-						obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file['details']["versionCode"], data_iter["docid"])
+						obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_iter["docId"])
 						obb_filename = os.path.join(download_folder, obb_filename)
 						obb_total_size = int(obb_file['file']['total_size'])
 						obb_chunk_size = int(obb_file['file']['chunk_size'])
