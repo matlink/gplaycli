@@ -4,7 +4,7 @@ Upstream-Contact: Matlink (Matlink - Sysadmin matlink.fr) <matlink@matlink.fr>
 Source: https://github.com/matlink/gplaycli
 
 Files: *
-Copyright: 2015-2016, Matlink
+Copyright: 2015-2020, Matlink
            2013, Tuxicoman
 License: AGPL-3
  This program is free software: you can redistribute it and/or modify
