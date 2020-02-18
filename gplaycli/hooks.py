@@ -5,6 +5,8 @@ def connected(function):
 	"""
 	def check_connection(self, *args, **kwargs):
 		if self.api is None or self.api.authSubToken is None:
-			self.connect()
+			ok, err = self.connect()
+			if not ok:
+				exit(err)
 		return function(self, *args, **kwargs)
 	return check_connection

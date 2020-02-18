@@ -422,6 +422,9 @@ class GPlaycli:
 		elif self.keyring_service and not HAVE_KEYRING:
 			logger.error("You asked for keyring service but keyring package is not installed")
 			return False, ERRORS.KEYRING_NOT_INSTALLED
+		else:
+			logger.error("No password found. Check your configuration file.")
+			return False, ERRORS.CANNOT_LOGIN_GPLAY
 		try:
 			self.api.login(email=self.gmail_address, password=password)
 		except LoginError as e:
