@@ -3,7 +3,7 @@ import os
 import sys
 
 setup(name='gplaycli',
-		version='3.27',
+		version='3.28',
 		description='GPlayCli, a Google play downloader command line interface',
 		author="Matlink",
 		author_email="matlink@matlink.fr",
