@@ -27,3 +27,16 @@ jobs:
       run: |
         python tests/config-edit.py gplaycli.conf
         python -m pytest tests
+  deb:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        sudo sed -i 's/bionic/disco/g' /etc/apt/sources.list
+        sudo apt update
+        sudo apt install -y wget build-essential python3-{pyaxmlparser,setuptools} dpkg-dev debhelper dh-python fakeroot
+        wget http://ftp.debian.org/debian/pool/main/g/googleplay-api/python3-gpapi_0.4.4-1_all.deb
+        sudo dpkg -i python3-gpapi_0.4.4-1_all.deb || sudo apt -f install -y
+    - name: Build Debian package
+      run: make deb
