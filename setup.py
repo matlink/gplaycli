@@ -21,7 +21,7 @@ setup(name='gplaycli',
 			'gplaycli': 'gplaycli',
 		},
 		data_files=[
-			[os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf']],
+			['etc/gplaycli', ['gplaycli.conf']],
 		],
 		install_requires=[
 				'gpapi>=0.4.4',

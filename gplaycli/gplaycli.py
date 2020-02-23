@@ -18,6 +18,7 @@ see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
+import site
 import json
 import enum
 import logging
@@ -78,17 +79,17 @@ class GPlaycli:
 		if config_file is None:
 			# default local user configs
 			cred_paths_list = [
-				'gplaycli.conf',
-				os.path.expanduser("~") + '/.config/gplaycli/gplaycli.conf',
-				'/etc/gplaycli/gplaycli.conf'
+				os.getcwd(),
+				os.path.join(site.USER_BASE, 'etc', 'gplaycli'),
+				os.path.join(sys.prefix, 'etc', 'gplaycli'),
+				os.path.join('etc', 'gplaycli')
 			]
-			config_file = None
 			for filepath in cred_paths_list:
-				if os.path.isfile(filepath):
-					config_file = filepath
+				if os.path.isfile(os.path.join(filepath, 'gplaycli.conf')):
+					config_file = os.path.join(filepath, 'gplaycli.conf')
 					break
 			if config_file is None:
-				logger.warn("No configuration file found at %s, using default values" % cred_paths_list)
+				logger.warn("No configuration file gplaycli.conf found at %s, using default values" % cred_paths_list)
 
 		self.api 			= None
 		self.token_passed 	= False
