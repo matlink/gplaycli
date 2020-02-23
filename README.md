@@ -72,7 +72,7 @@ Pip
 
 Debian installation
 --------------------
-Releases are available here https://github.com/matlink/gplaycli/releases/ as debian packages. If you prefer not to use debian packaging, check the following method.
+Releases are available here https://github.com/matlink/gplaycli/releases/ as debian packages. You can download automated builds at the Github Action tab. If you prefer not to use debian packaging, check the following method.
 
 Requirements
 ----------
