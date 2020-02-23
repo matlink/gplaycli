@@ -38,5 +38,11 @@ jobs:
         sudo apt install -y wget build-essential python3-{pyaxmlparser,setuptools} dpkg-dev debhelper dh-python fakeroot
         wget http://ftp.debian.org/debian/pool/main/g/googleplay-api/python3-gpapi_0.4.4-1_all.deb
         sudo dpkg -i python3-gpapi_0.4.4-1_all.deb || sudo apt -f install -y
+        echo "::set-env name=VERSION::$(head -n1 debian/changelog | cut -d' ' -f2 | sed 's/.*(\(.*\))/\1/')"
     - name: Build Debian package
       run: make deb
+    - name: Upload deb file
+      uses: actions/upload-artifact@v1
+      with:
+        name: gplaycli_${{env.VERSION}}_all.deb
+        path: packages/gplaycli_${{env.VERSION}}_all.deb
