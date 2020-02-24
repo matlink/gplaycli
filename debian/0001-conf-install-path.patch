@@ -1,4 +1,0 @@
-31c31
-< 			[os.path.expanduser('~')+'/.config/gplaycli', ['gplaycli.conf']],
----
-> 			['/etc/gplaycli/', ['gplaycli.conf']],

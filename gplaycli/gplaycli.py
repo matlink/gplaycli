@@ -81,8 +81,8 @@ class GPlaycli:
 			cred_paths_list = [
 				os.getcwd(),
 				os.path.join(site.USER_BASE, 'etc', 'gplaycli'),
-				os.path.join(sys.prefix, 'etc', 'gplaycli'),
-				os.path.join('etc', 'gplaycli')
+				os.path.join(sys.prefix, 'local', 'etc', 'gplaycli'),
+				os.path.join('/etc', 'gplaycli')
 			]
 			for filepath in cred_paths_list:
 				if os.path.isfile(os.path.join(filepath, 'gplaycli.conf')):

@@ -19,7 +19,7 @@ jobs:
         sudo dpkg -i python3-gpapi_0.4.4-1_all.deb || sudo apt -f install -y
         echo "::set-env name=VERSION::$(head -n1 debian/changelog | cut -d' ' -f2 | sed 's/.*(\(.*\))/\1/')"
     - name: Build Debian package
-      run: make deb
+      run: sudo make deb
     - name: Upload deb file
       uses: actions/upload-artifact@v1
       with:
