@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - dev
 jobs:
   deb:
     runs-on: ubuntu-latest
