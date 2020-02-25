@@ -19,6 +19,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install pytest
+        python -m pip install https://github.com/nomore201/googleplay-api/archive/master.zip
         python -m pip install .
     - name: Test with pytest
       env:
