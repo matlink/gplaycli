@@ -29,7 +29,7 @@ setup(name='gplaycli',
 			['etc/gplaycli', ['gplaycli.conf']],
 		],
 		install_requires=[
-				'matlink-gpapi>=0.4.4',
+				'matlink-gpapi>=0.4.4.1',
 				'pyaxmlparser',
 		],
 )
