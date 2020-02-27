@@ -18,7 +18,7 @@ function clean_build_directories {
 
 function build_python_package {
     echo "--- Building Python Package ---"
-    echo -e "[install]\nprefix=/" > setup.cfg
+    echo -e "[install]\nprefix=/\ninstall-scripts=/usr/bin" > setup.cfg
     python3 setup.py sdist --formats=gztar
 }
 
