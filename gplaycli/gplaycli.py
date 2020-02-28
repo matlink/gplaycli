@@ -287,6 +287,7 @@ class GPlaycli:
 				continue
 
 			additional_data = data_iter['additionalData']
+			splits = data_iter['splits']
 			total_size = int(data_iter['file']['total_size'])
 			chunk_size = int(data_iter['file']['chunk_size'])
 			try:
@@ -307,6 +308,16 @@ class GPlaycli:
 							for index, chunk in enumerate(obb_file["file"]["data"]):
 								fbuffer.write(chunk)
 								bar.show(index * obb_chunk_size)
+							bar.done()
+				if splits:
+					for split in splits:
+						split_total_size = int(split['file']['total_size'])
+						split_chunk_size = int(split['file']['chunk_size'])
+						with open(split['name'], "wb") as fbuffer:
+							bar = util.progressbar(expected_size=split_total_size, hide=not self.progress_bar)
+							for index, chunk in enumerate(split["file"]["data"]):
+								fbuffer.write(chunk)
+								bar.show(index * split_chunk_size)
 							bar.done()
 			except IOError as exc:
 				logger.error("Error while writing %s : %s", packagename, exc)
