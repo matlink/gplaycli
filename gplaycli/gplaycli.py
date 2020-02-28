@@ -401,7 +401,11 @@ class GPlaycli:
 			self.retrieve_token()
 			return self.connect_token()
 		else:
-			return self.connect_credentials()
+			ok, err = self.connect_credentials()
+			if ok:
+				self.token = self.api.authSubToken
+				self.gsfid = self.api.gsfId
+			return ok, err
 
 	def connect_token(self):
 		if self.token_passed:
