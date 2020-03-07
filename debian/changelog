@@ -1,4 +1,13 @@
-gplaycli (3.28-1) unstable; urgency=low
+gplaycli (3.29-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Use new way of authenticate on Google Play
+  * Fix lots of authentication errors
+  * Fix token dispenser errors
+
+ -- Matlink <matlink@matlink.fr>  Mon, 7 Mar 2020 00:13:00 +0000
+
+ gplaycli (3.28-1) unstable; urgency=low
 
   * New upstream release.
 
