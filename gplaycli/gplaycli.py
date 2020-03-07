@@ -18,6 +18,7 @@ see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
+import site
 import json
 import enum
 import logging
@@ -78,17 +79,17 @@ class GPlaycli:
 		if config_file is None:
 			# default local user configs
 			cred_paths_list = [
-				'gplaycli.conf',
-				os.path.expanduser("~") + '/.config/gplaycli/gplaycli.conf',
-				'/etc/gplaycli/gplaycli.conf'
+				os.getcwd(),
+				os.path.join(site.USER_BASE, 'etc', 'gplaycli'),
+				os.path.join(sys.prefix, 'local', 'etc', 'gplaycli'),
+				os.path.join('/etc', 'gplaycli')
 			]
-			config_file = None
 			for filepath in cred_paths_list:
-				if os.path.isfile(filepath):
-					config_file = filepath
+				if os.path.isfile(os.path.join(filepath, 'gplaycli.conf')):
+					config_file = os.path.join(filepath, 'gplaycli.conf')
 					break
 			if config_file is None:
-				logger.warn("No configuration file found at %s, using default values" % cred_paths_list)
+				logger.warn("No configuration file gplaycli.conf found at %s, using default values" % cred_paths_list)
 
 		self.api 			= None
 		self.token_passed 	= False
@@ -175,32 +176,35 @@ class GPlaycli:
 		a new token is fetched from the token-dispenser
 		server located at self.token_url.
 		"""
-		self.token, self.gsfid, self.device = self.get_cached_token()
-		if (self.token is not None and not force_new and self.device == self.device_codename):
+		self.token, self.gsfid, self.gmail_address = self.get_cached_token()
+		if (self.token is not None and not force_new):
 			logger.info("Using cached token.")
+			self.gsfid = hex(self.api.checkin(self.gmail_address, self.token))[2:]
 			return
 
 		logger.info("Retrieving token ...")
-		url = '/'.join([self.token_url, self.device_codename])
-		logger.info("Token URL is %s", url)
-		response = requests.get(url)
+		logger.info("Token URL is %s", self.token_url)
+		email_url = '/'.join([self.token_url, 'email'])
+		response = requests.get(email_url)
+		if response.status_code == 200:
+			self.gmail_address = response.text
+		else:
+			logger.error("Cannot retrieve email address from token dispenser")
+			raise ERRORS.TOKEN_DISPENSER_SERVER_ERROR
 
-		if response.text == 'Auth error':
-			logger.error('Token dispenser auth error, probably too many connections')
-			sys.exit(ERRORS.TOKEN_DISPENSER_AUTH_ERROR)
+		token_url = '/'.join([self.token_url, 'token/email', self.gmail_address])
+		response = requests.get(token_url)
 
-		elif response.text == "Server error":
-			logger.error('Token dispenser server error')
-			sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
-
-		elif len(response.text) != 88: # other kinds of errors
-			logger.error('Unknown error: %s', response.text)
-			sys.exit(ERRORS.TOKEN_DISPENSER_SERVER_ERROR)
-
-		self.token, self.gsfid = response.text.split(" ")
-		logger.info("Token: %s", self.token)
-		logger.info("GSFId: %s", self.gsfid)
-		self.write_cached_token(self.token, self.gsfid, self.device_codename)
+		if response.status_code == 200:
+			self.token = response.text
+			self.gsfid = hex(self.api.checkin(self.gmail_address, self.token))[2:]
+			logger.info("Email: %s", self.gmail_address)
+			logger.info("Token: %s", self.token)
+			logger.info("GsfId: %s", self.gsfid)
+			self.write_cached_token(self.token, self.gsfid, self.gmail_address)
+		else:
+			logger.error("Token dispenser server error: %s", response.status_code)
+			raise ERRORS.TOKEN_DISPENSER_SERVER_ERROR
 
 	@hooks.connected
 	def download(self, pkg_todownload):
@@ -283,6 +287,7 @@ class GPlaycli:
 				continue
 
 			additional_data = data_iter['additionalData']
+			splits = data_iter['splits']
 			total_size = int(data_iter['file']['total_size'])
 			chunk_size = int(data_iter['file']['chunk_size'])
 			try:
@@ -303,6 +308,16 @@ class GPlaycli:
 							for index, chunk in enumerate(obb_file["file"]["data"]):
 								fbuffer.write(chunk)
 								bar.show(index * obb_chunk_size)
+							bar.done()
+				if splits:
+					for split in splits:
+						split_total_size = int(split['file']['total_size'])
+						split_chunk_size = int(split['file']['chunk_size'])
+						with open(split['name'], "wb") as fbuffer:
+							bar = util.progressbar(expected_size=split_total_size, hide=not self.progress_bar)
+							for index, chunk in enumerate(split["file"]["data"]):
+								fbuffer.write(chunk)
+								bar.show(index * split_chunk_size)
 							bar.done()
 			except IOError as exc:
 				logger.error("Error while writing %s : %s", packagename, exc)
@@ -397,7 +412,11 @@ class GPlaycli:
 			self.retrieve_token()
 			return self.connect_token()
 		else:
-			return self.connect_credentials()
+			ok, err = self.connect_credentials()
+			if ok:
+				self.token = self.api.authSubToken
+				self.gsfid = self.api.gsfId
+			return ok, err
 
 	def connect_token(self):
 		if self.token_passed:
@@ -442,15 +461,16 @@ class GPlaycli:
 			cache_dic = json.loads(open(self.tokencachefile).read())
 			token = cache_dic['token']
 			gsfid = cache_dic['gsfid']
-			device = cache_dic['device']
-		except (IOError, ValueError):  # cache file does not exists or is corrupted
+			address = cache_dic['address']
+		except (IOError, ValueError, KeyError) as e:  # cache file does not exists or is corrupted
+			print(e)
 			token = None
 			gsfid = None
-			device = None
-			logger.error('Cache file does not exists or is corrupted')
-		return token, gsfid, device
+			address = None
+			logger.info('Cache file does not exists or is corrupted')
+		return token, gsfid, address
 
-	def write_cached_token(self, token, gsfid, device):
+	def write_cached_token(self, token, gsfid, address):
 		"""
 		Write the given token, gsfid and device
 		to the self.tokencachefile file.
@@ -465,7 +485,7 @@ class GPlaycli:
 		with open(self.tokencachefile, 'w') as tcf:
 			tcf.write(json.dumps({'token' : token,
 								  'gsfid' : gsfid,
-								  'device' : device}))
+								  'address' : address}))
 
 	def prepare_analyse_apks(self):
 		"""
