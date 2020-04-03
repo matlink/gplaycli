@@ -26,7 +26,7 @@ setup(name='gplaycli',
 			'gplaycli': 'gplaycli',
 		},
 		data_files=[
-			['etc/gplaycli', ['gplaycli.conf']],
+			['/etc/gplaycli', ['gplaycli.conf']],
 		],
 		install_requires=[
 				'matlink-gpapi>=0.4.4.4',
