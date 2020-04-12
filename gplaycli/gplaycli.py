@@ -625,7 +625,7 @@ def main():
 	parser.add_argument('-ts', '--token-str',			help="Supply token string by yourself, need to supply GSF_ID at the same time", metavar="TOKEN_STR")
 	parser.add_argument('-g',  '--gsfid',				help="Supply GSF_ID by yourself, need to supply token string at the same time", metavar="GSF_ID")
 	parser.add_argument('-c',  '--config',				help="Use a different config file than gplaycli.conf", metavar="CONF_FILE", nargs=1)
-	parser.add_argument('-p',  '--progress',			help="Prompt a progress bar while downloading packages", action='store_true')
+	parser.add_argument('-p',  '--progress',			help="Prompt a progress bar while downloading packages", action='store_true', default=None)
 	parser.add_argument('-L',  '--log',				help="Enable logging of apps status in separate logging files", action='store_true', default=None)
 
 	if len(sys.argv) < 2:
