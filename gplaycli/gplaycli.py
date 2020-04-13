@@ -104,16 +104,17 @@ class GPlaycli:
 		self.token_url 			= config.get('Credentials', 'token_url', fallback='https://matlink.fr/token/email/gsfid')
 		self.keyring_service    = config.get('Credentials', 'keyring_service', fallback=None)
 
-		self.tokencachefile 	= os.path.expanduser(config.get("Cache", "token", fallback="token.cache"))
-		self.yes 				= config.getboolean('Misc', 'accept_all', fallback=False)
-		self.verbose 			= config.getboolean('Misc', 'verbose', fallback=False)
-		self.append_version 	= config.getboolean('Misc', 'append_version', fallback=False)
-		self.progress_bar 		= config.getboolean('Misc', 'progress', fallback=False)
-		self.logging_enable 	= config.getboolean('Misc', 'enable_logging', fallback=False)
-		self.addfiles_enable 	= config.getboolean('Misc', 'enable_addfiles', fallback=False)
-		self.device_codename 	= config.get('Device', 'codename', fallback='bacon')
-		self.locale 			= config.get("Locale", "locale", fallback="en_GB")
-		self.timezone 			= config.get("Locale", "timezone", fallback="CEST")
+		self.tokencachefile 	= os.path.expanduser(config.get('Cache', 'token', fallback='token.cache'))
+		self.download_folder	= os.path.expanduser(config.get('Cache', 'download_folder', fallback='.'))
+		self.yes				= config.getboolean('Misc', 'accept_all', fallback=False)
+		self.verbose			= config.getboolean('Misc', 'verbose', fallback=False)
+		self.append_version		= config.getboolean('Misc', 'append_version', fallback=False)
+		self.progress_bar		= config.getboolean('Misc', 'progress', fallback=False)
+		self.logging_enable		= config.getboolean('Misc', 'enable_logging', fallback=False)
+		self.addfiles_enable	= config.getboolean('Misc', 'enable_addfiles', fallback=False)
+		self.device_codename	= config.get('Device', 'codename', fallback='bacon')
+		self.locale				= config.get('Locale', 'locale', fallback='en_GB')
+		self.timezone			= config.get('Locale', 'timezone', fallback='CEST')
 
 		if not args: return
 
@@ -137,6 +138,9 @@ class GPlaycli:
 
 		if args.update is not None:
 			self.download_folder = args.update
+
+		if args.download is not None and args.folder is not None:
+			self.download_folder = args.folder[0]
 
 		if args.log is not None:
 			self.logging_enable = args.log
@@ -337,8 +341,8 @@ class GPlaycli:
 		"""
 		Search the given string search_string on the Play Store.
 
-		search_string   -- the string to search on the Play Store
-		free_only       -- True if only costless apps should be searched for
+		search_string	-- the string to search on the Play Store
+		free_only		-- True if only costless apps should be searched for
 		include_headers -- True if the result table should show column names
 		"""
 		try:
@@ -359,7 +363,7 @@ class GPlaycli:
 				for app in cluster["child"]:
 					# skip that app if it not free
 					# or if it's beta (pre-registration)
-					if ('offer' not in app  # beta apps (pre-registration)
+					if ('offer' not in app	# beta apps (pre-registration)
 							or free_only
 							and app['offer'][0]['checkoutFlowRequired']  # not free to download
 						):
@@ -618,7 +622,7 @@ def main():
 	parser.add_argument('-a',  '--additional-files',	help="Enable the download of additional files", action='store_true', default=False)
 	parser.add_argument('-F',  '--file',				help="Load packages to download from file, one package per line", metavar="FILE")
 	parser.add_argument('-u',  '--update',				help="Update all APKs in a given folder", metavar="FOLDER")
-	parser.add_argument('-f',  '--folder',				help="Where to put the downloaded Apks, only for -d command", metavar="FOLDER", nargs=1, default=['.'])
+	parser.add_argument('-f',  '--folder',				help="Where to put the downloaded Apks, only for -d command", metavar="FOLDER", nargs=1, default=None)
 	parser.add_argument('-dc', '--device-codename',		help="The device codename to fake", choices=GooglePlayAPI.getDevicesCodenames(), metavar="DEVICE_CODENAME")
 	parser.add_argument('-t',  '--token',				help="Instead of classical credentials, use the tokenize version", action='store_true', default=None)
 	parser.add_argument('-tu', '--token-url',			help="Use the given tokendispenser URL to retrieve a token", metavar="TOKEN_URL")
@@ -654,8 +658,6 @@ def main():
 		args.download = util.load_from_file(args.file)
 
 	if args.download is not None:
-		if args.folder is not None:
-			cli.download_folder = args.folder[0]
 		cli.download(args.download)
 
 
