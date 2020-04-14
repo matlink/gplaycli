@@ -167,9 +167,9 @@ class GPlaycli:
 				raise TypeError("Token string and GSFID have to be passed at the same time.")
 
 		if self.logging_enable:
-			self.success_logfile = "apps_downloaded.log"
-			self.failed_logfile  = "apps_failed.log"
-			self.unavail_logfile = "apps_not_available.log"
+			self.success_logfile = os.path.join(self.download_folder,"apps_downloaded.log")
+			self.failed_logfile  = os.path.join(self.download_folder,"apps_failed.log")
+			self.unavail_logfile = os.path.join(self.download_folder,"apps_not_available.log")
 
 	########## Public methods ##########
 
