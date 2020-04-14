@@ -10,7 +10,8 @@ def sizeof_fmt(num):
 	return "%.2f%s" % (num/(1024**log), ['B ','KB','MB','GB','TB'][log])
 
 def load_from_file(filename):
-	return [package.strip('\r\n') for package in open(filename).readlines()]
+	return [package.strip('\r\n') for package in open(filename).readlines()
+            if not package.startswith('#')]
 
 def list_folder_apks(folder):
 	"""
