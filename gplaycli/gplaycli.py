@@ -355,27 +355,29 @@ class GPlaycli:
 			all_results.append(col_names)
 		# Compute results values
 		for doc in results:
-			for cluster in doc["child"]:
-				for app in cluster["child"]:
-					# skip that app if it not free
-					# or if it's beta (pre-registration)
-					if ('offer' not in app  # beta apps (pre-registration)
-							or free_only
-							and app['offer'][0]['checkoutFlowRequired']  # not free to download
-						):
-						continue
-					details = app['details']['appDetails']
-					detail = [app['title'],
-							  app['creator'],
-							  util.sizeof_fmt(int(details['installationSize']))
-							  if int(details['installationSize']) > 0 else 'N/A',
-							  details['numDownloads'],
-							  details['uploadDate'],
-							  app['docid'],
-							  details['versionCode'],
-							  "%.2f" % app["aggregateRating"]["starRating"]
-							  ]
-					all_results.append(detail)
+			if "child" in doc.keys():
+				for cluster in doc["child"]:
+					if "child" in cluster.keys():
+						for app in cluster["child"]:
+							# skip that app if it not free
+							# or if it's beta (pre-registration)
+							if ('offer' not in app	# beta apps (pre-registration)
+								or free_only
+								and app['offer'][0]['checkoutFlowRequired']  # not free to download
+								):
+								continue
+							details = app['details']['appDetails']
+							detail = [app['title'],
+									  app['creator'],
+									  util.sizeof_fmt(int(details['installationSize']))
+									  if int(details['installationSize']) > 0 else 'N/A',
+									  details['numDownloads'],
+									  details['uploadDate'],
+									  app['docid'],
+									  details['versionCode'],
+									  "%.2f" % app["aggregateRating"]["starRating"]
+									  ]
+							all_results.append(detail)
 
 		# Print a nice table
 		col_width = []
