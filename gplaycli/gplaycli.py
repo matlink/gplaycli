@@ -25,6 +25,7 @@ import logging
 import argparse
 import requests
 import configparser
+from datetime import datetime
 
 from gpapi.googleplay import GooglePlayAPI, LoginError, RequestError
 from google.protobuf.message import DecodeError
@@ -594,9 +595,9 @@ class GPlaycli:
 		for result, logfile in [(success, self.success_logfile), (failed, self.failed_logfile), (unavail, self.unavail_logfile)]:
 			if not result:
 				continue
-			with open(logfile, 'w') as _buffer:
+			with open(logfile, 'a') as _buffer:
 				for package in result:
-					print(package, file=_buffer)
+					print(str(datetime.now()) + " : " + package, file=_buffer)
 
 	########## End internal methods ##########
 
