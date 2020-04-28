@@ -262,6 +262,8 @@ class GPlaycli:
 					filename = "%s-v.%s.apk" % (detail['docid'], detail['details']['appDetails']['versionString'])
 				else:
 					filename = "%s.apk" % detail['docid']
+			else:
+				filename = os.path.basename(filename)
 
 			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
@@ -286,11 +288,13 @@ class GPlaycli:
 
 			additional_data = data_iter['additionalData']
 			splits = data_iter['splits']
+			app_download_folder = download_folder
 			if(additional_data or splits):
-				download_folder = os.path.join(download_folder, re.sub(".apk$","",filename))
-				os.mkdir(download_folder)
-				
-			filepath = os.path.join(download_folder, filename)
+				app_download_folder = os.path.join(download_folder, re.sub(".apk$","",filename))
+				if not os.path.exists(app_download_folder):
+					os.mkdir(app_download_folder)
+
+			filepath = os.path.join(app_download_folder, filename)
 
 			#if file exists, continue
 			if self.append_version and os.path.isfile(filepath):
@@ -309,7 +313,7 @@ class GPlaycli:
 				if additional_data:
 					for obb_file in additional_data:
 						obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_iter["docId"])
-						obb_filename = os.path.join(download_folder, obb_filename)
+						obb_filename = os.path.join(app_download_folder, obb_filename)
 						obb_total_size = int(obb_file['file']['total_size'])
 						obb_chunk_size = int(obb_file['file']['chunk_size'])
 						with open(obb_filename, "wb") as fbuffer:
@@ -322,7 +326,7 @@ class GPlaycli:
 					for split in splits:
 						split_total_size = int(split['file']['total_size'])
 						split_chunk_size = int(split['file']['chunk_size'])
-						split_filename = os.path.join(download_folder, split['name']) + ".apk"
+						split_filename = os.path.join(app_download_folder, split['name']) + ".apk"
 						with open(split_filename, "wb") as fbuffer:
 							bar = util.progressbar(expected_size=split_total_size, hide=not self.progress_bar)
 							for index, chunk in enumerate(split["file"]["data"]):
@@ -525,8 +529,9 @@ class GPlaycli:
 			logger.info("Analyzing %s", filepath)
 			apk = APK(filepath)
 			packagename = apk.package
-			package_bunch.append(packagename)
-			version_codes.append(util.vcode(apk.version_code))
+			if not packagename in package_bunch:
+				package_bunch.append(packagename)
+				version_codes.append(util.vcode(apk.version_code))
 
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
