@@ -522,6 +522,7 @@ class GPlaycli:
 		in the download_folder folder.
 		"""
 		list_apks_to_update = []
+		list_of_uniq_apks = []
 		package_bunch = []
 		version_codes = []
 		unavail_items = []
@@ -532,13 +533,14 @@ class GPlaycli:
 			apk = APK(filepath)
 			packagename = apk.package
 			if not packagename in package_bunch:
+				list_of_uniq_apks.append(filepath)
 				package_bunch.append(packagename)
 				version_codes.append(util.vcode(apk.version_code))
 
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
 		details = self.api.bulkDetails(package_bunch)
-		for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
+		for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_uniq_apks, version_codes):
 			# this app is not in the play store
 			if not detail:
 				unavail_items.append(((packagename, filename), UNAVAIL))
