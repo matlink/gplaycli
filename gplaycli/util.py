@@ -10,13 +10,16 @@ def sizeof_fmt(num):
 	return "%.2f%s" % (num/(1024**log), ['B ','KB','MB','GB','TB'][log])
 
 def load_from_file(filename):
-	return [package.strip('\r\n') for package in open(filename).readlines()]
+	return [package.strip('\r\n') for package in open(filename).readlines()
+            if not package.startswith('#')]
 
 def list_folder_apks(folder):
 	"""
 	List apks in the given folder
 	"""
 	list_of_apks = [filename for filename in os.listdir(folder) if filename.endswith(".apk")]
+	list_of_apks += [os.path.join(d,d+".apk") for d in os.listdir(folder)
+					 if os.path.isfile(os.path.join(folder,d,d+".apk"))]
 	return list_of_apks
 
 def vcode(string_vcode):

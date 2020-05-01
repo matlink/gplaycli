@@ -17,6 +17,7 @@ see <http://www.gnu.org/licenses/>.
 """
 
 import os
+import re
 import sys
 import site
 import json
@@ -104,16 +105,17 @@ class GPlaycli:
 		self.token_url 			= config.get('Credentials', 'token_url', fallback='https://matlink.fr/token/email/gsfid')
 		self.keyring_service    = config.get('Credentials', 'keyring_service', fallback=None)
 
-		self.tokencachefile 	= os.path.expanduser(config.get("Cache", "token", fallback="token.cache"))
-		self.yes 				= config.getboolean('Misc', 'accept_all', fallback=False)
-		self.verbose 			= config.getboolean('Misc', 'verbose', fallback=False)
-		self.append_version 	= config.getboolean('Misc', 'append_version', fallback=False)
-		self.progress_bar 		= config.getboolean('Misc', 'progress', fallback=False)
-		self.logging_enable 	= config.getboolean('Misc', 'enable_logging', fallback=False)
-		self.addfiles_enable 	= config.getboolean('Misc', 'enable_addfiles', fallback=False)
-		self.device_codename 	= config.get('Device', 'codename', fallback='bacon')
-		self.locale 			= config.get("Locale", "locale", fallback="en_GB")
-		self.timezone 			= config.get("Locale", "timezone", fallback="CEST")
+		self.tokencachefile 	= os.path.expanduser(config.get('Cache', 'token', fallback='token.cache'))
+		self.download_folder	= os.path.expanduser(config.get('Cache', 'download_folder', fallback='.'))
+		self.yes				= config.getboolean('Misc', 'accept_all', fallback=False)
+		self.verbose			= config.getboolean('Misc', 'verbose', fallback=False)
+		self.append_version		= config.getboolean('Misc', 'append_version', fallback=False)
+		self.progress_bar		= config.getboolean('Misc', 'progress', fallback=False)
+		self.logging_enable		= config.getboolean('Misc', 'enable_logging', fallback=False)
+		self.addfiles_enable	= config.getboolean('Misc', 'enable_addfiles', fallback=False)
+		self.device_codename	= config.get('Device', 'codename', fallback='bacon')
+		self.locale				= config.get('Locale', 'locale', fallback='en_GB')
+		self.timezone			= config.get('Locale', 'timezone', fallback='CEST')
 
 		if not args: return
 
@@ -137,6 +139,9 @@ class GPlaycli:
 
 		if args.update is not None:
 			self.download_folder = args.update
+
+		if args.download is not None and args.folder is not None:
+			self.download_folder = args.folder[0]
 
 		if args.log is not None:
 			self.logging_enable = args.log
@@ -163,9 +168,9 @@ class GPlaycli:
 				raise TypeError("Token string and GSFID have to be passed at the same time.")
 
 		if self.logging_enable:
-			self.success_logfile = "apps_downloaded.log"
-			self.failed_logfile  = "apps_failed.log"
-			self.unavail_logfile = "apps_not_available.log"
+			self.success_logfile = os.path.join(self.download_folder,"apps_downloaded.log")
+			self.failed_logfile  = os.path.join(self.download_folder,"apps_failed.log")
+			self.unavail_logfile = os.path.join(self.download_folder,"apps_not_available.log")
 
 	########## Public methods ##########
 
@@ -253,10 +258,14 @@ class GPlaycli:
 			packagename, filename = item
 
 			if filename is None:
-				if self.append_version:
-					filename = "%s-v.%s.apk" % (detail['docid'], detail['details']['appDetails']['versionString'])
-				else:
-					filename = "%s.apk" % detail['docid']
+				filename = detail['docid']
+			else:
+				filename = re.sub('-v[0-9.-]+(apk)?','',os.path.basename(filename))
+
+			if self.append_version:
+				filename = "%s-v.%s.apk" % (filename, detail['details']['appDetails']['versionString'])
+			else:
+				filename = "%s.apk" % filename
 
 			logger.info("%s / %s %s", 1+position, len(pkg_todownload), packagename)
 
@@ -279,15 +288,21 @@ class GPlaycli:
 				failed_downloads.append((item, exc))
 				continue
 
-			filepath = os.path.join(download_folder, filename)
+			additional_data = data_iter['additionalData']
+			splits = data_iter['splits']
+			app_download_folder = download_folder
+			if(additional_data or splits):
+				app_download_folder = os.path.join(download_folder, re.sub(".apk$","",filename))
+				if not os.path.exists(app_download_folder):
+					os.mkdir(app_download_folder)
+
+			filepath = os.path.join(app_download_folder, filename)
 
 			#if file exists, continue
 			if self.append_version and os.path.isfile(filepath):
 				logger.info("File %s already exists, skipping.", filename)
 				continue
 
-			additional_data = data_iter['additionalData']
-			splits = data_iter['splits']
 			total_size = int(data_iter['file']['total_size'])
 			chunk_size = int(data_iter['file']['chunk_size'])
 			try:
@@ -300,7 +315,7 @@ class GPlaycli:
 				if additional_data:
 					for obb_file in additional_data:
 						obb_filename = "%s.%s.%s.obb" % (obb_file["type"], obb_file["versionCode"], data_iter["docId"])
-						obb_filename = os.path.join(download_folder, obb_filename)
+						obb_filename = os.path.join(app_download_folder, obb_filename)
 						obb_total_size = int(obb_file['file']['total_size'])
 						obb_chunk_size = int(obb_file['file']['chunk_size'])
 						with open(obb_filename, "wb") as fbuffer:
@@ -313,7 +328,8 @@ class GPlaycli:
 					for split in splits:
 						split_total_size = int(split['file']['total_size'])
 						split_chunk_size = int(split['file']['chunk_size'])
-						with open(split['name'], "wb") as fbuffer:
+						split_filename = os.path.join(app_download_folder, split['name']) + ".apk"
+						with open(split_filename, "wb") as fbuffer:
 							bar = util.progressbar(expected_size=split_total_size, hide=not self.progress_bar)
 							for index, chunk in enumerate(split["file"]["data"]):
 								fbuffer.write(chunk)
@@ -337,8 +353,8 @@ class GPlaycli:
 		"""
 		Search the given string search_string on the Play Store.
 
-		search_string   -- the string to search on the Play Store
-		free_only       -- True if only costless apps should be searched for
+		search_string	-- the string to search on the Play Store
+		free_only		-- True if only costless apps should be searched for
 		include_headers -- True if the result table should show column names
 		"""
 		try:
@@ -359,7 +375,7 @@ class GPlaycli:
 				for app in cluster["child"]:
 					# skip that app if it not free
 					# or if it's beta (pre-registration)
-					if ('offer' not in app  # beta apps (pre-registration)
+					if ('offer' not in app	# beta apps (pre-registration)
 							or free_only
 							and app['offer'][0]['checkoutFlowRequired']  # not free to download
 						):
@@ -506,6 +522,7 @@ class GPlaycli:
 		in the download_folder folder.
 		"""
 		list_apks_to_update = []
+		list_of_uniq_apks = []
 		package_bunch = []
 		version_codes = []
 		unavail_items = []
@@ -515,13 +532,15 @@ class GPlaycli:
 			logger.info("Analyzing %s", filepath)
 			apk = APK(filepath)
 			packagename = apk.package
-			package_bunch.append(packagename)
-			version_codes.append(util.vcode(apk.version_code))
+			if not packagename in package_bunch:
+				list_of_uniq_apks.append(filepath)
+				package_bunch.append(packagename)
+				version_codes.append(util.vcode(apk.version_code))
 
 		# BulkDetails requires only one HTTP request
 		# Get APK info from store
 		details = self.api.bulkDetails(package_bunch)
-		for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_apks, version_codes):
+		for detail, packagename, filename, apk_version_code in zip(details, package_bunch, list_of_uniq_apks, version_codes):
 			# this app is not in the play store
 			if not detail:
 				unavail_items.append(((packagename, filename), UNAVAIL))
@@ -618,7 +637,7 @@ def main():
 	parser.add_argument('-a',  '--additional-files',	help="Enable the download of additional files", action='store_true', default=False)
 	parser.add_argument('-F',  '--file',				help="Load packages to download from file, one package per line", metavar="FILE")
 	parser.add_argument('-u',  '--update',				help="Update all APKs in a given folder", metavar="FOLDER")
-	parser.add_argument('-f',  '--folder',				help="Where to put the downloaded Apks, only for -d command", metavar="FOLDER", nargs=1, default=['.'])
+	parser.add_argument('-f',  '--folder',				help="Where to put the downloaded Apks, only for -d command", metavar="FOLDER", nargs=1, default=None)
 	parser.add_argument('-dc', '--device-codename',		help="The device codename to fake", choices=GooglePlayAPI.getDevicesCodenames(), metavar="DEVICE_CODENAME")
 	parser.add_argument('-t',  '--token',				help="Instead of classical credentials, use the tokenize version", action='store_true', default=None)
 	parser.add_argument('-tu', '--token-url',			help="Use the given tokendispenser URL to retrieve a token", metavar="TOKEN_URL")
@@ -654,8 +673,6 @@ def main():
 		args.download = util.load_from_file(args.file)
 
 	if args.download is not None:
-		if args.folder is not None:
-			cli.download_folder = args.folder[0]
 		cli.download(args.download)
 
 
