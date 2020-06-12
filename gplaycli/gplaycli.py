@@ -341,6 +341,8 @@ class GPlaycli:
 		free_only       -- True if only costless apps should be searched for
 		include_headers -- True if the result table should show column names
 		"""
+		if self.verbose:
+			logger.setLevel(logging.INFO)
 		try:
 			results = self.api.search(search_string)
 		except IndexError:
@@ -356,6 +358,8 @@ class GPlaycli:
 		"""
 		List subcategories if category is supplied, else lists all categories
 		"""
+		if self.verbose:
+			logger.setLevel(logging.INFO)
 		if(len(category) == 0 or category == None):
 			obj = self.api.browse(None,None)
 			if(len(obj['category']) > 0):
@@ -383,6 +387,8 @@ class GPlaycli:
 
 		Requires both category and subcategory
 		"""
+		if self.verbose:
+			logger.setLevel(logging.INFO)
 		category = category.upper()
 		subcategory = subcategory.lower()
 		try:
@@ -750,6 +756,7 @@ def main():
 		cli.search(args.search, not args.paid)
 
 	if args.category_list is not None:
+		cli.verbose = True
 		cli.list_categories(args.category_list)
 	
 	elif args.category:
