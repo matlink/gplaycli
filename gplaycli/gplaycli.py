@@ -641,7 +641,7 @@ class GPlaycli:
 						continue
 			else:
 				# This is for the api.list() returned format, as opposed to api.search() returned format
-				if 'docId' in doc and 'details' in doc:
+				if 'docid' in doc and 'details' in doc:
 					# skip that app if it not free
 					# or if it's beta (pre-registration)
 					if ('offer' not in doc  # beta apps (pre-registration)
@@ -650,7 +650,7 @@ class GPlaycli:
 						):
 						continue
 					all_results.append(GPlaycli.decode_app_structure(doc,not free_only))
-		if(len(all_results) == 0):
+		if(len(all_results) <= 1):
 			# No results
 			return None
 		# Print a nice table
