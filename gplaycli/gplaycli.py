@@ -347,7 +347,7 @@ class GPlaycli:
 			results = self.api.search(search_string)
 		except IndexError:
 			results = []
-		all_results = self.format_app_results(results,include_headers,free_only)
+		all_results = self.format_app_results(results,free_only,include_headers)
 		if not all_results:
 			logger.info("No result")
 			return
@@ -381,7 +381,7 @@ class GPlaycli:
 			
 
 	@hooks.connected
-	def list_category_apps(self, category, subcategory, include_headers=True):
+	def list_category_apps(self, category, subcategory, free_only=True, include_headers=True):
 		"""
 		List top apps found in category & subcategory
 
@@ -395,7 +395,7 @@ class GPlaycli:
 			results = self.api.list(category,subcategory)
 		except IndexError:
 			results = []
-		all_results = self.format_app_results(results,include_headers,False)
+		all_results = self.format_app_results(results,free_only,include_headers)
 		if not all_results:
 			logger.info("No result")
 			return
@@ -607,7 +607,7 @@ class GPlaycli:
 					print(package, file=_buffer)
 
 	@staticmethod
-	def format_app_results(results,include_headers=True,free_only=True):
+	def format_app_results(results,free_only=True,include_headers=True):
 		"""
 		Writes a neatly formatted table for a list of apps as returned by the GPApi
 
@@ -762,7 +762,7 @@ def main():
 	
 	elif args.category:
 		cli.verbose = True
-		cli.list_category_apps(args.category[0],args.category[1])
+		cli.list_category_apps(args.category[0],args.category[1], not args.paid)
 
 	if args.file:
 		args.download = util.load_from_file(args.file)
