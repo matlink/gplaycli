@@ -341,58 +341,66 @@ class GPlaycli:
 		free_only       -- True if only costless apps should be searched for
 		include_headers -- True if the result table should show column names
 		"""
+		if self.verbose:
+			logger.setLevel(logging.INFO)
 		try:
 			results = self.api.search(search_string)
 		except IndexError:
 			results = []
-		if not results:
+		all_results = self.format_app_results(results,free_only,include_headers)
+		if not all_results:
 			logger.info("No result")
 			return
-		all_results = []
-		if include_headers:
-			# Name of the columns
-			col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
-			all_results.append(col_names)
-		# Compute results values
-		for doc in results:
-			for cluster in doc["child"]:
-				for app in cluster["child"]:
-					# skip that app if it not free
-					# or if it's beta (pre-registration)
-					if ('offer' not in app  # beta apps (pre-registration)
-							or free_only
-							and app['offer'][0]['checkoutFlowRequired']  # not free to download
-						):
-						continue
-					details = app['details']['appDetails']
-					detail = [app['title'],
-							  app['creator'],
-							  util.sizeof_fmt(int(details['installationSize']))
-							  if int(details['installationSize']) > 0 else 'N/A',
-							  details['numDownloads'],
-							  details['uploadDate'],
-							  app['docid'],
-							  details['versionCode'],
-							  "%.2f" % app["aggregateRating"]["starRating"]
-							  ]
-					all_results.append(detail)
-
-		# Print a nice table
-		col_width = []
-		for column_indice in range(len(all_results[0])):
-			col_length = max([len("%s" % row[column_indice]) for row in all_results])
-			col_width.append(col_length + 2)
-
-		for result in all_results:
-			for indice, item in enumerate(result):
-				out = "".join(str(item).strip().ljust(col_width[indice]))
-				try:
-					print(out, end='')
-				except UnicodeEncodeError:
-					out = out.encode('utf-8', errors='replace')
-					print(out, end='')
-			print()
 		return all_results
+	
+	@hooks.connected
+	def list_categories(self, category):
+		"""
+		List subcategories if category is supplied, else lists all categories
+		"""
+		if self.verbose:
+			logger.setLevel(logging.INFO)
+		if(len(category) == 0 or category == None):
+			obj = self.api.browse(None,None)
+			if(len(obj['category']) > 0):
+				print("Category ID")
+				for category in obj['category']:
+					catId = category['unknownCategoryContainer']['categoryIdContainer']['categoryId']
+					print(catId)
+		else:
+			# Category IDs are always uppercase.
+			category = category.upper()
+			subcats = self.api.list(category)
+			if(len(subcats) == 0):
+				print("No subcategories found for category '%s'" % category)
+				print("Category may not exist.")
+			else:
+				print("Subcategory")
+				for subcat in subcats:
+					print(subcat)
+			
+
+	@hooks.connected
+	def list_category_apps(self, category, subcategory, free_only=True, include_headers=True):
+		"""
+		List top apps found in category & subcategory
+
+		Requires both category and subcategory
+		"""
+		if self.verbose:
+			logger.setLevel(logging.INFO)
+		category = category.upper()
+		subcategory = subcategory.lower()
+		try:
+			results = self.api.list(category,subcategory)
+		except IndexError:
+			results = []
+		all_results = self.format_app_results(results,free_only,include_headers)
+		if not all_results:
+			logger.info("No result")
+			return
+		return all_results
+
 
 	########## End public methods ##########
 
@@ -598,6 +606,102 @@ class GPlaycli:
 				for package in result:
 					print(package, file=_buffer)
 
+	@staticmethod
+	def format_app_results(results,free_only=True,include_headers=True):
+		"""
+		Writes a neatly formatted table for a list of apps as returned by the GPApi
+
+		Returns all_results to caller
+		"""
+		if not results:
+			return None
+		all_results = []
+		if include_headers:
+			# Name of the columns
+			if free_only:
+				col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Rating"]
+			else:
+				col_names = ["Title", "Creator", "Size", "Downloads", "Last Update", "AppID", "Version", "Paid App", "Rating"]
+			all_results.append(col_names)
+		# Compute results values
+		for doc in results:
+			if "child" in doc:
+				for cluster in doc["child"]:
+					if 'child' in cluster:
+						for app in cluster["child"]:
+							# skip that app if it not free
+							# or if it's beta (pre-registration)
+							if ('offer' not in app  # beta apps (pre-registration)
+									or free_only
+									and app['offer'][0]['checkoutFlowRequired']  # not free to download
+								):
+								continue
+							all_results.append(GPlaycli.decode_app_structure(app, not free_only))
+					else:
+						continue
+			else:
+				# This is for the api.list() returned format, as opposed to api.search() returned format
+				if 'docid' in doc and 'details' in doc:
+					# skip that app if it not free
+					# or if it's beta (pre-registration)
+					if ('offer' not in doc  # beta apps (pre-registration)
+							or free_only
+							and doc['offer'][0]['checkoutFlowRequired']  # not free to download
+						):
+						continue
+					all_results.append(GPlaycli.decode_app_structure(doc,not free_only))
+		if(len(all_results) <= 1):
+			# No results
+			return None
+		# Print a nice table
+		col_width = []
+		for column_indice in range(len(all_results[0])):
+			col_length = max([len("%s" % row[column_indice]) for row in all_results])
+			col_width.append(col_length + 2)
+
+		for result in all_results:
+			for indice, item in enumerate(result):
+				out = "".join(str(item).strip().ljust(col_width[indice]))
+				try:
+					print(out, end='')
+				except UnicodeEncodeError:
+					out = out.encode('utf-8', errors='replace')
+					print(out, end='')
+			print()
+		
+		return all_results
+	
+	@staticmethod
+	def decode_app_structure(app,features_paid=False):
+		details = app['details']['appDetails']
+
+		# In the case of api.list() results, 'starRating' may not exist.
+		rating = ("%.2f" % app['aggregateRating']['starRating']) if 'starRating' in app['aggregateRating'] else '0.00'
+		if features_paid:
+			detail = [app['title'],
+						app['creator'],
+						util.sizeof_fmt(int(details['installationSize']))
+						if int(details['installationSize']) > 0 else 'N/A',
+						details['numDownloads'],
+						details['uploadDate'],
+						app['docid'],
+						details['versionCode'],
+						app['offer'][0]['checkoutFlowRequired'],
+						rating
+						]
+		else:
+			detail = [app['title'],
+						app['creator'],
+						util.sizeof_fmt(int(details['installationSize']))
+						if int(details['installationSize']) > 0 else 'N/A',
+						details['numDownloads'],
+						details['uploadDate'],
+						app['docid'],
+						details['versionCode'],
+						rating
+						]
+		return detail
+
 	########## End internal methods ##########
 
 
@@ -627,6 +731,8 @@ def main():
 	parser.add_argument('-c',  '--config',				help="Use a different config file than gplaycli.conf", metavar="CONF_FILE", nargs=1)
 	parser.add_argument('-p',  '--progress',			help="Prompt a progress bar while downloading packages", action='store_true')
 	parser.add_argument('-L',  '--log',					help="Enable logging of apps status in separate logging files", action='store_true', default=False)
+	parser.add_argument('-C',  '--category',			help="List apps in category & subcategory", nargs=2, metavar=("CATEGORY_ID","SUBCATEGORY"))
+	parser.add_argument('-Cl', '--category-list',		help="List subcategories for category, or all categories if no category listed", nargs='?', metavar="CATEGORY_ID", const='', default=None)
 
 	if len(sys.argv) < 2:
 		sys.argv.append("-h")
@@ -649,6 +755,14 @@ def main():
 	if args.search:
 		cli.verbose = True
 		cli.search(args.search, not args.paid)
+
+	if args.category_list is not None:
+		cli.verbose = True
+		cli.list_categories(args.category_list)
+	
+	elif args.category:
+		cli.verbose = True
+		cli.list_category_apps(args.category[0],args.category[1], not args.paid)
 
 	if args.file:
 		args.download = util.load_from_file(args.file)
