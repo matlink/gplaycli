@@ -42,12 +42,17 @@ GPlayCli is a command line tool to search, install, update Android applications 
 	  -p, --progress        Prompt a progress bar while downloading packages
 	  -L, --log             Enable logging of apps status in separate logging files
 
-Credentials
+Login
 ===========
-## Warning
-Token authentication is currently out of order since the default token dispenser instance has probably been blacklisted from Google servers.
+There are 2 ways of authenticating: token (default) or credentials.
 
-By default, gplaycli fetches a token from a token dispenser server located at https://matlink.fr/token/email/gsfid to login in Google Play. If you want to use another token dispenser server, change its URL in the configuration file (depends on the way you installed it). If you want to use your own Google credentials, put
+Token
+-----
+By default, gplaycli fetches a token from a token dispenser server located at https://matlink.fr/token/ to login in Google Play. If you want to use another token dispenser server, change its URL in the configuration file (depends on the way you installed it). 
+
+Credentials
+-----------
+If you want to use your own Google credentials, put
 	
 	token=False
 
@@ -67,28 +72,8 @@ Installation
 
 Pip
 ---
-- Best way to install it is using pip3: `pip3 install gplaycli` or `pip3 install gplaycli --user` if you are non-root
-- Cleanest way is using virtualenv: `virtualenv gplaycli; cd gplaycli; source bin/activate`, then either `pip3 install gplaycli` or `git clone https://github.com/matlink/gplaycli && pip3 install ./gplaycli/`. Make sure `virtualenv` is initialized with Python 3. If it's not, use `virtualenv -p python3`.
+`python3 -m pip install gplaycli` or `python3 -m pip install gplaycli --user` if you are non-root (consider using `virtualenv`)
 
 Debian installation
 --------------------
-Releases are available here https://github.com/matlink/gplaycli/releases/ as debian packages. Or click this link for automated builds ![Debian package](https://github.com/matlink/gplaycli/workflows/Debian%20package/badge.svg). If you prefer not to use debian packaging, check the following method.
-
-Requirements
-----------
-Works on GNU/Linux or Windows with `pip` and Python 3. First of all, ensure these packages are installed on your system : 
-
-- python3-dev package -> `apt-get install python3-dev`
-- libffi package -> `apt-get install libffi-dev`
-- libssl-dev -> `apt-get install libssl-dev` (for pypi's `cryptography` compilation)
-- python (>=3)
-
-Then, you need to install it with some needed libraries using either `pip3 install gplaycli` or `python3 setup.py install` after cloning it, then it will be available with `gplaycli` command. If you don't want to install it, only install requirements with `pip3 install -r requirements.txt` and use it as it.
-
-If you want to use your own Google credentials, simply change them in the `gplaycli.conf` file with your own settings. 
-
-If you plan to use it with F-Droid-server, remember that fdroidserver needs Java (more precisely the 'jar' command) to work.
-
-Uninstall
-=========
-Use `pip uninstall gplaycli`, and remove conf with `rm -rf /etc/gplaycli`. Should be clean, except python dependencies for gplaycli.
+Releases are available here https://github.com/matlink/gplaycli/releases/ as debian packages. Or click this link for automated builds ![Debian package](https://github.com/matlink/gplaycli/workflows/Debian%20package/badge.svg)

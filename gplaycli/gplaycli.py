@@ -311,9 +311,14 @@ class GPlaycli:
 							bar.done()
 				if splits:
 					for split in splits:
+						if self.append_version:
+							split_filename = "split_%s-v.%s.apk" % (split['name'],detail['details']['appDetails']['versionString'])
+						else:
+							split_filename = "split_%s.apk" % (split['name'])
+						split_filename = os.path.join(download_folder, split_filename)
 						split_total_size = int(split['file']['total_size'])
 						split_chunk_size = int(split['file']['chunk_size'])
-						with open(split['name'], "wb") as fbuffer:
+						with open(split_filename, "wb") as fbuffer:
 							bar = util.progressbar(expected_size=split_total_size, hide=not self.progress_bar)
 							for index, chunk in enumerate(split["file"]["data"]):
 								fbuffer.write(chunk)
