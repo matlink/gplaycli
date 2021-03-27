@@ -275,7 +275,7 @@ class GPlaycli:
 				unavail_downloads.append((item, exc))
 				continue
 			except Exception as exc:
-				logger.exception("Error while downloading %s", exc_info=exc)
+				logger.exception("Error while downloading %s", packagename, exc_info=exc)
 				failed_downloads.append((item, exc))
 				continue
 
