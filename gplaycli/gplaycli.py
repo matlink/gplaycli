@@ -287,7 +287,7 @@ class GPlaycli:
 				continue
 
 			additional_data = data_iter['additionalData']
-			splits = data_iter['splits']
+			splits = data_iter.get('splits')
 			total_size = int(data_iter['file']['total_size'])
 			chunk_size = int(data_iter['file']['chunk_size'])
 			try:
