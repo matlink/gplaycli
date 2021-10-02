@@ -370,7 +370,7 @@ class GPlaycli:
 							  util.sizeof_fmt(int(details['installationSize']))
 							  if int(details['installationSize']) > 0 else 'N/A',
 							  details['numDownloads'],
-							  details['uploadDate'],
+							  details['uploadDate'] if ('uploadDate' in details) else 'N/A',
 							  app['docid'],
 							  details['versionCode'],
 							  "%.2f" % app["aggregateRating"]["starRating"]
