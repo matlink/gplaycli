@@ -93,6 +93,7 @@ class GPlaycli:
 
 		self.api 			= None
 		self.token_passed 	= False
+		self.token_attempts	= 0
 
 
 		config = configparser.ConfigParser()
@@ -343,7 +344,7 @@ class GPlaycli:
 		"""
 		try:
 			results = self.api.search(search_string)
-		except IndexError:
+		except (IndexError, RequestError):
 			results = []
 		if not results:
 			logger.info("No result")
@@ -424,11 +425,17 @@ class GPlaycli:
 		else:
 			logger.info("Using auto retrieved token to connect to API")
 		try:
+			self.token_attempts += 1
 			self.api.login(authSubToken=self.token, gsfId=int(self.gsfid, 16))
 		except (ValueError, IndexError, LoginError, DecodeError, SystemError, RequestError):
-			logger.info("Token has expired or is invalid. Retrieving a new one...")
-			self.retrieve_token(force_new=True)
-			self.connect()
+			if self.token_attempts < 5:
+				logger.info("Token has expired or is invalid. Retrieving a new one...")
+				self.retrieve_token(force_new=True)
+				self.connect()
+			else:
+				logger.error("Multiple attempts to fetch anonymous token failed.")
+				logger.error("Try setting 'token=False' and adding Google credentials to gplaycli.conf")
+
 		return True, None
 
 	def connect_credentials(self):
