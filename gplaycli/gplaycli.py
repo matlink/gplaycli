@@ -608,14 +608,14 @@ def main():
 	"""
 	parser = argparse.ArgumentParser(description="A Google Play Store Apk downloader and manager for command line")
 	parser.add_argument('-V',  '--version',				help="Print version number and exit", action='store_true')
-	parser.add_argument('-v',  '--verbose',				help="Be verbose", action='store_true')
+	parser.add_argument('-v',  '--verbose',				help="Be verbose", action='store_true', default=None)
 	parser.add_argument('-s',  '--search',				help="Search the given string in Google Play Store", metavar="SEARCH")
 	parser.add_argument('-d',  '--download',			help="Download the Apps that map given AppIDs", metavar="AppID", nargs="+")
 	parser.add_argument('-y',  '--yes',					help="Say yes to all prompted questions", action='store_true')
 	parser.add_argument('-l',  '--list',				help="List APKS in the given folder, with details", metavar="FOLDER")
 	parser.add_argument('-P',  '--paid',				help="Also search for paid apps", action='store_true', default=False)
-	parser.add_argument('-av', '--append-version',		help="Append versionstring to APKs when downloading", action='store_true')
-	parser.add_argument('-a',  '--additional-files',	help="Enable the download of additional files", action='store_true', default=False)
+	parser.add_argument('-av', '--append-version',		help="Append versionstring to APKs when downloading", action='store_true', default=None)
+	parser.add_argument('-a',  '--additional-files',	help="Enable the download of additional files", action='store_true', default=None)
 	parser.add_argument('-F',  '--file',				help="Load packages to download from file, one package per line", metavar="FILE")
 	parser.add_argument('-u',  '--update',				help="Update all APKs in a given folder", metavar="FOLDER")
 	parser.add_argument('-f',  '--folder',				help="Where to put the downloaded Apks, only for -d command", metavar="FOLDER", nargs=1, default=['.'])
@@ -625,8 +625,8 @@ def main():
 	parser.add_argument('-ts', '--token-str',			help="Supply token string by yourself, need to supply GSF_ID at the same time", metavar="TOKEN_STR")
 	parser.add_argument('-g',  '--gsfid',				help="Supply GSF_ID by yourself, need to supply token string at the same time", metavar="GSF_ID")
 	parser.add_argument('-c',  '--config',				help="Use a different config file than gplaycli.conf", metavar="CONF_FILE", nargs=1)
-	parser.add_argument('-p',  '--progress',			help="Prompt a progress bar while downloading packages", action='store_true')
-	parser.add_argument('-L',  '--log',					help="Enable logging of apps status in separate logging files", action='store_true', default=False)
+	parser.add_argument('-p',  '--progress',			help="Prompt a progress bar while downloading packages", action='store_true', default=None)
+	parser.add_argument('-L',  '--log',				help="Enable logging of apps status in separate logging files", action='store_true', default=None)
 
 	if len(sys.argv) < 2:
 		sys.argv.append("-h")
