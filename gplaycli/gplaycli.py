@@ -311,9 +311,10 @@ class GPlaycli:
 							bar.done()
 				if splits:
 					for split in splits:
+						split_filename = os.path.join(download_folder, split['name'])
 						split_total_size = int(split['file']['total_size'])
 						split_chunk_size = int(split['file']['chunk_size'])
-						with open(split['name'], "wb") as fbuffer:
+						with open(split_filename, "wb") as fbuffer:
 							bar = util.progressbar(expected_size=split_total_size, hide=not self.progress_bar)
 							for index, chunk in enumerate(split["file"]["data"]):
 								fbuffer.write(chunk)
